@@ -1,7 +1,7 @@
 from django import forms
 from datetime import datetime
 class HomeForm(forms.Form):
-    cNumber = forms.CharField(max_length=50,initial="免填")
+    cNumber = forms.CharField(max_length=50,initial="免填",disabled=True)
     cAuther = forms.CharField(max_length=20)#姓名
     cDepartment = forms.CharField(max_length=50)#單位
     cType = forms.CharField(max_length=10)
@@ -10,7 +10,7 @@ class HomeForm(forms.Form):
     cEndDate = forms.DateField(initial=datetime.now(),required=False)
     # cLock = forms.CharField(max_length=5,default='')
 class SignedForm (forms.Form):
-	cNumber = forms.CharField(max_length=50,initial='免填')
+	cNumber = forms.CharField(max_length=50,initial='免填',disabled=True)
 	cJob_title = forms.CharField(max_length=50,initial='',required=False)
 	cSubject = forms.CharField(max_length=255, initial='')
 	cDiscription = forms.CharField(widget=forms.Textarea,required=False)
@@ -23,7 +23,7 @@ class MeetingInnerForm(forms.Form):
 
 #17
 class MeetingForm (forms.Form):
-	cNumber = forms.CharField(max_length=50, initial='免填')
+	cNumber = forms.CharField(max_length=50, initial='免填',disabled=True)
 	cMeetingType = forms.CharField(max_length=10)#會議型態
 	cLocation = forms.CharField(max_length=30,required=False)
 	cTime = forms.CharField(max_length=20)#時間
@@ -38,7 +38,7 @@ class MeetingForm (forms.Form):
 
 #內部連絡單
 class ContactForm (forms.Form):
-	cNumber = forms.CharField(max_length=50, initial='免填')
+	cNumber = forms.CharField(max_length=50, initial='免填',disabled=True)
 	cAutherManager = forms.CharField(max_length=20,required=False)
 	cDecisionDep = forms.CharField(max_length=50)
 	cImplementDep = forms.CharField(max_length=50)
@@ -54,7 +54,7 @@ class ContractInnerForm(forms.Form):
 	cRemark = forms.CharField(widget=forms.Textarea,required=False)
 
 class ContractForm(forms.Form):
-	cNumber = forms.CharField(max_length=50, initial='免填') #編號
+	cNumber = forms.CharField(max_length=50, initial='免填',disabled=True) #編號
 	cClient = forms.CharField(max_length=20) #客戶名稱
 	cLocation = forms.CharField(max_length=20)#工作地點
 	cContent = forms.CharField(widget=forms.Textarea,required=False)#發包內容
@@ -68,7 +68,7 @@ class ContractForm(forms.Form):
 	cDepartmentManager_Sign = forms.CharField(max_length=20,required=False) #單位主管簽名
 	cUndertaker = forms.CharField(max_length=20,required=False)#承辦人
 class ChangeForm(forms.Form):
-    cNumber = forms.CharField(max_length=50, initial='免填') #編號
+    cNumber = forms.CharField(max_length=50, initial='免填',disabled=True) #編號
     cProjectName = forms.CharField(max_length=50, initial='') #專案名稱
     cChangeitem = forms.CharField(max_length=20) #變更項目
     cChangereason = forms.CharField(max_length=20) #變更原因
