@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.min.css' %}">
+  <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.structure.min.css' %}">
+  <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.theme.min.css' %}">
+  <title>顯示所有資料</title>
+</head>
+
+<body>
+  <h2 align="left">顯示所有資料</h2>
+  <!-- {{sign_detail}} -->
+  <button style="margin-right: 5px;" onclick="New()">新增</button>
+  <button  onclick="GoToSign(event)">簽呈資料</button>
+  <button  onclick="GoToMeeting(event)">會議記錄資料</button>
+  <button onclick="GoToContact(event)">內部連絡單資料</button>
+  <button onclick="GoToContract(event)">工程發包議價記錄單</button>
+  <button onclick="GoToChange(event)">設計變更通知單</button>
+  <form action="." method="POST">
+    {% csrf_token %}
+    <table border='2' cellpadding='5' cellspacing='2'>
+      <th>筆數</th>
+      <th>編號</th>
+      <th>種類</th>
+      <th>發文者</th>
+      <th>部門別</th>
+      <th>日期</th>
+      <th>文件進度</th>
+      <th>完成日期</th>
+      {% for unit in all %}
+      <tr>
+        <td>{{unit.id}}</td>
+        <td>{{unit.cNumber}}</td>
+        <td>{{unit.cType}}</td>
+        <td>{{unit.cAuther}}</td>
+        <td>{{unit.cDepartment}}</td>
+        <td>{{unit.cDate}}</td>
+        <td>{{unit.cProgress}}</td>
+        <td>{{unit.cEndDate}}</td>
+
+        <td>
+          <button type="button" class="{{unit.id}}" id="Detail/{{unit.cNumber}}" onclick="Detail(event)">詳細內容</button>
+
+          <!-- {% if unit.cType == "簽呈" %}
+            <button type="button" class="{{unit.id}}" id="Detail/{{unit.cNumber}}" onclick="Detail(event)">詳細內容</button>
+          {% elif unit.cType == "會議記錄" %}
+            <button type="button" class="{{unit.id}}" id="Detail/{{unit.cNumber}}" onclick="Detail(event)">詳細內容</button>
+          {% elif unit.cType == "內部連絡單" %}
+            <button type="button" class="{{unit.id}}" id="Detail/{{unit.cNumber}}" onclick="Detail(event)">詳細內容</button>
+          {% endif %} -->
+          <button type="button" class="{{unit.id}}" id="{{unit.id}}" onclick="Edit(event)">編輯</button>
+          <button type="button" class="{{unit.id}}" id="{{unit.id}}" onclick="Delete(event)">刪除</button>
+
+        </td>
+      </tr>
+
+      {% endfor %}
+    </table>
+  </form>
+  <p>總資料 {{allHomeCount}} 筆</p>
+  <script src="{% static 'jquery.min.js' %}"></script>
+  <script>
+
+
+      function Edit(event){
+        var id = event.target.id
+        $(location).attr("href","/homeEdit/"+id+"/load");
+      }
+
+      function Delete(event){
+        var id = event.target.id
+        $(location).attr("href","/homeDelete/"+id+"/");
+      }
+      function New(){
+        $(location).attr("href","/homePost/")
+      }
+      function GoToSign(){
+        $(location).attr("href","/signallIndex/");
+      }
+      function GoToMeeting(){
+        $(location).attr("href","/meetingallIndex/");
+      }
+      function Detail(event){
+        var id = event.target.id
+        $(location).attr("href",'/'+id+"/");
+      }
+      function GoToContact(){
+        $(location).attr("href","/contactallIndex/");
+      }
+      function GoToContract(){
+        $(location).attr("href","/contractallIndex/");
+      }
+      function GoToChange(){
+        $(location).attr("href","/changeallIndex/");
+      }
+
+
+  </script>
+
+  <script scr="{% static 'jquery-ui-1.13.2.custom/jquery-ui.min.js' %}"></script>
+</body>
+
+</html>

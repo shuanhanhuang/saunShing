@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.min.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.structure.min.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.theme.min.css' %}">
+    <title>資料表新增</title>
+  </head>
+  <body>
+    <h2>內部連絡單 資料表新增</h2>
+    <p style="color:red; font-weight: bold; font-size: larger;">{{message}}</p>
+    <form action="." method="post" name="form1">
+      {% csrf_token %}
+      <table border="1" cellpadding="5" cellspacing='3'>
+        <tr><th>編號</th><td>{{contactform.cNumber}}</td> </tr> 
+        <tr><th>發文主管</th><td>{{contactform.cAutherManager}}</td></tr>
+        <tr><th>決策單位</th>
+            <td>
+            <input name="cDecisionDep" type="radio"  value="總經理" checked="checked"/>總經理
+            <input name="cDecisionDep" type="radio" value="顧問"/>顧問
+            <input name="cDecisionDep" type="radio" value="協理"/>協理
+            </td>
+        </tr>
+        <tr><th>負責單位</th>
+            <td>
+                <input type="checkbox" value="管理部" class="check_box_list"/>管理部
+                <input type="checkbox" value="工程部" class="check_box_list"/>工程部
+                <br>
+                <input type="checkbox" value="業務部-部門經理" class="check_box_list"/>業務部-部門經理
+                <input type="checkbox" value="業務部-專案經理" class="check_box_list"/>業務部-專案經理
+                <input type="checkbox" value="業務部-設計專員" class="check_box_list"/>業務部-設計專員
+                <input type="checkbox" value="業務部-業務助理" class="check_box_list"/>業務部-業務助理
+                <br>
+                <input type="checkbox" value="廠務部-採購" class="check_box_list"/>廠務部-採購
+                <input type="checkbox" value="廠務部-生技" class="check_box_list"/>廠務部-生技
+                <input type="checkbox" value="廠務部-廠務" class="check_box_list"/>廠務部-廠務
+                <input type="checkbox" value="廠務部-倉管" class="check_box_list"/>廠務部-倉管
+                <input type="checkbox" value="廠務部-品管" class="check_box_list"/>廠務部-品管
+            </td>
+        </tr>
+        <tr><th>主旨</th><td>{{contactform.cSubject}}</td></tr>
+        <tr><th>說明</th><td>{{contactform.cDiscription}}</td></tr>
+        <tr><th>審核人員意見</th><td>{{contactform.cOption}}</td></tr>
+        <tr>
+          <th align="center">
+            <input type="hidden" name="cImplementDep" id="textvalue">
+            <input type="submit" name="button" id="button" value="送出">
+            <input type="reset" name="button2" id="button2" value="重設">
+          </th>
+        </tr>
+      </table>
+    </form>
+
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $(".check_box_list").click(function(){
+                var test = ""
+                $(".check_box_list:checked").each(function(){
+                    test+=$(this).val()+","
+                });
+                test= test.substring(0,test.length-1)
+                $("#textvalue").val(test);
+            })
+        })
+
+    </script>
+  
+
+
+  </body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.min.css' %}">
+  <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.structure.min.css' %}">
+  <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.theme.min.css' %}">
+  <title>會議詳細資料</title>
+</head>
+
+<body>
+  <h2 align="left">顯示「議價記錄」所有資料</h2>
+  <button style="margin-right: 5px;" id="{{id.cNumber}}" onclick="New(event)">新增</button>
+  <button id="{{id.cNumber}}" onclick="BacktoContract()">回會議記錄頁面</button>
+  <form action="/contractinnerIndex/{{id.cNumber}}/" method="POST">
+    {% csrf_token %}
+    <table border='2' cellpadding='5' cellspacing='2'>
+      <th>筆數</th>
+      <th>承包商</th>
+      <th>報價</th>
+      <th>第一次議價</th>
+      <th>第二次議價</th>
+      <th>備註欄</th>
+      {% for unit in unitinner %}
+      <tr>
+        <td>{{unit.id}}</td>
+        <td>{{unit.cContractor}}</td>
+        <td>{{unit.cQuotation}}</td>
+        <td>{{unit.cBargain1}}</td>
+        <td>{{unit.cBargain2}}</td>
+        <td>{{unit.cRemark}}</td>
+
+        <td>
+          <button type="button" class="{{unit.id}}" id="{{id.cNumber}}/{{unit.id}}" onclick="Edit(event)">編輯</button>
+          <button type="button" class="{{unit.id}}" id="{{id.cNumber}}/{{unit.id}}" onclick="Delete(event)">刪除</button>
+        </td>
+      </tr>
+
+      {% endfor %}
+
+    </table>
+  </form>
+  <p>總資料 {{allinnerContractCount}} 筆</p>
+  <script src="{% static 'jquery.min.js' %}"></script>
+  <script>
+
+
+      function Edit(event){
+        var id = event.target.id
+        $(location).attr("href","/contractinnerEdit/"+id+"/load");
+      }
+
+      function Delete(event){
+        var id = event.target.id
+        $(location).attr("href","/contractinnerDelete/"+id+"/");
+      }
+
+      function New(event){
+        var id = event.target.id
+        $(location).attr("href","/contractinnerPost/"+id+"/");
+        // /postinnerMeeting/{{id}}/
+      }
+
+      function BacktoContract(){
+        var id = event.target.id
+        $(location).attr("href","/contractIndex/"+id+'/');
+      }
+
+
+
+  </script>
+
+  <script scr="{% static 'jquery-ui-1.13.2.custom/jquery-ui.min.js' %}"></script>
+</body>
+
+</html>

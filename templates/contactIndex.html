@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.min.css' %}">
+  <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.structure.min.css' %}">
+  <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.theme.min.css' %}">
+  <title>顯示資料</title>
+</head>
+
+<body>
+  <h2 align="left">顯示 {{contact.cNumber}} 資料</h2>
+  <button onclick="BackToHome()">回首頁</button>
+  <form action="." method="POST">
+    {% csrf_token %}
+    <table border='2' cellpadding='5' cellspacing='2'>
+      <th>筆數</th>
+      <th>編號</th>
+      <th>發文主管</th>
+      <th>決策單位</th>
+      <th>執行單位</th>
+      <th>主旨</th>
+      <tr>
+        <td>{{contact.id}}</td>
+        <td>{{contact.cNumber}}</td>
+        <td>{{contact.cAutherManager}}</td>
+        <td>{{contact.cDecisionDep}}</td>
+        <td>{{contact.cImplementDep}}</td>
+        <td>{{contact.cSubject}}</td>
+        <td>
+          <button type="button" class="{{contact.id}}" id="{{home.cNumber}}/{{contact.id}}" onclick="Edit(event)">編輯</button>          
+        </td>
+      </tr>
+
+    </table>
+  </form>
+  <script src="{% static 'jquery.min.js' %}"></script>
+  <script>
+
+
+      function Edit(event){
+        var id = event.target.id
+        $(location).attr("href","/contactEdit/"+id+"/load");
+      }
+
+
+      function BackToHome(){
+        $(location).attr("href","/homeIndex/");
+      }
+
+
+
+  </script>
+
+  <script scr="{% static 'jquery-ui-1.13.2.custom/jquery-ui.min.js' %}"></script>
+</body>
+
+</html>

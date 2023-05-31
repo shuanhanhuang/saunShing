@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.min.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.structure.min.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.theme.min.css' %}">
+    <title>資料表修改</title>
+</head>
+<body>
+    <h2>會議記錄 資料表修改</h2>
+    <form action="/meetingEdit/{{index.cNumber}}/{{unit.id}}/save" method="POST" name="form1">
+        {% csrf_token %}
+        <table border="1" cellspacing="1" cellpadding="4">
+            <tr>
+                <th>會議型態</th>
+                {% if unit.cMeetingType == "定期會議" %}
+                    <td >
+                        <input name="cMeetingType" type="radio" id="cMeetingType1" value="定期會議"  checked="checked"/>
+                        定期會議
+                        <input name="cMeetingType" type="radio" id="cMeetingType2" value="管理審查會議" />
+                        管理審查會議
+                        <input name="cMeetingType" type="radio" id="cMeetingType3" value="產銷會議" />
+                        產銷會議
+                        <input name="cMeetingType" type="radio" id="cMeetingType4" value="其他會議" />
+                        其他會議
+                    </td>
+                {% elif unit.cMeetingType == "管理審查會議" %}
+                    <td >
+                        <input name="cMeetingType" type="radio" id="cMeetingType1" value="定期會議"  />
+                        定期會議
+                        <input name="cMeetingType" type="radio" id="cMeetingType2" value="管理審查會議" checked="checked"/>
+                        管理審查會議
+                        <input name="cMeetingType" type="radio" id="cMeetingType3" value="產銷會議" />
+                        產銷會議
+                        <input name="cMeetingType" type="radio" id="cMeetingType4" value="其他會議" />
+                        其他會議
+                    </td>
+                {% elif unit.cMeetingType == "產銷會議" %}
+                    <td >
+                        <input name="cMeetingType" type="radio" id="cMeetingType1" value="定期會議"  />
+                        定期會議
+                        <input name="cMeetingType" type="radio" id="cMeetingType2" value="管理審查會議" />
+                        管理審查會議
+                        <input name="cMeetingType" type="radio" id="cMeetingType3" value="產銷會議" checked="checked"/>
+                        產銷會議
+                        <input name="cMeetingType" type="radio" id="cMeetingType4" value="其他會議" />
+                        其他會議
+                    </td>
+                {% else %}
+                    <td >
+                        <input name="cMeetingType" type="radio" id="cMeetingType1" value="定期會議"  />
+                        定期會議
+                        <input name="cMeetingType" type="radio" id="cMeetingType2" value="管理審查會議" />
+                        管理審查會議
+                        <input name="cMeetingType" type="radio" id="cMeetingType3" value="產銷會議" />
+                        產銷會議
+                        <input name="cMeetingType" type="radio" id="cMeetingType4" value="其他會議" checked="checked"/>
+                        其他會議
+                    </td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th>主席</th>
+                <td ><input type="text" id="cLeader" name="cLeader" value={{unit.cLeader}}></td>
+            </tr>
+            <tr>
+                <th>紀錄</th>
+                <td ><input type="text" id="cRecoder" name="cRecoder" value={{unit.cRecoder}}></td>
+            </tr>
+            
+            <tr>
+                <th>地點</th>
+                <td ><input type="text" id="cLocation" name="cLocation" value={{unit.cLocation}}></td>
+            </tr>
+            <tr>
+                <th>主題</th>
+                <td><input type="text" id="cTopic" name="cTopic" value={{unit.cTopic}}></td>
+            </tr>
+            <tr>
+                <th>時間</th>
+                <td><input type="text" id="cTime" name="cTime" value={{unit.cTime}}></td>
+            </tr>
+            <tr>
+                <th>列席人數</th>
+                <td><textarea  id="cAttendees1" name="cAttendees1">{{unit.cAttendees1}}</textarea></td>
+            </tr>
+            <tr>
+                <th>出席人數</th>
+                <td><textarea  id="cAttendees2" name="cAttendees2">{{unit.cAttendees2}}</textarea></td>
+            </tr>
+             
+            <tr>
+                <th>副總簽名</th>
+                <td><input type="text" id="cViceGeneral_Sign" name="cViceGeneral_Sign" value={{unit.cViceGeneral_Sign}}></td>
+            </tr>
+
+            <tr>
+                <th>主管簽名</th>
+                <td><input type="text" id="cManger_Sign" name="cManger_Sign" value={{unit.cManger_Sign}}></td>
+            </tr>
+            <tr>
+                <th colspan="2" align="center">
+                <button>送出</button>
+                <input type="reset" name="button2" id="button2" value="重設"></th>
+            </tr>
+	    </table>
+	<span style="color:red">{{message}}</span>
+  </form>
+</body>
+</html>
+

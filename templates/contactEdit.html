@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.min.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.structure.min.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.theme.min.css' %}">
+    <title>資料表修改</title>
+</head>
+<body>
+    <h2>內部聯絡單 資料表修改</h2>
+    <span style="color:red">{{message}}</span>
+    <form action="/contactEdit/{{index.cNumber}}/{{unit.id}}/save" method="POST" name="form1">
+        {% csrf_token %}
+        <table border="1" cellspacing="1" cellpadding="4">
+
+            <tr>
+                <th>發文主管</th>
+                <td><input type="text" id="cAutherManager" name="cAutherManager" value={{unit.cAutherManager}}></td>
+            </tr>
+            <tr>
+                <th>決策單位{{unit.cDecisionDep}}</th>
+                {% if unit.cDecisionDep == "總經理" %}
+                    <td >
+                      <input name="cDecisionDep" type="radio" id="cDecisionDep1" value="總經理" checked="checked" />
+                      總經理
+                      <input name="cDecisionDep" type="radio" id="cDecisionDep2" value="顧問" />
+                      顧問
+                      <input name="cDecisionDep" type="radio" id="cDecisionDep3" value="協理" />
+                      協理
+                    </td>
+                {% elif unit.cDecisionDep == "顧問"%}
+                    <td>
+                        <input name="cDecisionDep" type="radio" id="cDecisionDep1" value="總經理"  />
+                        總經理
+                        <input name="cDecisionDep" type="radio" id="cDecisionDep2" value="顧問" checked="checked"/>
+                        顧問
+                        <input name="cDecisionDep" type="radio" id="cDecisionDep3" value="協理" />
+                        協理
+                    </td>
+                {% else %}
+                <td>
+                    <input name="cDecisionDep" type="radio" id="cDecisionDep1" value="總經理"  />
+                    總經理
+                    <input name="cDecisionDep" type="radio" id="cDecisionDep2" value="顧問" />
+                    顧問
+                    <input name="cDecisionDep" type="radio" id="cDecisionDep3" value="協理" checked="checked"/>
+                    協理
+                </td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th>執行單位</th>
+                <td>
+                    <input type="checkbox" name="option" class="check_box_list" value="管理部" {% if '管理部' in unit.cImplementDep %}checked{% endif %}>
+                    <label for="管理部">管理部
+                    <input type="checkbox" name="option" class="check_box_list" value="工程部" {% if '工程部' in unit.cImplementDep %}checked{% endif %}>
+                    <label for="工程部">工程部
+                    <br>
+                    <input type="checkbox" name="option" class="check_box_list" value="業務部-部門經理" {% if '業務部-部門經理' in unit.cImplementDep %}checked{% endif %}>
+                    <label for="業務部-部門經理">業務部-部門經理
+                    <input type="checkbox" name="option" class="check_box_list" value="業務部-部門經理" {% if '業務部-專案經理' in unit.cImplementDep %}checked{% endif %}>
+                    <label for="業務部-專案經理">業務部-專案經理
+                    <input type="checkbox" name="option" class="check_box_list" value="業務部-設計專員" {% if '業務部-設計專員' in unit.cImplementDep %}checked{% endif %}>
+                    <label for="業務部-設計專員">業務部-設計專員
+                    <input type="checkbox" name="option" class="check_box_list" value="業務部-業務助理" {% if '業務部-業務助理' in unit.cImplementDep %}checked{% endif %}>
+                    <label for="業務部-業務助理">業務部-業務助理
+                    <br>
+                    <input type="checkbox" name="option" class="check_box_list" value="廠務部-採購" {% if '廠務部-採購' in unit.cImplementDep %}checked{% endif %}>
+                    <label for="廠務部-採購">廠務部-採購
+                    <input type="checkbox" name="option" class="check_box_list" value="廠務部-生技" {% if '廠務部-生技' in unit.cImplementDep %}checked{% endif %}>
+                    <label for="廠務部-生技">廠務部-生技
+                    <input type="checkbox" name="option" class="check_box_list" value="廠務部-廠務" {% if '廠務部-廠務' in unit.cImplementDep %}checked{% endif %}>
+                    <label for="廠務部-廠務">廠務部-廠務
+                    <input type="checkbox" name="option" class="check_box_list" value="廠務部-倉管" {% if '廠務部-倉管' in unit.cImplementDep %}checked{% endif %}>
+                    <label for="廠務部-倉管">廠務部-倉管
+                    <input type="checkbox" name="option" class="check_box_list" value="廠務部-品管" {% if '廠務部-品管' in unit.cImplementDep %}checked{% endif %}>
+                    <label for="廠務部-品管">廠務部-品管
+                </td>
+            </tr>
+            <tr>
+                <th>主旨</th>
+                <td><input type="text" id="cSubject" name="cSubject" value={{unit.cSubject}}></td>
+            </tr>
+            <tr>
+                <th>說明</th>
+                <td><textarea  id="cDiscription" name="cDiscription">{{unit.cDiscription}}</textarea></td>
+            </tr>
+            <tr>
+                <th>審核人員意見</th>
+                <td><textarea  id="cOption" name="cOption">{{unit.cOption}}</textarea></td>
+            </tr>
+            
+            <tr>
+                <th colspan="2" align="center">
+                <input type="hidden" name="cImplementDep" id="textvalue">
+                <button type="submit" value="Submit">送出</button>
+                <input type="reset" name="button2" id="button2" value="重設"></th>
+            </tr>
+	    </table>
+	
+  </form>
+
+  <script src="{% static 'jquery.min.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $(".check_box_list").click(function(){
+                var test = ""
+                $(".check_box_list:checked").each(function(){
+                    test+=$(this).val()+","
+                });
+                test= test.substring(0,test.length-1)
+                $("#textvalue").val(test);
+            })
+
+            
+        })
+    </script>
+</body>
+</html>
+

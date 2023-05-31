@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.min.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.structure.min.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.theme.min.css' %}">
+    <title>資料表修改</title>
+</head>
+<body>
+    <h2>資料表修改</h2>
+    <form action="/homeEdit/{{unit.id}}/save" method="POST" name="form1">
+        {% csrf_token %}
+        <table border="1" cellspacing="1" cellpadding="4">
+            <tr>
+                <th>姓名</th>
+                <td ><input type="text" id="cAuther" name="cAuther" value={{unit.cAuther}}></td>
+            </tr>
+            <tr>
+                <th>部門別</th>
+                {% if unit.cDepartment == "總經理室" %}
+                    <td >
+                        <input name="cDepartment" type="radio" id="cDepartment1" value="總經理室" checked="checked" />
+                        總經理室
+                        <input name="cDepartment" type="radio" id="cDepartment2" value="稽核室" />
+                        稽核室
+                        <input name="cDepartment" type="radio" id="cDepartment3" value="文管中心" />
+                        文管中心
+                        <input name="cDepartment" type="radio" id="cDepartment4" value="管理部" />
+                        管理部
+                        <input name="cDepartment" type="radio" id="cDepartment3" value="業務設計部" />
+                        業務設計部
+                        <input name="cDepartment" type="radio" id="cDepartment4" value="廠務部" />
+                        廠務部
+                    </td>
+                {% elif unit.cProgress == "稽核室" %}
+                    <td >
+                        <input name="cDepartment" type="radio" id="cDepartment1" value="總經理室"  />
+                        總經理室
+                        <input name="cDepartment" type="radio" id="cDepartment2" value="稽核室" checked="checked"/>
+                        稽核室
+                        <input name="cDepartment" type="radio" id="cDepartment3" value="文管中心" />
+                        文管中心
+                        <input name="cDepartment" type="radio" id="cDepartment4" value="管理部" />
+                        管理部
+                        <input name="cDepartment" type="radio" id="cDepartment3" value="業務設計部" />
+                        業務設計部
+                        <input name="cDepartment" type="radio" id="cDepartment4" value="廠務部" />
+                        廠務部
+                    </td>
+                {% elif unit.cProgress == "文管中心" %}
+                    <td >
+                        <input name="cDepartment" type="radio" id="cDepartment1" value="總經理室"  />
+                        總經理室
+                        <input name="cDepartment" type="radio" id="cDepartment2" value="稽核室" />
+                        稽核室
+                        <input name="cDepartment" type="radio" id="cDepartment3" value="文管中心" checked="checked"/>
+                        文管中心
+                        <input name="cDepartment" type="radio" id="cDepartment4" value="管理部" />
+                        管理部
+                        <input name="cDepartment" type="radio" id="cDepartment3" value="業務設計部" />
+                        業務設計部
+                        <input name="cDepartment" type="radio" id="cDepartment4" value="廠務部" />
+                        廠務部
+                    </td>
+                {% elif unit.cDepartment == "管理部" %}
+                    <td >
+                        <input name="cDepartment" type="radio" id="cDepartment1" value="總經理室"  />
+                        總經理室
+                        <input name="cDepartment" type="radio" id="cDepartment2" value="稽核室" />
+                        稽核室
+                        <input name="cDepartment" type="radio" id="cDepartment3" value="文管中心" />
+                        文管中心
+                        <input name="cDepartment" type="radio" id="cDepartment4" value="管理部" checked="checked"/>
+                        管理部
+                        <input name="cDepartment" type="radio" id="cDepartment3" value="業務設計部" />
+                        業務設計部
+                        <input name="cDepartment" type="radio" id="cDepartment4" value="廠務部" />
+                        廠務部
+                    </td>
+                {% elif unit.cDepartment == " 業務設計部" %}
+                    <td >
+                        <input name="cDepartment" type="radio" id="cDepartment1" value="總經理室"  />
+                        總經理室
+                        <input name="cDepartment" type="radio" id="cDepartment2" value="稽核室" />
+                        稽核室
+                        <input name="cDepartment" type="radio" id="cDepartment3" value="文管中心" />
+                        文管中心
+                        <input name="cDepartment" type="radio" id="cDepartment4" value="管理部" />
+                        管理部
+                        <input name="cDepartment" type="radio" id="cDepartment3" value="業務設計部" checked="checked"/>
+                        業務設計部
+                        <input name="cDepartment" type="radio" id="cDepartment4" value="廠務部" />
+                        廠務部
+                    </td>
+                {% else %}
+                    <td >
+                        <input name="cDepartment" type="radio" id="cDepartment1" value="總經理室"  />
+                        總經理室
+                        <input name="cDepartment" type="radio" id="cDepartment2" value="稽核室" />
+                        稽核室
+                        <input name="cDepartment" type="radio" id="cDepartment3" value="文管中心" />
+                        文管中心
+                        <input name="cDepartment" type="radio" id="cDepartment4" value="管理部" />
+                        管理部
+                        <input name="cDepartment" type="radio" id="cDepartment3" value="業務設計部" />
+                        業務設計部
+                        <input name="cDepartment" type="radio" id="cDepartment4" value="廠務部" checked="checked"/>
+                        廠務部
+                    </td>
+                {% endif %}
+            </tr>
+            
+            <tr>
+                <th>文件進度</th>
+                {% if unit.cProgress == "草稿" %}
+                    <td >
+                      <input name="cProgress" type="radio" id="cProgress1" value="草稿" checked="checked" />
+                      草稿
+                      <input name="cProgress" type="radio" id="cProgress2" value="流程中" />
+                      流程中
+                      <input name="cProgress" type="radio" id="cProgress3" value="廢單" />
+                      廢單
+                      <input name="cProgress" type="radio" id="cProgress4" value="結案" />
+                      結案
+                    </td>
+                {% elif unit.cProgress == "流程中" %}
+                    <td >
+                        <input name="cProgress" type="radio" id="cProgress1" value="草稿"  />
+                        草稿
+                        <input name="cProgress" type="radio" id="cProgress2" value="流程中" checked="checked"/>
+                        流程中
+                        <input name="cProgress" type="radio" id="cProgress3" value="廢單" />
+                        廢單
+                        <input name="cProgress" type="radio" id="cProgress4" value="結案" />
+                        結案
+                    </td>
+                {% elif unit.cProgress == "廢單" %}
+                    <td >
+                        <input name="cProgress" type="radio" id="cProgress1" value="草稿"  />
+                        草稿
+                        <input name="cProgress" type="radio" id="cProgress2" value="流程中" />
+                        流程中
+                        <input name="cProgress" type="radio" id="cProgress3" value="廢單" checked="checked"/>
+                        廢單
+                        <input name="cProgress" type="radio" id="cProgress4" value="結案" />
+                        結案
+                    </td>
+                {% else %}
+                    <td >
+                        <input name="cProgress" type="radio" id="cProgress1" value="草稿" />
+                        草稿
+                        <input name="cProgress" type="radio" id="cProgress2" value="流程中" />
+                        流程中
+                        <input name="cProgress" type="radio" id="cProgress3" value="廢單" />
+                        廢單
+                        <input name="cProgress" type="radio" id="cProgress4" value="結案" checked="checked"/>
+                        結案
+                    </td>
+                {% endif %}
+              </tr>
+              <tr>
+                <th>完成日期</th>
+                <td><input type="text" id="cEndDate" name="cEndDate" value={{unit.cEndDate}}></td>
+            </tr>
+            <tr>
+                <th colspan="2" align="center">
+                <button>送出</button>
+                <input type="reset" name="button2" id="button2" value="重設"></th>
+            </tr>
+	    </table>
+	<span style="color:red">{{message}}</span>
+  </form>
+</body>
+</html>
+

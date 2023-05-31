@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.min.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.structure.min.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.theme.min.css' %}">
+    <title>資料表新增</title>
+  </head>
+  <body>
+    <h2>工程發包議價紀錄單 資料表新增</h2>
+    <!-- <button onclick="BackToSign()">回簽呈資料表</button> -->
+    <p style="color:red; font-weight: bold; font-size: larger;">※如果付款方式為支票，請在備註欄備註「當月結__天票」</p>
+    <p style="color:red; font-weight: bold; font-size: larger;">※{{message}}</p>
+    <form action="." method="post" name="form1">
+      {% csrf_token %}
+      <table border="1" cellpadding="5" cellspacing='3'>
+        <tr><th>編號</th><td>{{contractform.cNumber}}</td></tr>
+        <tr><th>客戶名稱</th><td>{{contractform.cClient}}</td></tr>
+        <tr><th>工地名稱/地點</th><td>{{contractform.cLocation}}</td></tr>
+        <tr><th>發包內容</th><td>{{contractform.cContent}}</td></tr>
+        <tr><th>確認訂單</th><td>{{contractform.cConfirm}}</td></tr>
+        <tr>
+            <th>付款方式</th>
+            <td>
+                <input name="cPayMode" type="radio" value="現金" checked="checked"/>現金
+                <input name="cPayMode" type="radio" value="支票"/>支票
+            </td>
+        </tr>
+        <tr><th>工程預算</th><td>{{contractform.cBudget}}</td></tr>
+        <tr><th>備註</th><td>{{contractform.cOther}}</td></tr>
+        <tr><th>總經理簽名</th><td>{{contractform.cGeneral_Sign}}</td></tr>
+        <tr><th>副總經理簽名</th><td>{{contractform.cViceGeneral_Sign}}</td></tr>
+        <tr><th>部門主管簽名</th><td>{{contractform.cManager_Sign}}</td></tr>
+        <tr><th>單位主管簽名</th><td>{{contractform.cDepartmentManager_Sign}}</td></tr>
+        <tr><th>承辦人簽名</th><td>{{contractform.cUndertaker}}</td></tr>
+        <tr>
+            <th align="center">
+            <input type="submit" name="button" id="button" value="送出">
+            <input type="reset" name="button2" id="button2" value="重設">
+        </th>
+          </tr>
+      </table>
+    </form>
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script>
+      // function BackToSign(){
+      //   $(location).attr("href","/signIndex/")
+      // }
+    </script>
+  
+
+
+  </body>
+</html>

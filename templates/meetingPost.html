@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.min.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.structure.min.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.theme.min.css' %}">
+    <title>資料表新增</title>
+  </head>
+  <body>
+    <h2>會議紀錄 資料表新增</h2></button>
+    <p style="color:red; font-weight: bold; font-size: larger;">{{message}}</p>
+    <form action="." method="post" name="form1">
+    {% csrf_token %}
+
+    <table border="1" cellpadding="5" cellspacing='3'>
+      <tr><th>編號</th><td>{{meetingform.cNumber}}</td> </tr>
+      <tr><th>紀錄</th><td>{{meetingform.cRecoder}}</td></tr>
+      <tr><th>會議型態</th>
+        <td>
+          <input name="cMeetingType" type="radio" value="定期會議" checked="checked"/>定期會議
+          <input name="cMeetingType" type="radio" value="管理審查會議"/>管理審查會議
+          <input name="cMeetingType" type="radio" value="產銷會議"/>產銷會議
+          <input name="cMeetingType" type="radio" value="其他會議"/>其他會議
+        </td>
+      </tr>
+      <tr><th>時間</th><td>{{meetingform.cTime}}</td></tr>
+      <tr><th>主席</th><td>{{meetingform.cLeader}}</td></tr>
+      <tr><th>主題</th><td>{{meetingform.cTopic}}</td></tr>
+      <tr><th>列席人員</th><td>{{meetingform.cAttendees1}}</td></tr>
+      <tr><th>出席人員</th><td>{{meetingform.cAttendees2}}</td></tr>
+
+
+      <tr><th>副總簽名</th><td>{{meetingform.cViceGeneral_Sign}}</td></tr>
+      <tr><th>主管簽名</th><td>{{meetingform.cManger_Sign}}</td></tr>
+  		<th align="center">
+        <input type="submit" name="button" id="button" value="送出">
+  	    <input type="reset" name="button2" id="button2" value="重設">
+      </th>
+  	  </tr>
+    </table>
+  </form>
+
+  
+
+
+  </body>
+</html>

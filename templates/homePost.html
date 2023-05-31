@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.min.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.structure.min.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.theme.min.css' %}">
+    <title>資料表新增</title>
+  </head>
+  <body>
+    <h2>資料表新增</h2>
+    <button onclick="BackToHome()">回首頁</button>
+    <p style="color:red; font-weight: bold; font-size: larger;">{{message}}</p>
+    <form action="." method="post" name="form1">
+      {% csrf_token %}
+      <table border="1" cellpadding="5" cellspacing='3'>
+        <tr>
+            <th>種類</th>
+            <td>
+                <input name="cType" type="radio" value="簽呈" checked="checked"/>簽呈
+                <input name="cType" type="radio" value="會議記錄"/>會議記錄
+                <input name="cType" type="radio" value="內部連絡單"/>內部連絡單
+                <input name="cType" type="radio" value="工程發包議價記錄單"/>工程發包議價記錄單
+                <input name="cType" type="radio" value="設計變更通知單"/>設計變更通知單
+            </td>
+        </tr>
+        <tr><th>編號</th><td>{{homeform.cNumber}}</td> </tr>
+        <tr><th>姓名</th><td>{{homeform.cAuther}}</td></tr>
+        <tr>
+          <th>部門別</th>
+          <td>
+            <input name="cDepartment" type="radio" value="總經理室" checked="checked"/>總經理室
+            <input name="cDepartment" type="radio" value="稽核室"/>稽核室
+            <input name="cDepartment" type="radio" value="文管中心"/>文管中心
+            <input name="cDepartment" type="radio" value="管理部"/>管理部
+            <input name="cDepartment" type="radio" value="業務設計部"/>業務設計部
+            <input name="cDepartment" type="radio" value="廠務部"/>廠務部
+          </td>
+        </tr>
+        <tr><th>日期</th><td>{{homeform.cDate}}</td></tr>
+        <tr>
+          <th>文件進度</th>
+          <td>
+            <input name="cProgress" type="radio"  value="草稿" checked="checked"/>草稿
+            <input name="cProgress" type="radio" value="流程中"/>流程中
+            <input name="cProgress" type="radio" value="廢單"/>廢單
+            <input name="cProgress" type="radio" value="結案"/>結案
+          </td>
+        </tr>
+        <tr>
+        <tr><th>完成日期</th><td>{{homeform.cEndDate}}</td></tr>
+          <th align="center">
+            <input type="submit" name="button" id="button" value="送出">
+            <input type="reset" name="button2" id="button2" value="重設">
+          </th>
+        </tr>
+      </table>
+    </form>
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script>
+      function BackToSign(){
+        $(location).attr("href","/indexSign/")
+      }
+      function BackToHome(){
+        $(location).attr("href","/homeIndex/")
+      }
+    </script>
+  
+
+
+  </body>
+</html>

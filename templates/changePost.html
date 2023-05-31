@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.min.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.structure.min.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.theme.min.css' %}">
+    <title>資料表新增</title>
+  </head>
+  <body>
+    <h2>設計變更通知單 資料表新增</h2>
+    <p style="color:red; font-weight: bold; font-size: larger;">{{message}}</p>
+    <form action="." method="post" name="form1">
+      {% csrf_token %}
+      <table border="1" cellpadding="5" cellspacing='3'>
+        <tr><th>編號</th><td>{{changeform.cNumber}}</td> </tr> 
+        <tr><th>工程名稱</th><td>{{changeform.cProjectName}}</td></tr>
+        <tr><th>變更方式</th>
+            <td>
+            <input name="cHowChange" type="radio"  value="設計變更(永久)" checked="checked"/>設計變更(永久)
+            <input name="cHowChange" type="radio" value="設計變更(個案)"/>設計變更(個案)
+            </td>
+        </tr>
+        <tr><th>變更項目</th>
+            <td>
+            <input name="cChangeitem" type="radio"  value="設計圖面" checked="checked"/>設計圖面
+            <input name="cChangeitem" type="radio" value="產品/工程規範"/>產品/工程規範
+            <input name="cChangeitem" type="radio"  value="標準料表(BOM)" checked="checked"/>標準料表(BOM)
+            <input name="cChangeitem" type="radio" value="檢驗標準"/>檢驗標準
+            </td>
+        </tr>
+        <tr><th>變更原因</th>
+            <td>
+            <p style="color:red; font-weight: bold">※有償請簽核完畢影印一份管理部稽核</p>
+            <input name="cChangereason" type="radio"  value="客戶需求改變" checked="checked"/>客戶需求改變
+            <input name="cChangereason" type="radio"  value="設計錯誤"/>設計錯誤
+            <input name="cChangereason" type="radio" value="製造單位要求改變"/>製造單位要求改變
+            <input name="cChangereason" type="radio" value="其他"/>其他
+            </td>
+        </tr>
+        <tr><th>有償/無償</th>
+          <td>
+          <input name="cEarn" type="radio"  value="有償" checked="checked"/>有償
+          <input name="cEarn" type="radio" value="無償"/>無償
+          </td>
+      </tr>
+        <tr><th>影響項目</th><td>{{changeform.cAffectitem}}</td></tr>
+        <tr><th>變更要點說明</th><td>{{changeform.cKeypoint}}</td></tr>
+        <tr><th>變更潛在風險說明</th><td>{{changeform.cRisk}}</td></tr>
+        <tr>
+            <th>廠務部意見</th><td>{{changeform.cOption_FS}}</td>
+            <th>簽名</th><td>{{changeform.cFs_Sign}}</td>
+        </tr>
+        <tr>
+            <th>業務設計部意見</th><td>{{changeform.cOption_Design}}</td>
+            <th>簽名</th><td>{{changeform.cDesign_Sign}}</td>
+        </tr>
+        <tr>
+            <th>品管課意見</th><td>{{changeform.cOption_Quality}}</td>
+            <th>簽名</th><td>{{changeform.cQuality_Sign}}</td>
+        </tr>
+        <tr>
+            <th>採購課意見</th><td>{{changeform.cOption_Purchase}}</td>
+            <th>簽名</th><td>{{changeform.cPurchase_Sign}}</td>
+        </tr>
+        <tr><th>副本印製</th>
+            <td>
+                <input type="checkbox" value="業務" class="check_box_list"/>業務
+                <input type="checkbox" value="設計" class="check_box_list"/>設計
+                <input type="checkbox" value="管理" class="check_box_list"/>管理
+                <input type="checkbox" value="顧問" class="check_box_list"/>顧問
+                <input type="checkbox" value="工程" class="check_box_list"/>工程
+                <input type="checkbox" value="廠務" class="check_box_list"/>廠務
+                <input type="checkbox" value="品管" class="check_box_list"/>品管
+            </td>
+        </tr>
+        <tr><th>技術通報</th>
+            <td>
+            <input name="cTech_bulletin" type="radio"  value="是" checked="checked"/>是
+            <input name="cTech_bulletin" type="radio" value="否"/>否
+            </td>
+        </tr>
+        <tr><th>核准人</th><td>{{changeform.cApproved}}</td></tr>
+        <tr><th>審查人</th><td>{{changeform.cReview}}</td></tr>
+        <tr><th>承辦人</th><td>{{changeform.cUndertaker}}</td></tr>
+        <tr>
+          <th align="center">
+            <input type="hidden" name="cCC" id="textvalue">
+            <input type="submit" name="button" id="button" value="送出">
+            <input type="reset" name="button2" id="button2" value="重設">
+          </th>
+        </tr>
+      </table>
+    </form>
+
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $(".check_box_list").click(function(){
+                var test = ""
+                $(".check_box_list:checked").each(function(){
+                    test+=$(this).val()+","
+                });
+                test= test.substring(0,test.length-1)
+                $("#textvalue").val(test);
+            })
+        })
+
+    </script>
+  
+
+
+  </body>
+</html>
