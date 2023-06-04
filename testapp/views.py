@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from django.shortcuts import render, redirect
 from datetime import datetime
+from django.contrib import auth
 from testapp.form import HomeForm,SignedForm,MeetingInnerForm,MeetingForm,ContactForm,ContractForm,ContractInnerForm,ChangeForm
 from testapp.models import Home,Signed,MeetingInner,Meeting,Contact,Contract,ContractInner,Change
+from django.db.models import Q
+from testapp.filter import HomeFilter
 
 Acount = 0
 # Bcount = 0
@@ -57,7 +60,14 @@ def HomePost(request):
     homeform = HomeForm()
     return render(request, "HomePost.html", locals())
 def homeIndex(request):
-    all = Home.objects.all().order_by("id")
+    if 'q' in request.GET:
+        q = request.GET['q']
+        multiple_q = Q(Q(cNumber__icontains=q) | Q(cType__icontains=q) | Q(cAuther__icontains=q) | Q(cProgress__icontains=q) | Q(cDate__icontains=q) | Q(cEndDate__icontains=q))
+        all = Home.objects.filter(multiple_q)
+    else:
+        all = Home.objects.all().order_by("id")
+        homeFilter = HomeFilter(request.GET, queryset=all)
+        all = homeFilter.qs
     allHomeCount = len(all)
     return render(request, "homeIndex.html",locals())
 
@@ -145,7 +155,12 @@ def signIndex(request,cNumber=None):
     return render(request, "signIndex.html",locals())
 
 def signallIndex(request):
-    signall = Signed.objects.all().order_by("id")
+    if 'q' in request.GET:
+        q = request.GET['q']
+        multiple_q = Q(Q(cNumber__icontains=q) | Q(cSubject__icontains=q))
+        signall = Signed.objects.filter(multiple_q)
+    else:
+        signall = Signed.objects.all().order_by("id")
     signallCount = len(signall)
     return render(request, "signall_Index.html",locals())
 
@@ -220,7 +235,12 @@ def meetingIndex(request,cNumber=None):
     return render(request, "meetingIndex.html",locals())
 
 def meetingallIndex(request):
-    meetingall = Meeting.objects.all().order_by("id")
+    if 'q' in request.GET:
+        q = request.GET['q']
+        multiple_q = Q(Q(cNumber__icontains=q) | Q(cTopic__icontains=q) | Q(cMeetingType__icontains=q))
+        meetingall = Meeting.objects.filter(multiple_q)
+    else:
+        meetingall = Meeting.objects.all().order_by("id")   
     meetingallCount = len(meetingall)
     return render(request, "meetingall_Index.html",locals())
 
@@ -263,7 +283,12 @@ def meetinginnerEdit(request,id=None,mode=None,cNumber=None):
 
 def meetinginnerIndex(request,cNumber=None):
     id = Meeting.objects.get(cNumber = cNumber)
-    unitinner = MeetingInner.objects.filter(innermeeting=id).order_by("id")
+    if 'q' in request.GET:
+        q = request.GET['q']
+        multiple_q = Q(Q(cContent__icontains=q) | Q(cDoPerson__icontains=q) | Q(cExpectDate__icontains=q))
+        unitinner = MeetingInner.objects.filter(multiple_q)
+    else:
+        unitinner = MeetingInner.objects.filter(innermeeting=id).order_by("id")
     allinnerMeetingCount = len(unitinner)
     return render(request, "meetinginnerIndex.html",locals())
 
@@ -311,7 +336,12 @@ def contactIndex(request,cNumber=None):
     return render(request, "contactIndex.html",locals())
 
 def contactallIndex(request):
-    contactall = Contact.objects.all().order_by("id")
+    if 'q' in request.GET:
+        q = request.GET['q']
+        multiple_q = Q(Q(cNumber__icontains=q) | Q(cSubject__icontains=q) | Q(cDecisionDep__icontains=q))
+        contactall = Contact.objects.filter(multiple_q)
+    else:
+        contactall = Contact.objects.all().order_by("id")
     contactallCount = len(contactall)
     return render(request, "contactall_Index.html",locals())
 
@@ -369,7 +399,12 @@ def contractIndex(request,cNumber=None):
     return render(request, "contractIndex.html",locals())
 
 def contractallIndex(request):
-    contractall = Contract.objects.all().order_by("id")
+    if 'q' in request.GET:
+        q = request.GET['q']
+        multiple_q = Q(Q(cNumber__icontains=q) | Q(cClient__icontains=q) | Q(cLocation__icontains=q) | Q(cContent__icontains=q))
+        contractall = Contract.objects.filter(multiple_q)
+    else:
+        contractall = Contract.objects.all().order_by("id")
     contractallCount = len(contractall)
     return render(request, "contractall_Index.html",locals())
 
@@ -436,7 +471,12 @@ def contractinnerEdit(request,id=None,mode=None,cNumber=None):
 
 def contractinnerIndex(request,cNumber=None):
     id = Contract.objects.get(cNumber = cNumber)
-    unitinner = ContractInner.objects.filter(innercontract=id).order_by("id")
+    if 'q' in request.GET:
+        q = request.GET['q']
+        multiple_q = Q(Q(cContractor__icontains=q) | Q(cRemark__icontains=q))
+        unitinner = ContractInner.objects.filter(multiple_q)
+    else:
+        unitinner = ContractInner.objects.filter(innercontract=id).order_by("id")
     allinnerContractCount = len(unitinner)
     return render(request, "contractinnerIndex.html",locals())
 
@@ -464,7 +504,7 @@ def changePost(request,cNumber=None):
             cProjectName = changeform.cleaned_data['cProjectName']
             cChangeitem = changeform.cleaned_data['cChangeitem']
             cChangereason = changeform.cleaned_data['cChangereason']
-            cAffectitem = changeform.cleaned_data['cHowChange']
+            cAffectitem = changeform.cleaned_data['cAffectitem']
             cRisk =  changeform.cleaned_data['cRisk']
             cKeypoint =  changeform.cleaned_data['cKeypoint']
             cOption_FS =  changeform.cleaned_data['cOption_FS']
@@ -501,7 +541,12 @@ def changeIndex(request,cNumber=None):
     return render(request, "changeIndex.html",locals())
 
 def changeallIndex(request):
-    changeall = Change.objects.all().order_by("id")
+    if 'q' in request.GET:
+        q = request.GET['q']
+        multiple_q = Q(Q(cNumber__icontains=q) | Q(cProjectName__icontains=q) | Q(cChangeitem__icontains=q) | Q(cChangereason__icontains=q) | Q(cHowChange__icontains=q))
+        changeall = Change.objects.filter(multiple_q)
+    else:
+        changeall = Change.objects.all().order_by("id")
     changeallCount = len(changeall)
     return render(request, "changeall_Index.html",locals())
 
@@ -536,3 +581,28 @@ def changeEdit(request,id=None,mode=None,cNumber=None):
         unit.save()  #寫入資料庫
         message = '已修改...'
         return redirect('/changeIndex/'+str(index.cNumber)+'/')
+    
+def login(request):
+	if request.method == 'POST':
+		name = request.POST['user']
+		password = request.POST['password']
+		user = auth.authenticate(username=name, password=password)
+		if user is not None:
+			if user.is_active:
+				auth.login(request,user)
+				return redirect('/homeIndex/')
+				message = '登入成功！'
+			else:
+				message = '帳號尚未啟用！'
+		else:
+			message = '登入失敗！'
+	return render(request, "login.html", locals())
+
+def logout(request):
+	auth.logout(request)
+	return redirect('/HomePage/')
+
+def HomePage(request):
+	if request.user.is_authenticated:
+		name=request.user.username
+	return render(request, "HomePage.html", locals())
