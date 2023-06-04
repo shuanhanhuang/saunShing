@@ -44,6 +44,11 @@
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
         <ul class="navbar-nav ml-2">
+          <li class="nav-item active">
+            <a class="nav-link disabled" style="color: green;">{{username}} <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-2">
           <li class="nav-item">
             <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button>
           </li>
@@ -52,11 +57,6 @@
     </div>
   </nav>
 
-
-
-  <!-- <h2 align="left">顯示「工程發包議價記錄單」所有資料</h2> -->
-  <!-- <button style="margin-right: 5px;" onclick="New()">新增</button> -->
-  <!-- <button onclick="BackToHome()">回首頁</button> -->
   <form action="." method="POST">
     {% csrf_token %}
     <div class="container">
@@ -66,8 +66,7 @@
             <th scope="col">筆數</th>
             <th scope="col">編號</th>
             <th scope="col">客戶名稱</th>
-            <th scope="col">工地名稱/地點</th>
-            <th scope="col">發包內容</th>
+            <th scope="col">工地地點</th>
             <th scope="col">確認訂單</th>
             <th scope="col">付款方式</th>
             <th scope="col">工程預算</th>
@@ -79,12 +78,12 @@
               <td>{{unit.cNumber}}</td>
               <td>{{unit.cClient}}</td>
               <td>{{unit.cLocation}}</td>
-              <td>{{unit.cContent}}</td>
               <td>{{unit.cConfirm}}</td>
               <td>{{unit.cPayMode}}</td>
               <td>{{unit.cBudget}}</td>
               <td>
                 <button type="button" class="btn btn-outline-warning" id="{{unit.cNumber}}" onclick="checkContent()">查看議價記錄</button>
+                <button type="button" class="btn btn-outline-primary" id="{{unit.cNumber}}" onclick="View()">檢視</button>                     
               </td>
             </tr>
             {% endfor %}
@@ -105,9 +104,6 @@
 
   <script>
 
-    // function BackToHome(){
-    // $(location).attr("href","/homeIndex/");
-    // }
 
     function checkContent(){
         var id = event.target.id
@@ -115,6 +111,10 @@
     }
     function Logout(){
         $(location).attr("href","/logout/");
+    }
+    function View(){
+        var id = event.target.id
+        $(location).attr("href","/contractView/"+id+"/");
     }
 
   </script>

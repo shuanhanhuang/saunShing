@@ -44,6 +44,11 @@
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
         <ul class="navbar-nav ml-2">
+          <li class="nav-item active">
+            <a class="nav-link disabled" style="color: green;">{{username}} <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-2">
           <li class="nav-item">
             <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button>
           </li>
@@ -68,6 +73,9 @@
               <td>{{unit.id}}</td>
               <td>{{unit.cNumber}}</td>
               <td>{{unit.cSubject}}</td>
+              <td>
+                <button type="button" class="btn btn-outline-primary" id="{{unit.cNumber}}" onclick="View()">檢視</button> 
+              </td>
             </tr>
             {% endfor %}
           </tbody>
@@ -89,6 +97,10 @@
 
     function Logout(){
         $(location).attr("href","/logout/");
+    }
+    function View(){
+        var id = event.target.id
+        $(location).attr("href","/signView/"+id+"/");
     }
 
   </script>

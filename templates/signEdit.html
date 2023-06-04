@@ -35,6 +35,11 @@
             </li>
           </ul>
           <ul class="navbar-nav ml-2">
+            <li class="nav-item active">
+              <a class="nav-link disabled" style="color: green;">{{username}} <span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-2">
             <li class="nav-item">
               <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button>
             </li>
@@ -75,7 +80,6 @@
                         <input type="reset"  class="btn btn-danger" name="button2" id="button2" value="重設"></th>
                     </tr>
                 </table>
-                <span style="color:red">{{message}}</span>
             </div>
         </div>
   </form>

@@ -2,47 +2,100 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0  shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.min.css' %}">
-    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.structure.min.css' %}">
-    <link rel="stylesheet" href="{% static 'jquery-ui-1.13.2.custom/jquery-ui.theme.min.css' %}">
     <title>資料表新增</title>
   </head>
   <body>
-    <h2>會議紀錄 資料表新增</h2></button>
-    <p style="color:red; font-weight: bold; font-size: larger;">{{message}}</p>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+  
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="/homeIndex/">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="/signallIndex/">簽呈資料</a>
+                <a class="dropdown-item" href="/meetingallIndex/">會議記錄資料</a>
+                <a class="dropdown-item" href="/contactallIndex/">內部連絡單資料</a>
+                <a class="dropdown-item" href="/contractallIndex/">工程發包議價記錄單</a>
+                <a class="dropdown-item" href="/changeallIndex/">設計變更通知單</a>
+              </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-2">
+            <li class="nav-item active">
+              <a class="nav-link disabled" style="color: green;">{{username}} <span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-2">
+            <li class="nav-item">
+              <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <h2 class="mt-2">會議紀錄 資料表新增</h2>
+      </div>
+      <p style="color:red; font-weight: bold; font-size: larger;">{{message}}</p>
+    </div>
+
+
     <form action="." method="post" name="form1">
     {% csrf_token %}
+      <div class="container">
+        <div class="row">
+          <table class="table">
+            <tr><th>編號</th><td>{{meetingform.cNumber}}</td> </tr>
+            <tr><th>紀錄</th><td>{{meetingform.cRecoder}}</td></tr>
+            <tr><th>會議型態</th>
+              <td>
+                <input name="cMeetingType" type="radio" value="定期會議" checked="checked"/>定期會議
+                <input name="cMeetingType" type="radio" value="管理審查會議"/>管理審查會議
+                <input name="cMeetingType" type="radio" value="產銷會議"/>產銷會議
+                <input name="cMeetingType" type="radio" value="其他會議"/>其他會議
+              </td>
+            </tr>
+            <tr><th>時間</th><td>{{meetingform.cTime}}</td></tr>
+            <tr><th>主席</th><td>{{meetingform.cLeader}}</td></tr>
+            <tr><th>主題</th><td>{{meetingform.cTopic}}</td></tr>
+            <tr><th>列席人員</th><td>{{meetingform.cAttendees1}}</td></tr>
+            <tr><th>出席人員</th><td>{{meetingform.cAttendees2}}</td></tr>
+            {% if username == "viceP" %}
+              <tr><th>副總簽名</th><td>{{meetingform.cViceGeneral_Sign}}</td></tr>
+            {% elif authenticate == True %}
+              <tr><th>主管簽名</th><td>{{meetingform.cManger_Sign}}</td></tr>
+            {% endif %}
+            <th align="center">
+              <input type="submit" class="btn btn-primary" name="button" id="button" value="送出">
+              <input type="reset" class="btn btn-danger" name="button2" id="button2" value="重設">
+            </th>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </form>
 
-    <table border="1" cellpadding="5" cellspacing='3'>
-      <tr><th>編號</th><td>{{meetingform.cNumber}}</td> </tr>
-      <tr><th>紀錄</th><td>{{meetingform.cRecoder}}</td></tr>
-      <tr><th>會議型態</th>
-        <td>
-          <input name="cMeetingType" type="radio" value="定期會議" checked="checked"/>定期會議
-          <input name="cMeetingType" type="radio" value="管理審查會議"/>管理審查會議
-          <input name="cMeetingType" type="radio" value="產銷會議"/>產銷會議
-          <input name="cMeetingType" type="radio" value="其他會議"/>其他會議
-        </td>
-      </tr>
-      <tr><th>時間</th><td>{{meetingform.cTime}}</td></tr>
-      <tr><th>主席</th><td>{{meetingform.cLeader}}</td></tr>
-      <tr><th>主題</th><td>{{meetingform.cTopic}}</td></tr>
-      <tr><th>列席人員</th><td>{{meetingform.cAttendees1}}</td></tr>
-      <tr><th>出席人員</th><td>{{meetingform.cAttendees2}}</td></tr>
-
-
-      <tr><th>副總簽名</th><td>{{meetingform.cViceGeneral_Sign}}</td></tr>
-      <tr><th>主管簽名</th><td>{{meetingform.cManger_Sign}}</td></tr>
-  		<th align="center">
-        <input type="submit" name="button" id="button" value="送出">
-  	    <input type="reset" name="button2" id="button2" value="重設">
-      </th>
-  	  </tr>
-    </table>
-  </form>
-
-  
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script>
+      function Logout(){
+        $(location).attr("href","/logout/");
+      }
+    </script>
 
 
   </body>

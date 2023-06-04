@@ -17,13 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from testapp.views import HomePage,login,logout,homeDelete,homeEdit,homeIndex,HomePost,\
-    signIndex,signPost,signEdit,signallIndex,Detail,\
-    meetingallIndex,meetingIndex,meetingPost,meetingEdit,\
+    signView,signPost,signEdit,signallIndex,Detail,\
+    meetingallIndex,meetingView,meetingPost,meetingEdit,\
     meetinginnerEdit,meetinginnerPost,meetinginnerIndex,meetinginnerDelete,\
-    contactallIndex,contactIndex,contactPost,contactEdit,\
-    contractallIndex,contractIndex,contractPost,contractEdit,\
+    contactallIndex,contactView,contactPost,contactEdit,\
+    contractallIndex,contractPost,contractEdit,contractView,\
     contractinnerDelete,contractinnerIndex,contractinnerEdit,contractinnerPost,\
-    changeallIndex,changeIndex,changeEdit,changePost
+    changeallIndex,changeView,changeEdit,changePost
 urlpatterns = [
     path('',HomePage),
     path('HomePage/',HomePage),
@@ -36,13 +36,13 @@ urlpatterns = [
     path('homeDelete/<int:id>/',homeDelete),
 
     path('signallIndex/',signallIndex),
-    path('signIndex/<str:cNumber>/',signIndex),
+    path('signView/<str:cNumber>/',signView),
     path('signPost/<str:cNumber>/',signPost),
     path('signEdit/<str:cNumber>/<int:id>/<str:mode>',signEdit),
     path('Detail/<str:cNumber>/',Detail),
 
     path('meetingallIndex/',meetingallIndex),
-    path('meetingIndex/<str:cNumber>/',meetingIndex),
+    path('meetingView/<str:cNumber>/',meetingView),
     path('meetingPost/<str:cNumber>/',meetingPost),
     path('meetingEdit/<str:cNumber>/<int:id>/<str:mode>',meetingEdit),
 
@@ -52,14 +52,14 @@ urlpatterns = [
     path('meetinginnerPost/<str:cNumber>/',meetinginnerPost),
 
     path('contactallIndex/',contactallIndex),
-    path('contactIndex/<str:cNumber>/',contactIndex),
+    path('contactView/<str:cNumber>/',contactView),
     path('contactPost/<str:cNumber>/',contactPost),
     path('contactEdit/<str:cNumber>/<int:id>/<str:mode>',contactEdit),
 
     path('contractallIndex/',contractallIndex),
-    path('contractIndex/<str:cNumber>/',contractIndex),
     path('contractPost/<str:cNumber>/',contractPost),
     path('contractEdit/<str:cNumber>/<int:id>/<str:mode>',contractEdit),
+    path("contractView/<str:cNumber>/",contractView),
 
     path('contractinnerDelete/<str:cNumber>/<int:id>/',contractinnerDelete),
     path('contractinnerIndex/<str:cNumber>/',contractinnerIndex),
@@ -67,7 +67,7 @@ urlpatterns = [
     path('contractinnerPost/<str:cNumber>/',contractinnerPost),
 
     path('changeallIndex/',changeallIndex),
-    path('changeIndex/<str:cNumber>/',changeIndex),
+    path('changeView/<str:cNumber>/',changeView),
     path('changeEdit/<str:cNumber>/<int:id>/<str:mode>',changeEdit),
     path('changePost/<str:cNumber>/',changePost),
 

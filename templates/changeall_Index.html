@@ -44,6 +44,11 @@
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
         <ul class="navbar-nav ml-2">
+          <li class="nav-item active">
+            <a class="nav-link disabled" style="color: green;">{{username}} <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-2">
           <li class="nav-item">
             <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button>
           </li>
@@ -67,7 +72,7 @@
             <th scope="col">專案名稱</th>
             <th scope="col">變更項目</th>
             <th scope="col">變更原因</th>
-            <th scope="col">如何變更</th>
+            <th scope="col">變更方式</th>
             <th scope="col">影響項目</th>
             <th scope="col">變更風險說明</th>
             <th scope="col">變更要點說明</th>
@@ -86,6 +91,9 @@
               <td>{{unit.cRisk}}</td>
               <td>{{unit.cKeypoint}}</td>
               <td>{{unit.cTech_bulletin}}</td>
+              <td>
+                <button type="button" class="btn btn-outline-primary" id="{{unit.cNumber}}" onclick="View()">檢視</button> 
+              </td>
             </tr>
             {% endfor %}
           </tbody>
@@ -106,12 +114,17 @@
 
   <script>
 
-    function BackToHome(){
-    $(location).attr("href","/homeIndex/");
-    }
+    // function BackToHome(){
+    // $(location).attr("href","/homeIndex/");
+    // }
     function Logout(){
         $(location).attr("href","/logout/");
     }
+    function View(){
+        var id = event.target.id
+        $(location).attr("href","/changeView/"+id+"/");
+    }
+
 
 
   </script>

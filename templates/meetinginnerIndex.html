@@ -20,11 +20,11 @@
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-    
+      <!-- /meetingIndex/{{id.cNumber}}/{{unit.id}} -->
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="/meetingIndex/{{id.cNumber}}/{{unit.id}}">回會議記錄<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/meetingallIndex/">回會議記錄<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="/meetinginnerPost/{{id.cNumber}}/{{unit.id}}">新增<span class="sr-only">(current)</span></a>
@@ -46,6 +46,11 @@
           <input class="form-control mr-sm-2" name='q' type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
+        <ul class="navbar-nav ml-2">
+          <li class="nav-item active">
+            <a class="nav-link disabled" style="color: green;">{{username}} <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
         <ul class="navbar-nav ml-2">
           <li class="nav-item">
             <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button>

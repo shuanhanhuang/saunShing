@@ -44,6 +44,11 @@
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
         <ul class="navbar-nav ml-2">
+          <li class="nav-item active">
+            <a class="nav-link disabled" style="color: green;">{{username}} <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-2">
           <li class="nav-item">
             <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button>
           </li>
@@ -65,8 +70,6 @@
             <th scope="col">主席</th>
             <th scope="col">紀錄</th>
             <th scope="col">地點</th>
-            <th scope="col">副總簽名</th>
-            <th scope="col">主管簽名</th>
           </thead>
           <tbody>
             {% for unit in meetingall %}
@@ -78,11 +81,10 @@
               <td>{{unit.cLeader}}</td>
               <td>{{unit.cRecoder}}</td>
               <td>{{unit.cLocation}}</td>
-              <td>{{unit.cViceGeneral_Sign}}</td>
-              <td>{{unit.cManger_Sign}}</td>
               <td>
                   <button type="button" class="btn btn-outline-warning" id="{{unit.cNumber}}" onclick="checkContent()">查看會議內容</button>
-              </td>
+                  <button type="button" class="btn btn-outline-primary" id="{{unit.cNumber}}" onclick="View()">檢視</button>                     
+                </td>
             </tr>
             {% endfor %}
           </tbody>
@@ -102,9 +104,10 @@
 
   <script>
 
-    // function BackToHome(){
-    //     $(location).attr("href","/homeIndex/");
-    // }
+    function View(){
+        var id = event.target.id
+        $(location).attr("href","/meetingView/"+id+"/");
+    }
 
     function checkContent(){
         var id = event.target.id

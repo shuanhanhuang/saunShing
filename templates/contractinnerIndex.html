@@ -24,7 +24,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="/contractIndex/{{id.cNumber}}/{{unit.id}}">回議價記錄單<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/contractallIndex/">回議價記錄單<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="/contractinnerPost/{{id.cNumber}}/{{unit.id}}">新增<span class="sr-only">(current)</span></a>
@@ -47,6 +47,11 @@
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
         <ul class="navbar-nav ml-2">
+          <li class="nav-item active">
+            <a class="nav-link disabled" style="color: green;">{{username}} <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-2">
           <li class="nav-item">
             <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button>
           </li>
@@ -56,9 +61,6 @@
   </nav>
 
 
-  <!-- <h2 align="left">顯示「議價記錄」所有資料</h2>
-  <button style="margin-right: 5px;" id="{{id.cNumber}}" onclick="New(event)">新增</button>
-  <button id="{{id.cNumber}}" onclick="BacktoContract()">回會議記錄頁面</button> -->
   <form action="/contractinnerIndex/{{id.cNumber}}/" method="POST">
     {% csrf_token %}
     <div class="container">
