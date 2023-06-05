@@ -26,9 +26,11 @@
           <li class="nav-item active">
             <a class="nav-link" href="/contractallIndex/">回工程發包議價記錄單<span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="/contractinnerPost/{{id.cNumber}}/{{unit.id}}">新增<span class="sr-only">(current)</span></a>
-          </li>
+          {% if home.cLock == "否" %}
+            <li class="nav-item active">
+              <a class="nav-link" href="/contractinnerPost/{{id.cNumber}}/{{unit.id}}">新增<span class="sr-only">(current)</span></a>
+            </li>
+          {% endif %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
               Dropdown
@@ -85,8 +87,10 @@
               <td>{{unit.cRemark}}</td>
               <td>
                 <button type="button" class="btn btn-outline-primary" id="{{id.cNumber}}/{{unit.id}}" onclick="View(event)">檢視</button>
-                <button type="button" class="btn btn-outline-info" id="{{id.cNumber}}/{{unit.id}}" onclick="Edit(event)">編輯</button>
-                <button type="button" class="btn btn-outline-secondary" id="{{id.cNumber}}/{{unit.id}}" onclick="Delete(event)">刪除</button>
+                {% if home.cLock == "否" %}
+                  <button type="button" class="btn btn-outline-info" id="{{id.cNumber}}/{{unit.id}}" onclick="Edit(event)">編輯</button>
+                  <button type="button" class="btn btn-outline-secondary" id="{{id.cNumber}}/{{unit.id}}" onclick="Delete(event)">刪除</button>
+                {% endif %}
               </td>
             </tr>
             {% endfor %}

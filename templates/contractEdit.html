@@ -102,12 +102,12 @@
                         <th>備註</th>
                         <td><textarea  id="cOther" name="cOther">{{unit.cOther}}</textarea></td>
                     </tr>
-                    {% if username == "Gen" %}
+                    {% if firstname == "總座" %}
                         <tr>
                             <th>總經理簽名</th>
                             <td><input type="text" id="cGeneral_Sign" name="cGeneral_Sign" value={{unit.cGeneral_Sign}}></td>
                         </tr>
-                    {% elif username == "viceP" %}
+                    {% elif firstname == "副總" %}
                         <tr>
                             <th>副總經理簽名</th>
                             <td><input type="text" id="cViceGeneral_Sign" name="cViceGeneral_Sign" value={{unit.cViceGeneral_Sign}}></td>

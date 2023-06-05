@@ -62,7 +62,6 @@
       <p style="color:red; font-weight: bold; font-size: larger;">{{message}}</p>
     </div>
 
-    
     <form action="." method="post" name="form1">
       {% csrf_token %}
       <div class="container">
@@ -103,6 +102,15 @@
             </tr>
             <tr>
             <tr><th>完成日期</th><td>{{homeform.cEndDate}}</td></tr>
+            {% if authenticate == True %}
+            <tr>
+              <th>鎖定</th>
+              <td>
+                <input name="cLock" type="radio"  value="否" checked="checked"/>否
+                <input name="cLock" type="radio" value=是"/>是
+              </td>
+            </tr>
+            {% endif %}
               <th align="center">
                 <input type="submit" class="btn btn-primary" name="button" id="button" value="送出">
                 <input type="reset" class="btn btn-danger" name="button2" id="button2" value="重設">

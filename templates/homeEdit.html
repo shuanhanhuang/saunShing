@@ -60,10 +60,7 @@
         <div class="container">
             <div class="row">
                 <table class="table">
-                    <tr>
-                        <th>姓名</th>
-                        <td ><input type="text" id="cAuther" name="cAuther" value={{unit.cAuther}}></td>
-                    </tr>
+                  {% if unit.cLock == "否" %}
                     <tr>
                         <th>部門別</th>
                         {% if unit.cDepartment == "總經理室" %}
@@ -211,11 +208,51 @@
                         <th>完成日期</th>
                         <td><input type="text" id="cEndDate" name="cEndDate" value={{unit.cEndDate}}></td>
                     </tr>
+                    {% if authenticate == True %}
+                      <tr>
+                        <th>鎖定</th>
+                        {% if unit.cLock == "否" %}
+                          <td>
+                            <input name="cLock" type="radio" id="cLock1" value="否" checked="checked" />
+                            否
+                            <input name="cLock" type="radio" id="cLock2" value="是" />
+                            是
+                          </td>
+                        {% else %}
+                          <td>
+                            <input name="cLock" type="radio" id="cLock1" value="否"  />
+                            否
+                            <input name="cLock" type="radio" id="cLock2" value="是" checked="checked"/>
+                            是
+                          </td>
+                        {% endif %}
+                      </tr>
+                    {% endif %}
+                  {% else %}
                     <tr>
-                        <th colspan="2" align="center">
-                          <input type="submit" class="btn btn-primary" name="button" id="button" value="送出">
-                          <input type="reset" class="btn btn-danger" name="button2" id="button2" value="重設"></th>
+                      <th>鎖定</th>
+                      {% if unit.cLock == "否" %}
+                        <td>
+                          <input name="cLock" type="radio" id="cLock1" value="否" checked="checked" />
+                          否
+                          <input name="cLock" type="radio" id="cLock2" value="是" />
+                          是
+                        </td>
+                      {% else %}
+                        <td>
+                          <input name="cLock" type="radio" id="cLock1" value="否"  />
+                          否
+                          <input name="cLock" type="radio" id="cLock2" value="是" checked="checked"/>
+                          是
+                        </td>
+                      {% endif %}
                     </tr>
+                  {% endif %}
+                  <tr>
+                      <th colspan="2" align="center">
+                        <input type="submit" class="btn btn-primary" name="button" id="button" value="送出">
+                        <input type="reset" class="btn btn-danger" name="button2" id="button2" value="重設"></th>
+                  </tr>
                 </table>
 	            <span style="color:red">{{message}}</span>
             </div>

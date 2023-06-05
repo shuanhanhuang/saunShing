@@ -10,7 +10,7 @@ class Home(models.Model):
     cProgress = models.CharField(max_length=20,null=False,default='')
     cDate = models.DateField(null=False)#日期
     cEndDate = models.DateField(blank=True, null=True)
-    # cLock = models.CharField(max_length=5,null=False,default='')
+    cLock = models.CharField(max_length=5,null=False,default='否')
 4+1
 class Signed (models.Model):
     cNumber = models.CharField(max_length=50, default='', null=False)#編號

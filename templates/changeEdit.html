@@ -222,22 +222,22 @@
                         <th>變更潛在風險說明</th>
                         <td><input type="text" id="cRisk" name="cRisk" value={{unit.cRisk}}></td>
                     </tr>
-                    {% if username == "fs" %}
+                    {% if firstname == "廠務部" %}
                     <tr>
                         <th>廠務部意見</th><td><textarea  id="cOption_FS" name="cOption_FS">{{unit.cOption_FS}}</textarea></td>
                         <th>簽名</th><td><input type="text" id="cFs_Sign" name="cFs_Sign" value={{unit.cFs_Sign}}></td>
                     </tr>
-                    {% elif username == "ds" %}
+                    {% elif firstname == "設計部" %}
                     <tr>
                         <th>業務設計部意見</th><td><textarea  id="cOption_Design" name="cOption_Design">{{unit.cOption_Design}}</textarea></td>
                         <th>簽名</th><td><input type="text" id="cDesign_Sign" name="cDesign_Sign" value={{unit.cDesign_Sign}}></td>
                     </tr>
-                    {% elif username == "qs" %}
+                    {% elif firstname == "品管部" %}
                     <tr>
                         <th>品管課意見</th><td><textarea  id="cOption_Quality" name="cOption_Quality">{{unit.cOption_Quality}}</textarea></td>
                         <th>簽名</th><td><input type="text" id="cQuality_Sign" name="cQuality_Sign" value={{unit.cQuality_Sign}}></td>
                     </tr>
-                    {% elif username == "ps" %}
+                    {% elif firstname == "採購部" %}
                     <tr>
                         <th>採購課意見</th><td><textarea  id="cOption_Purchase" name="cOption_Purchase">{{unit.cOption_Purchase}}</textarea></td>
                         <th>簽名</th><td><input type="text" id="cPurchase_Sign" name="cPurchase_Sign" value={{unit.cPurchase_Sign}}></td>

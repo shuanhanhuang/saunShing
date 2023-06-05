@@ -15,6 +15,7 @@ def HomePost(request):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     global Acount
     if request.method == "POST":  #如果是以POST方式才處理
         homeform = HomeForm(request.POST)  #建立forms物件
@@ -40,10 +41,11 @@ def HomePost(request):
                 cNumber = "C"+str(cDate.year)+str(cDate.month)+str(cDate.day)+count+str(Acount)
             elif(homeform.cleaned_data['cType'] == "設計變更通知單"):
                 cNumber = "B"+str(cDate.year)+str(cDate.month)+str(cDate.day)+count+str(Acount)
-            cAuther = homeform.cleaned_data['cAuther']
+            cAuther = firstname
             cEndDate =  datetime.now() #取得表單輸入資料
             cProgress =  homeform.cleaned_data['cProgress']
-            unit = Home.objects.create(cType=cType,cNumber=cNumber,cAuther=cAuther, cDate=cDate, cDepartment=cDepartment, cEndDate=cEndDate, cProgress=cProgress)
+            cLock = homeform.cleaned_data['cLock']
+            unit = Home.objects.create(cType=cType,cNumber=cNumber,cAuther=cAuther, cDate=cDate, cDepartment=cDepartment, cEndDate=cEndDate, cProgress=cProgress,cLock=cLock)
             home = unit.save()  #寫入資料庫
             message = '已儲存...'
             if cType == "簽呈":
@@ -98,10 +100,14 @@ def homeEdit(request,id=None,mode=None):
         return render(request, "homeEdit.html", locals())
     elif mode == "save": # 由 edit2.html 按 submit
         unit = Home.objects.get(id=id)  #取得要修改的資料記錄
-        unit.cAuther = request.POST['cAuther']
-        unit.cDepartment=request.POST['cDepartment']
-        unit.cEndDate = request.POST['cEndDate']
-        unit.cProgress=request.POST['cProgress']
+        if(unit.cLock == "是"):
+            unit.cLock=request.POST['cLock']
+        else: 
+            unit.cDepartment=request.POST['cDepartment']
+            unit.cEndDate = request.POST['cEndDate']
+            unit.cProgress=request.POST['cProgress']
+            if (authenticate == True):
+                unit.cLock=request.POST['cLock']
         unit.save()  #寫入資料庫
         message = '已修改...'
         return redirect('/homeIndex/')
@@ -237,6 +243,7 @@ def meetingEdit(request,id=None,mode=None,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     index = Home.objects.get(cNumber = cNumber)
     if mode == "load":  # 由 index.html 按 編輯二 鈕
         unit = Meeting.objects.get(id = id)  #取得要修改的資料記
@@ -251,7 +258,7 @@ def meetingEdit(request,id=None,mode=None,cNumber=None):
         unit.cAttendees1=request.POST['cAttendees1']
         unit.cAttendees2=request.POST['cAttendees2']
         unit.cLeader = request.POST['cLeader']
-        if(username == "viceP" or username == "Gen"):
+        if(firstname == "副總"):
             unit.cViceGeneral_Sign = request.POST['cViceGeneral_Sign']
         elif(authenticate == True):
             unit.cManger_Sign = request.POST['cManger_Sign']
@@ -325,6 +332,7 @@ def meetinginnerEdit(request,id=None,mode=None,cNumber=None):
         return redirect('/meetinginnerIndex/'+str(index.cNumber)+'/')
 
 def meetinginnerIndex(request,cNumber=None):
+    home = Home.objects.get(cNumber = cNumber)
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
@@ -490,6 +498,7 @@ def contractEdit(request,id=None,mode=None,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     index = Home.objects.get(cNumber = cNumber)
     if mode == "load":  # 由 index.html 按 編輯二 鈕
         unit = Contract.objects.get(id = id)  #取得要修改的資料記
@@ -503,9 +512,9 @@ def contractEdit(request,id=None,mode=None,cNumber=None):
         unit.cBudget = request.POST['cBudget']
         unit.cOther = request.POST['cOther']
         unit.cConfirm=request.POST['cConfirm']
-        if username == "Gen":
+        if firstname == "總座":
             unit.cGeneral_Sign=request.POST['cGeneral_Sign']
-        elif username == "viceP":
+        elif firstname == "副總":
             unit.cViceGeneral_Sign=request.POST['cViceGeneral_Sign']
         elif authenticate == True:
             unit.cManager_Sign = request.POST['cManager_Sign']
@@ -560,6 +569,7 @@ def contractinnerEdit(request,id=None,mode=None,cNumber=None):
         return redirect('/contractinnerIndex/'+str(index.cNumber)+'/')
 
 def contractinnerIndex(request,cNumber=None):
+    home = Home.objects.get(cNumber = cNumber)
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
@@ -671,6 +681,7 @@ def changeEdit(request,id=None,mode=None,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     index = Home.objects.get(cNumber = cNumber)
     if mode == "load":  # 由 index.html 按 編輯二 鈕
         unit = Change.objects.get(id = id)  #取得要修改的資料記
@@ -691,16 +702,16 @@ def changeEdit(request,id=None,mode=None,cNumber=None):
         unit.cApproved=request.POST['cApproved']
         unit.cReview=request.POST['cReview']
         unit.cUndertaker = request.POST['cUndertaker']
-        if username == "fs":
+        if firstname == "廠務部":
             unit.cOption_FS=request.POST['cOption_FS']
             unit.cFs_Sign = request.POST['cFs_Sign']
-        elif username == 'ds':
+        elif firstname == '設計部':
             unit.cOption_Design=request.POST['cOption_Design']
             unit.cDesign_Sign = request.POST['cDesign_Sign'] 
-        elif username == 'qs':
+        elif firstname == '品管部':
             unit.cOption_Quality=request.POST['cOption_Quality']
             unit.cQuality_Sign = request.POST['cQuality_Sign']
-        elif username == 'qs':
+        elif firstname == '採購部':
             unit.cOption_Purchase = request.POST['cOption_Purchase']
             unit.cPurchase_Sign = request.POST['cPurchase_Sign']
         unit.save()  #寫入資料庫

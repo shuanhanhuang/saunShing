@@ -2,13 +2,14 @@ from django import forms
 from datetime import datetime
 class HomeForm(forms.Form):
     cNumber = forms.CharField(max_length=50,initial="免填",disabled=True)
-    cAuther = forms.CharField(max_length=20)#姓名
+    cAuther = forms.CharField(max_length=20,initial="免填",disabled=True)#姓名
     cDepartment = forms.CharField(max_length=50)#單位
     cType = forms.CharField(max_length=10)
     cProgress = forms.CharField(max_length=20)
     cDate = forms.DateField(initial=datetime.now())#日期
     cEndDate = forms.DateField(initial=datetime.now(),required=False)
-    # cLock = forms.CharField(max_length=5,default='')
+    cLock = forms.CharField(max_length=5,initial="否")
+
 class SignedForm (forms.Form):
 	cNumber = forms.CharField(max_length=50,initial='免填',disabled=True)
 	cJob_title = forms.CharField(max_length=50,initial='',required=False)
