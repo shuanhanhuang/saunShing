@@ -82,6 +82,7 @@
               <td>{{unit.cExpectDate}}</td>
               <td>{{unit.cOther}}</td>
               <td>
+                <button type="button" class="btn btn-outline-primary" id="{{id.cNumber}}/{{unit.id}}" onclick="View(event)">檢視</button>
                 <button type="button" class="btn btn-outline-info" id="{{id.cNumber}}/{{unit.id}}" onclick="Edit(event)">編輯</button>
                 <button type="button" class="btn btn-outline-secondary" id="{{id.cNumber}}/{{unit.id}}" onclick="Delete(event)">刪除</button>
               </td>
@@ -115,6 +116,11 @@
 
       function Logout(){
         $(location).attr("href","/logout/");
+      }
+
+      function View(event){
+        var id = event.target.id
+        $(location).attr("href","/meetinginnerView/"+id+"/");
       }
 
       // function New(event){

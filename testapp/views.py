@@ -338,6 +338,14 @@ def meetinginnerIndex(request,cNumber=None):
     allinnerMeetingCount = len(unitinner)
     return render(request, "meetinginnerIndex.html",locals())
 
+def meetinginnerView(request,cNumber=None,id=None):
+    if request.user.is_authenticated:
+        username=request.user.username
+        authenticate=request.user.is_staff
+    home = Meeting.objects.get(cNumber=cNumber)
+    meetinginner = MeetingInner.objects.get(id=id)
+    return render(request, "meetinginnerView.html",locals())
+
 def meetinginnerDelete(request,id=None,cNumber=None):
     index = Meeting.objects.get(cNumber = cNumber)
     if id!=None:
@@ -564,6 +572,14 @@ def contractinnerIndex(request,cNumber=None):
         unitinner = ContractInner.objects.filter(innercontract=id).order_by("id")
     allinnerContractCount = len(unitinner)
     return render(request, "contractinnerIndex.html",locals())
+
+def contractinnerView(request,cNumber=None,id=None):
+    if request.user.is_authenticated:
+        username=request.user.username
+        authenticate=request.user.is_staff
+    home = Contract.objects.get(cNumber=cNumber)
+    contractinner = ContractInner.objects.get(id=id)
+    return render(request, "contractinnerView.html",locals())
 
 def contractinnerDelete(request,id=None,cNumber=None):
     if request.user.is_authenticated:

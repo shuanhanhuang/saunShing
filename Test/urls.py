@@ -18,11 +18,11 @@ from django.contrib import admin
 from django.urls import path
 from testapp.views import HomePage,login,logout,homeDelete,homeEdit,homeIndex,HomePost,\
     signView,signPost,signEdit,signallIndex,Detail,\
-    meetingallIndex,meetingView,meetingPost,meetingEdit,\
+    meetingallIndex,meetingView,meetingPost,meetingEdit,meetinginnerView,\
     meetinginnerEdit,meetinginnerPost,meetinginnerIndex,meetinginnerDelete,\
     contactallIndex,contactView,contactPost,contactEdit,\
     contractallIndex,contractPost,contractEdit,contractView,\
-    contractinnerDelete,contractinnerIndex,contractinnerEdit,contractinnerPost,\
+    contractinnerDelete,contractinnerIndex,contractinnerEdit,contractinnerPost,contractinnerView,\
     changeallIndex,changeView,changeEdit,changePost
 urlpatterns = [
     path('',HomePage),
@@ -50,6 +50,7 @@ urlpatterns = [
     path('meetinginnerIndex/<str:cNumber>/',meetinginnerIndex),
     path('meetinginnerEdit/<str:cNumber>/<int:id>/<str:mode>',meetinginnerEdit),
     path('meetinginnerPost/<str:cNumber>/',meetinginnerPost),
+    path('meetinginnerView/<str:cNumber>/<int:id>/',meetinginnerView),
 
     path('contactallIndex/',contactallIndex),
     path('contactView/<str:cNumber>/',contactView),
@@ -65,6 +66,8 @@ urlpatterns = [
     path('contractinnerIndex/<str:cNumber>/',contractinnerIndex),
     path('contractinnerEdit/<str:cNumber>/<int:id>/<str:mode>',contractinnerEdit),
     path('contractinnerPost/<str:cNumber>/',contractinnerPost),
+    path('contractinnerView/<str:cNumber>/<int:id>/',contractinnerView),
+
 
     path('changeallIndex/',changeallIndex),
     path('changeView/<str:cNumber>/',changeView),
