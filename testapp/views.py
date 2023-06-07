@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import render, redirect
 from datetime import datetime
@@ -7,11 +9,10 @@ from testapp.form import HomeForm,SignedForm,MeetingInnerForm,MeetingForm,Contac
 from testapp.models import Home,Signed,MeetingInner,Meeting,Contact,Contract,ContractInner,Change
 from django.db.models import Q
 from testapp.filter import HomeFilter
-from io import BytesIO
-from django.http import HttpResponse
-from django.template.loader import get_template
-from django.views import View
-from xhtml2pdf import pisa
+# from weasyprint import HTML
+from django.template.loader import render_to_string
+import tempfile
+from django.db.models import Sum
 
 Acount = 0
 # Bcount = 0
@@ -23,7 +24,7 @@ def HomePost(request):
         firstname = request.user.first_name
     global Acount
     if request.method == "POST":  #如果是以POST方式才處理
-        homeform = HomeForm(request.POST)  #建立forms物件
+        homeform = HomeForm(request.POST,request.FILES)  #建立forms物件
         if homeform.is_valid():
             Acount= Acount+1        
             cType = homeform.cleaned_data['cType']
@@ -50,7 +51,8 @@ def HomePost(request):
             cEndDate =  datetime.now() #取得表單輸入資料
             cProgress =  homeform.cleaned_data['cProgress']
             cLock = homeform.cleaned_data['cLock']
-            unit = Home.objects.create(cType=cType,cNumber=cNumber,cAuther=cAuther, cDate=cDate, cDepartment=cDepartment, cEndDate=cEndDate, cProgress=cProgress,cLock=cLock)
+            cDoc = homeform.cleaned_data['cDoc']
+            unit = Home.objects.create(cType=cType,cNumber=cNumber,cAuther=cAuther, cDate=cDate, cDepartment=cDepartment, cEndDate=cEndDate, cProgress=cProgress,cLock=cLock,cDoc=cDoc)
             home = unit.save()  #寫入資料庫
             message = '已儲存...'
             if cType == "簽呈":
@@ -181,10 +183,14 @@ def signView(request,cNumber=None):
     sign = Signed.objects.get(cNumber=cNumber)
     return render(request, "signView.html",locals())
 
-class run_pdf(View):
-    def get(self, request, *args, **kwargs):
-        pdf = render_to_pdf('signView.html')
-        return HttpResponse(pdf, content_type='application/pdf')
+
+def signPdf(request,cNumber=None):
+    if request.user.is_authenticated:
+        username=request.user.username
+        authenticate=request.user.is_staff
+    home = Home.objects.get(cNumber=cNumber)
+    sign = Signed.objects.get(cNumber=cNumber)
+    return render(request, "signPdf.html",locals())
 
 def signallIndex(request):
     if request.user.is_authenticated:
@@ -752,13 +758,3 @@ def HomePage(request):
 	if request.user.is_authenticated:
 		name=request.user.username
 	return render(request, "HomePage.html", locals())
-
-
-def render_to_pdf(template_src, context_dict={}):
-	template = get_template(template_src)
-	html  = template.render(context_dict)
-	result = BytesIO()
-	pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
-	if not pdf.err:
-		return HttpResponse(result.getvalue(), content_type='application/pdf')
-	return None

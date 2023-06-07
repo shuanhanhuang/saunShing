@@ -1,5 +1,6 @@
 from django import forms
 from datetime import datetime
+from testapp.models import Home
 class HomeForm(forms.Form):
     cNumber = forms.CharField(max_length=50,initial="免填",disabled=True)
     cAuther = forms.CharField(max_length=20,initial="免填",disabled=True)#姓名
@@ -9,6 +10,9 @@ class HomeForm(forms.Form):
     cDate = forms.DateField(initial=datetime.now())#日期
     cEndDate = forms.DateField(initial=datetime.now(),required=False)
     cLock = forms.CharField(max_length=5,initial="否")
+    cDoc = forms.FileField()
+
+			
 
 class SignedForm (forms.Form):
 	cNumber = forms.CharField(max_length=50,initial='免填',disabled=True)

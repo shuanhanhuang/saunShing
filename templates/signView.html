@@ -91,6 +91,11 @@
     function Logout(){
         $(location).attr("href","/logout/");
     }
+    function pdf(event){
+      var id = event.target.id
+      console.log(id)
+      $(location).attr("href","/pdf/"+id);
+    }
 
   </script>
 </body>

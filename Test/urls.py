@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls.static import static
+from django.conf import settings
 from testapp.views import HomePage,login,logout,homeDelete,homeEdit,homeIndex,HomePost,\
     signView,signPost,signEdit,signallIndex,Detail,\
     meetingallIndex,meetingView,meetingPost,meetingEdit,meetinginnerView,\
@@ -23,7 +25,7 @@ from testapp.views import HomePage,login,logout,homeDelete,homeEdit,homeIndex,Ho
     contactallIndex,contactView,contactPost,contactEdit,\
     contractallIndex,contractPost,contractEdit,contractView,\
     contractinnerDelete,contractinnerIndex,contractinnerEdit,contractinnerPost,contractinnerView,\
-    changeallIndex,changeView,changeEdit,changePost,run_pdf
+    changeallIndex,changeView,changeEdit,changePost
 urlpatterns = [
     path('',HomePage),
     path('HomePage/',HomePage),
@@ -73,7 +75,6 @@ urlpatterns = [
     path('changeEdit/<str:cNumber>/<int:id>/<str:mode>',changeEdit),
     path('changePost/<str:cNumber>/',changePost),
 
-    path('pdfView/', run_pdf.as_view()),
 
     path('admin/', admin.site.urls),
-]
+]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
