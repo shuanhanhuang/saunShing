@@ -7,6 +7,11 @@ from testapp.form import HomeForm,SignedForm,MeetingInnerForm,MeetingForm,Contac
 from testapp.models import Home,Signed,MeetingInner,Meeting,Contact,Contract,ContractInner,Change
 from django.db.models import Q
 from testapp.filter import HomeFilter
+from io import BytesIO
+from django.http import HttpResponse
+from django.template.loader import get_template
+from django.views import View
+from xhtml2pdf import pisa
 
 Acount = 0
 # Bcount = 0
@@ -175,6 +180,11 @@ def signView(request,cNumber=None):
     home = Home.objects.get(cNumber=cNumber)
     sign = Signed.objects.get(cNumber=cNumber)
     return render(request, "signView.html",locals())
+
+class run_pdf(View):
+    def get(self, request, *args, **kwargs):
+        pdf = render_to_pdf('signView.html')
+        return HttpResponse(pdf, content_type='application/pdf')
 
 def signallIndex(request):
     if request.user.is_authenticated:
@@ -742,3 +752,13 @@ def HomePage(request):
 	if request.user.is_authenticated:
 		name=request.user.username
 	return render(request, "HomePage.html", locals())
+
+
+def render_to_pdf(template_src, context_dict={}):
+	template = get_template(template_src)
+	html  = template.render(context_dict)
+	result = BytesIO()
+	pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+	if not pdf.err:
+		return HttpResponse(result.getvalue(), content_type='application/pdf')
+	return None

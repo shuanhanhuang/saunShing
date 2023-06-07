@@ -23,7 +23,7 @@ from testapp.views import HomePage,login,logout,homeDelete,homeEdit,homeIndex,Ho
     contactallIndex,contactView,contactPost,contactEdit,\
     contractallIndex,contractPost,contractEdit,contractView,\
     contractinnerDelete,contractinnerIndex,contractinnerEdit,contractinnerPost,contractinnerView,\
-    changeallIndex,changeView,changeEdit,changePost
+    changeallIndex,changeView,changeEdit,changePost,run_pdf
 urlpatterns = [
     path('',HomePage),
     path('HomePage/',HomePage),
@@ -68,12 +68,12 @@ urlpatterns = [
     path('contractinnerPost/<str:cNumber>/',contractinnerPost),
     path('contractinnerView/<str:cNumber>/<int:id>/',contractinnerView),
 
-
     path('changeallIndex/',changeallIndex),
     path('changeView/<str:cNumber>/',changeView),
     path('changeEdit/<str:cNumber>/<int:id>/<str:mode>',changeEdit),
     path('changePost/<str:cNumber>/',changePost),
 
+    path('pdfView/', run_pdf.as_view()),
 
     path('admin/', admin.site.urls),
 ]
