@@ -1,59 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0  shrink-to-fit=no">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     {% load static %}
     <title>資料表修改</title>
 </head>
+
 <body>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
-  
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <a class="navbar-brand" href="/homeIndex/">Home</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                Dropdown
-              </a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="/signallIndex/">簽呈資料</a>
-                <a class="dropdown-item" href="/meetingallIndex/">會議記錄資料</a>
-                <a class="dropdown-item" href="/contactallIndex/">內部連絡單資料</a>
-                <a class="dropdown-item" href="/contractallIndex/">工程發包議價記錄單</a>
-                <a class="dropdown-item" href="/changeallIndex/">設計變更通知單</a>
-              </div>
-            </li>
-          </ul>
-          <ul class="navbar-nav ml-2">
-            <li class="nav-item active">
-              <a class="nav-link disabled" style="color: green;">{{username}} <span class="sr-only">(current)</span></a>
-            </li>
-          </ul>
-          <ul class="navbar-nav ml-2">
-            <li class="nav-item">
-              <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button>
-            </li>
-          </ul>
+        <div class="container">
+            <a class="navbar-brand" href="/homeIndex/">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                            aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/signallIndex/">簽呈資料</a>
+                            <a class="dropdown-item" href="/meetingallIndex/">會議記錄資料</a>
+                            <a class="dropdown-item" href="/contactallIndex/">內部連絡單資料</a>
+                            <a class="dropdown-item" href="/contractallIndex/">工程發包議價記錄單</a>
+                            <a class="dropdown-item" href="/changeallIndex/">設計變更通知單</a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-2">
+                    <li class="nav-item active">
+                        <a class="nav-link disabled" style="color: green;">{{username}} <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-2">
+                    <li class="nav-item">
+                        <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
     </nav>
 
     <div class="container">
-      <div class="row">
-        <h2 class="mt-2">設計變更通知單 資料表修改</h2>
-      </div>
-      <p style="color:red; font-weight: bold; font-size: larger;">{{message}}</p>
+        <div class="row">
+            <h2 class="mt-2">設計變更通知單 資料表修改</h2>
+        </div>
+        <p style="color:red; font-weight: bold; font-size: larger;">{{message}}</p>
     </div>
 
 
@@ -81,25 +91,25 @@
                     <tr>
                         <th>變更方式</th>
                         {% if unit.cHowChange == "設計變更(永久)" %}
-                            <td >
+                        <td>
                             <input name="cHowChange" type="radio" id="cHowChange1" value="設計變更(永久)" checked="checked" />
                             設計變更(永久)
                             <input name="cHowChange" type="radio" id="cHowChange2" value="設計變更(個案)" />
                             設計變更(個案)
-                            </td>
+                        </td>
                         {% else %}
-                            <td>
-                            <input name="cHowChange" type="radio" id="cHowChange1" value="設計變更(永久)"  />
+                        <td>
+                            <input name="cHowChange" type="radio" id="cHowChange1" value="設計變更(永久)" />
                             設計變更(永久)
-                            <input name="cHowChange" type="radio" id="cHowChange2" value="設計變更(個案)" checked="checked"/>
+                            <input name="cHowChange" type="radio" id="cHowChange2" value="設計變更(個案)" checked="checked" />
                             設計變更(個案)
-                            </td>
+                        </td>
                         {% endif %}
                     </tr>
                     <tr>
                         <th>變更項目</th>
                         {% if unit.cChangeitem == "設計圖面" %}
-                            <td>
+                        <td>
                             <input name="cChangeitem" type="radio" id="cChangeitem1" value="設計圖面" checked="checked" />
                             設計圖面
                             <input name="cChangeitem" type="radio" id="cChangeitem2" value="產品/工程規範" />
@@ -108,47 +118,50 @@
                             標準料表(BOM)
                             <input name="cChangeitem" type="radio" id="cChangeitem4" value="檢驗標準" />
                             檢驗標準
-                            </td>
+                        </td>
                         {% elif unit.cChangeitem == "產品/工程規範" %}
-                            <td>
+                        <td>
                             <input name="cChangeitem" type="radio" id="cChangeitem1" value="設計圖面" />
                             設計圖面
-                            <input name="cChangeitem" type="radio" id="cChangeitem2" value="產品/工程規範" checked="checked"/>
+                            <input name="cChangeitem" type="radio" id="cChangeitem2" value="產品/工程規範"
+                                checked="checked" />
                             產品/工程規範
                             <input name="cChangeitem" type="radio" id="cChangeitem3" value="標準料表(BOM)" />
                             標準料表(BOM)
                             <input name="cChangeitem" type="radio" id="cChangeitem4" value="檢驗標準" />
                             檢驗標準
-                            </td>
+                        </td>
                         {% elif unit.cChangeitem == "標準料表(BOM)" %}
-                            <td>
+                        <td>
                             <input name="cChangeitem" type="radio" id="cChangeitem1" value="設計圖面" />
                             設計圖面
                             <input name="cChangeitem" type="radio" id="cChangeitem2" value="產品/工程規範" />
                             產品/工程規範
-                            <input name="cChangeitem" type="radio" id="cChangeitem3" value="標準料表(BOM)" checked="checked"/>
+                            <input name="cChangeitem" type="radio" id="cChangeitem3" value="標準料表(BOM)"
+                                checked="checked" />
                             標準料表(BOM)
                             <input name="cChangeitem" type="radio" id="cChangeitem4" value="檢驗標準" />
                             檢驗標準
-                            </td>
+                        </td>
                         {% else %}
-                            <td>
+                        <td>
                             <input name="cChangeitem" type="radio" id="cChangeitem1" value="設計圖面" />
                             設計圖面
                             <input name="cChangeitem" type="radio" id="cChangeitem2" value="產品/工程規範" />
                             產品/工程規範
                             <input name="cChangeitem" type="radio" id="cChangeitem3" value="標準料表(BOM)" />
                             標準料表(BOM)
-                            <input name="cChangeitem" type="radio" id="cChangeitem4" value="檢驗標準" checked="checked"/>
+                            <input name="cChangeitem" type="radio" id="cChangeitem4" value="檢驗標準" checked="checked" />
                             檢驗標準
-                            </td>
+                        </td>
                         {% endif %}
                     </tr>
                     <tr>
                         <th>變更原因</th>
                         {% if unit.cChangereason == "客戶需求改變" %}
-                            <td>
-                            <input name="cChangereason" type="radio" id="cChangereason1" value="客戶需求改變" checked="checked" />
+                        <td>
+                            <input name="cChangereason" type="radio" id="cChangereason1" value="客戶需求改變"
+                             checked="checked" />
                             客戶需求改變
                             <input name="cChangereason" type="radio" id="cChangereason2" value="設計錯誤" />
                             設計錯誤
@@ -156,12 +169,13 @@
                             製造單位要求改變
                             <input name="cChangereason" type="radio" id="cChangereason4" value="其他" />
                             其他
-                            </td>
+                        </td>
                         {% elif unit.cChangereason == "設計錯誤" %}
                         <td>
-                            <input name="cChangereason" type="radio" id="cChangereason1" value="客戶需求改變"  />
+                            <input name="cChangereason" type="radio" id="cChangereason1" value="客戶需求改變" />
                             客戶需求改變
-                            <input name="cChangereason" type="radio" id="cChangereason2" value="設計錯誤" checked="checked"/>
+                            <input name="cChangereason" type="radio" id="cChangereason2" value="設計錯誤"
+                                checked="checked" />
                             設計錯誤
                             <input name="cChangereason" type="radio" id="cChangereason3" value="製造單位要求改變" />
                             製造單位要求改變
@@ -170,76 +184,91 @@
                         </td>
                         {% elif unit.cChangereason == "製造單位要求改變" %}
                         <td>
-                            <input name="cChangereason" type="radio" id="cChangereason1" value="客戶需求改變"  />
+                            <input name="cChangereason" type="radio" id="cChangereason1" value="客戶需求改變" />
                             客戶需求改變
                             <input name="cChangereason" type="radio" id="cChangereason2" value="設計錯誤" />
                             設計錯誤
-                            <input name="cChangereason" type="radio" id="cChangereason3" value="製造單位要求改變" checked="checked"/>
+                            <input name="cChangereason" type="radio" id="cChangereason3" value="製造單位要求改變"
+                                checked="checked" />
                             製造單位要求改變
                             <input name="cChangereason" type="radio" id="cChangereason4" value="其他" />
                             其他
-                        {% else %}
+                            {% else %}
                         <td>
-                            <input name="cChangereason" type="radio" id="cChangereason1" value="客戶需求改變"  />
+                            <input name="cChangereason" type="radio" id="cChangereason1" value="客戶需求改變" />
                             客戶需求改變
                             <input name="cChangereason" type="radio" id="cChangereason2" value="設計錯誤" />
                             設計錯誤
                             <input name="cChangereason" type="radio" id="cChangereason3" value="製造單位要求改變" />
                             製造單位要求改變
-                            <input name="cChangereason" type="radio" id="cChangereason4" value="其他" checked="checked"/>
+                            <input name="cChangereason" type="radio" id="cChangereason4" value="其他" checked="checked" />
                             其他
+                            <input name="cChangereason" type="text" id="other" value={{unit.cChangereason}}>
+
                         </td>
                         {% endif %}
                     </tr>
                     <tr>
                         <th>有償/無償</th>
                         {% if unit.cEarn == "有償" %}
-                            <td >
+                        <td>
                             <input name="cEarn" type="radio" id="cEarn1" value="有償" checked="checked" />
                             有償
                             <input name="cEarn" type="radio" id="cEarn2" value="無償" />
                             無償
-                            </td>
+                        </td>
                         {% else %}
-                            <td>
-                            <input name="cEarn" type="radio" id="cEarn3" value="有償"  />
+                        <td>
+                            <input name="cEarn" type="radio" id="cEarn3" value="有償" />
                             有償
-                            <input name="cEarn" type="radio" id="cEarn4" value="無償" checked="checked"/>
+                            <input name="cEarn" type="radio" id="cEarn4" value="無償" checked="checked" />
                             無償
-                            </td>
+                        </td>
                         {% endif %}
                     </tr>
                     <tr>
                         <th>影響項目</th>
-                        <td><textarea  id="cAffectitem" name="cAffectitem">{{unit.cAffectitem}}</textarea></td>                    
+                        <td><textarea id="cAffectitem" name="cAffectitem">{{unit.cAffectitem}}</textarea></td>
                     </tr>
                     <tr>
                         <th>變更要點說明</th>
-                        <td><textarea  id="Keypoint" name="cKeypoint">{{unit.cKeypoint}}</textarea></td>                    
+                        <td><textarea id="Keypoint" name="cKeypoint">{{unit.cKeypoint}}</textarea></td>
                     </tr>
                     <tr>
                         <th>變更潛在風險說明</th>
-                        <td><textarea  id="cRisk" name="cRisk">{{unit.cRisk}}</textarea></td>                    
+                        <td><textarea id="cRisk" name="cRisk">{{unit.cRisk}}</textarea></td>
                     </tr>
                     {% if firstname == "廠務部" %}
                     <tr>
-                        <th>廠務部意見</th><td><textarea  id="cOption_FS" name="cOption_FS">{{unit.cOption_FS}}</textarea></td>
-                        <th>簽名</th><td><input type="text" id="cFs_Sign" name="cFs_Sign" value={{unit.cFs_Sign}}></td>
+                        <th>廠務部意見</th>
+                        <td><textarea id="cOption_FS" name="cOption_FS">{{unit.cOption_FS}}</textarea></td>
+                        <th>簽名</th>
+                        <td><input type="text" id="cFs_Sign" name="cFs_Sign" value={{unit.cFs_Sign}}></td>
                     </tr>
                     {% elif firstname == "設計部" %}
                     <tr>
-                        <th>業務設計部意見</th><td><textarea  id="cOption_Design" name="cOption_Design">{{unit.cOption_Design}}</textarea></td>
-                        <th>簽名</th><td><input type="text" id="cDesign_Sign" name="cDesign_Sign" value={{unit.cDesign_Sign}}></td>
+                        <th>業務設計部意見</th>
+                        <td><textarea id="cOption_Design" name="cOption_Design">{{unit.cOption_Design}}</textarea></td>
+                        <th>簽名</th>
+                        <td><input type="text" id="cDesign_Sign" name="cDesign_Sign" value={{unit.cDesign_Sign}}></td>
                     </tr>
                     {% elif firstname == "品管部" %}
                     <tr>
-                        <th>品管課意見</th><td><textarea  id="cOption_Quality" name="cOption_Quality">{{unit.cOption_Quality}}</textarea></td>
-                        <th>簽名</th><td><input type="text" id="cQuality_Sign" name="cQuality_Sign" value={{unit.cQuality_Sign}}></td>
+                        <th>品管課意見</th>
+                        <td><textarea id="cOption_Quality" name="cOption_Quality">{{unit.cOption_Quality}}</textarea>
+                        </td>
+                        <th>簽名</th>
+                        <td><input type="text" id="cQuality_Sign" name="cQuality_Sign" value={{unit.cQuality_Sign}}>
+                        </td>
                     </tr>
                     {% elif firstname == "採購部" %}
                     <tr>
-                        <th>採購課意見</th><td><textarea  id="cOption_Purchase" name="cOption_Purchase">{{unit.cOption_Purchase}}</textarea></td>
-                        <th>簽名</th><td><input type="text" id="cPurchase_Sign" name="cPurchase_Sign" value={{unit.cPurchase_Sign}}></td>
+                        <th>採購課意見</th>
+                        <td><textarea id="cOption_Purchase" name="cOption_Purchase">{{unit.cOption_Purchase}}</textarea>
+                        </td>
+                        <th>簽名</th>
+                        <td><input type="text" id="cPurchase_Sign" name="cPurchase_Sign" value={{unit.cPurchase_Sign}}>
+                        </td>
                     </tr>
                     {% endif %}
 
@@ -256,7 +285,7 @@
                             <label for="顧問">顧問
                             <input type="checkbox" name="option" class="check_box_list" value="工程" {% if '工程' in unit.cCC %}checked{% endif %}>
                             <label for="工程">工程
-                            <input type="checkbox" name="option" class="check_box_list" value="廠務" {% if '廠務' in unit.cCC %}checked{% endif %}>
+                            <input type="checkbox" name="option" class="check_box_list" value="廠務"{% if '廠務' in unit.cCC %}checked{% endif %}>
                             <label for="廠務">廠務
                             <input type="checkbox" name="option" class="check_box_list" value="品管" {% if '品管' in unit.cCC %}checked{% endif %}>
                             <label for="品管">品管
@@ -264,55 +293,110 @@
                             <label for="無">無
                         </td>
                     </tr>
-                    
+
                     <tr>
                         <th>技術通報</th>
                         {% if unit.cTech_bulletin == "是" %}
-                            <td >
-                            <input name="cTech_bulletin" type="radio" id="cTech_bulletin1" value="是" checked="checked" />
+                        <td>
+                            <input name="cTech_bulletin" type="radio" id="cTech_bulletin1" value="是"
+                                checked="checked" />
                             是
                             <input name="cTech_bulletin" type="radio" id="cTech_bulletin2" value="否" />
                             否
-                            </td>
+                        </td>
                         {% else %}
-                            <td>
-                            <input name="cTech_bulletin" type="radio" id="cTech_bulletin1" value="是"  />
+                        <td>
+                            <input name="cTech_bulletin" type="radio" id="cTech_bulletin1" value="是" />
                             是
-                            <input name="cTech_bulletin" type="radio" id="cTech_bulletin2" value="否" checked="checked"/>
+                            <input name="cTech_bulletin" type="radio" id="cTech_bulletin2" value="否"
+                                checked="checked" />
                             否
-                            </td>
+                        </td>
                         {% endif %}
                     </tr>
-                    
+
                     <tr>
                         <th colspan="2" align="center">
-                        <input type="hidden" name="cCC" id="textvalue">
-                        <button type="submit" class="btn btn-primary" value="Submit">送出</button>
-                        <input type="reset" class="btn btn-danger" name="button2" id="button2" value="重設"></th>
+                            <input type="hidden" name="cCC" id="textvalue">
+                            <input type="hidden" name="cChangereason" id="textvalue1" value={{unit.cChangereason}}>
+                            <button type="submit" class="btn btn-primary" value="Submit">送出</button>
+                            <input type="reset" class="btn btn-danger" name="button2" id="button2" value="重設">
+                        </th>
                     </tr>
                 </table>
             </div>
         </div>
-  </form>
+    </form>
 
-  <script src="{% static 'jquery.min.js' %}"></script>
+    <script src="{% static 'jquery.min.js' %}"></script>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
 
-            $(".check_box_list").click(function(){
+            $(".check_box_list").click(function () {
                 var test = ""
-                $(".check_box_list:checked").each(function(){
-                    test+=$(this).val()+","
+                $(".check_box_list:checked").each(function () {
+                    test += $(this).val() + ","
                 });
-                test= test.substring(0,test.length-1)
+                test = test.substring(0, test.length - 1)
                 $("#textvalue").val(test);
             })
+            if($("#other").val()==undefined){
+                $("#other").hide();
             
+
+            }
+            else{
+                $("#other").val()
+                console.log( $("#other").val())
+            }
+                
+            $('#cChangereason4').click(function () {
+                var test2 = ""
+                if ($(this).is(':checked')) {
+                    $("#other").show();
+
+                }
+                else {
+                    $("#other").html('');
+                    $("#other").hide();
+                }
+            });
+
+            $("#other").on("input", function () {
+                test2 = $(this).val();
+                $("#textvalue1").val(test2);
+
+            });
+
+            $('#cChangereason1').click(function () {
+
+                $("#other").html('');
+                $("#other").hide();
+                test2 = $(this).val()
+                $("#textvalue1").val(test2);
+
+            });
+            $('#cChangereason1').click(function () {
+
+                $("#other").html('');
+                $("#other").hide();
+                test2 = $(this).val()
+                $("#textvalue1").val(test2);
+            });
+            $('#cChangereason3').click(function () {
+
+                $("#other").html('');
+                $("#other").hide();
+                test2 = $(this).val()
+                $("#textvalue1").val(test2);
+
+            })
+
         })
-        function Logout(){
-            $(location).attr("href","/logout/");
+        function Logout() {
+            $(location).attr("href", "/logout/");
         }
     </script>
 </body>
-</html>
 
+</html>
