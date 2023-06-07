@@ -211,16 +211,15 @@
                     </tr>
                     <tr>
                         <th>影響項目</th>
-                        <td><input type="text" id="cAffectitem" name="cAffectitem" value={{unit.cAffectitem}}></td>
+                        <td><textarea  id="cAffectitem" name="cAffectitem">{{unit.cAffectitem}}</textarea></td>                    
                     </tr>
-                    
                     <tr>
                         <th>變更要點說明</th>
-                        <td><input type="text" id="cKeypoint" name="cKeypoint" value={{unit.cKeypoint}}></td>
+                        <td><textarea  id="Keypoint" name="cKeypoint">{{unit.cKeypoint}}</textarea></td>                    
                     </tr>
                     <tr>
                         <th>變更潛在風險說明</th>
-                        <td><input type="text" id="cRisk" name="cRisk" value={{unit.cRisk}}></td>
+                        <td><textarea  id="cRisk" name="cRisk">{{unit.cRisk}}</textarea></td>                    
                     </tr>
                     {% if firstname == "廠務部" %}
                     <tr>
@@ -299,6 +298,7 @@
   <script src="{% static 'jquery.min.js' %}"></script>
     <script>
         $(document).ready(function(){
+
             $(".check_box_list").click(function(){
                 var test = ""
                 $(".check_box_list:checked").each(function(){
@@ -307,7 +307,6 @@
                 test= test.substring(0,test.length-1)
                 $("#textvalue").val(test);
             })
-
             
         })
         function Logout(){

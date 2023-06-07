@@ -37,10 +37,6 @@
               </div>
             </li>
           </ul>
-          <!-- <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" name='q' type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form> -->
           <ul class="navbar-nav ml-2">
             <li class="nav-item active">
               <a class="nav-link disabled" style="color: green;">{{username}} <span class="sr-only">(current)</span></a>
@@ -107,7 +103,13 @@
               <th>鎖定</th>
               <td>
                 <input name="cLock" type="radio"  value="否" checked="checked"/>否
-                <input name="cLock" type="radio" value=是"/>是
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <th>鎖定</th>
+              <td>
+                <input name="cLock" type="radio"  value="否" checked="checked"/>否
               </td>
             </tr>
             {% endif %}

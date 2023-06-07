@@ -78,10 +78,11 @@
             <tr><th>變更原因</th>
                 <td>
                 <p style="color:red; font-weight: bold">※有償請簽核完畢影印一份管理部稽核</p>
-                <input name="cChangereason" type="radio"  value="客戶需求改變" checked="checked"/>客戶需求改變
-                <input name="cChangereason" type="radio"  value="設計錯誤"/>設計錯誤
-                <input name="cChangereason" type="radio" value="製造單位要求改變"/>製造單位要求改變
-                <input name="cChangereason" type="radio" value="其他"/>其他
+                <input name="cChangereason" type="radio" value="客戶需求改變" checked="checked" id="1" />客戶需求改變
+                <input name="cChangereason" type="radio" value="設計錯誤" id="2" />設計錯誤
+                <input name="cChangereason" type="radio" value="製造單位要求改變" id="3" />製造單位要求改變
+                <input name="cChangereason" type="radio" value="其他" id="Other" />其他
+                <input name="cChangereason" type="text" value="" id="other" />
                 </td>
             </tr>
             <tr><th>有償/無償</th>
@@ -158,10 +159,54 @@
                 test= test.substring(0,test.length-1)
                 $("#textvalue").val(test);
             })
-        })
-        function Logout(){
-        $(location).attr("href","/logout/");
-        }
+            $("#other").hide();
+
+            $('#Other').click(function () {
+              var test2 = ""
+              if ($(this).is(':checked')) {
+                $("#other").show();
+
+              }
+              else {
+                $("#other").html('');
+                $("#other").hide();
+              }
+            });
+
+            $("#other").on("input", function () {
+              test2 = $(this).val();
+              $("#textvalue1").val(test2);
+
+            });
+
+            $('#1').click(function () {
+
+              $("#other").html('');
+              $("#other").hide();
+              test2 = $(this).val()
+              $("#textvalue1").val(test2);
+
+            });
+            $('#2').click(function () {
+
+              $("#other").html('');
+              $("#other").hide();
+              test2 = $(this).val()
+              $("#textvalue1").val(test2);
+            });
+            $('#3').click(function () {
+
+              $("#other").html('');
+              $("#other").hide();
+              test2 = $(this).val()
+              $("#textvalue1").val(test2);
+
+              })
+            })
+
+          function Logout(){
+          $(location).attr("href","/logout/");
+          }
 
     </script>
   
