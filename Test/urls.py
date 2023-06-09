@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
-from testapp.views import HomePage,login,logout,homeDelete,homeEdit,homeIndex,HomePost,\
+from testapp.views import HomePage,login,logout,perosonIndex,open1,\
+    homeDelete,homeEdit,homeIndex,HomePost,\
     signView,signPost,signEdit,signallIndex,Detail,\
     meetingallIndex,meetingView,meetingPost,meetingEdit,meetinginnerView,\
     meetinginnerEdit,meetinginnerPost,meetinginnerIndex,meetinginnerDelete,\
@@ -31,6 +32,8 @@ urlpatterns = [
     path('HomePage/',HomePage),
     path('login/', login),
     path('logout/', logout),
+    path('perosonIndex/<str:cUsername>/',perosonIndex),
+    path('open1/<int:id>/<str:mode>',open1),
 
     path('homeIndex/',homeIndex),
     path('homePost/',HomePost),

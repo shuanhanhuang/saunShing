@@ -51,8 +51,9 @@ def HomePost(request):
             cEndDate =  datetime.now() #取得表單輸入資料
             cProgress =  homeform.cleaned_data['cProgress']
             cLock = homeform.cleaned_data['cLock']
-            cDoc = homeform.cleaned_data['cDoc']
-            unit = Home.objects.create(cType=cType,cNumber=cNumber,cAuther=cAuther, cDate=cDate, cDepartment=cDepartment, cEndDate=cEndDate, cProgress=cProgress,cLock=cLock,cDoc=cDoc)
+            cReceive = homeform.cleaned_data['cReceive']
+            cFile = homeform.cleaned_data['cFile']
+            unit = Home.objects.create(cType=cType,cNumber=cNumber,cAuther=cAuther, cDate=cDate, cDepartment=cDepartment, cEndDate=cEndDate, cProgress=cProgress,cLock=cLock,cReceive=cReceive,cFile=cFile)
             home = unit.save()  #寫入資料庫
             message = '已儲存...'
             if cType == "簽呈":
@@ -87,7 +88,15 @@ def homeIndex(request):
     allHomeCount = len(all)
     return render(request, "homeIndex.html",locals())
 
+open = False
+def open1(request,id=None,mode=None):
+    global open
+    open = True
+    return redirect('/homeEdit/'+str(id)+"/"+str(mode))
+
 def homeEdit(request,id=None,mode=None):
+    global open
+    Open = open
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
@@ -110,9 +119,14 @@ def homeEdit(request,id=None,mode=None):
         if(unit.cLock == "是"):
             unit.cLock=request.POST['cLock']
         else: 
-            unit.cDepartment=request.POST['cDepartment']
+            unit.cAuther = request.POST['cAuther']
+            unit.cDepartment = request.POST['cDepartment']
             unit.cEndDate = request.POST['cEndDate']
-            unit.cProgress=request.POST['cProgress']
+            unit.cProgress = request.POST['cProgress']
+            unit.cReceive = request.POST['cReceive']
+            if Open == True:
+                unit.cFile = request.POST['cFile']
+                open = False
             if (authenticate == True):
                 unit.cLock=request.POST['cLock']
         unit.save()  #寫入資料庫
@@ -149,6 +163,13 @@ def Detail(request,cNumber=None):
         change_detail = Change.objects.get(cNumber=cNumber)
         return redirect('/changeEdit/'+str(cNumber)+'/'+str(change_detail.id)+'/load')
 
+def perosonIndex(request,cUsername = None):
+    if request.user.is_authenticated:
+        username=request.user.username
+        authenticate=request.user.is_staff
+    all = Home.objects.filter(cReceive = cUsername)
+    allHomeCount = len(all)
+    return render(request, "perosonIndex.html",locals())
 
 #簽呈
 def signPost(request,cNumber=None):

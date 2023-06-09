@@ -99,6 +99,16 @@
             <tr>
             <tr><th>完成日期</th><td>{{homeform.cEndDate}}</td></tr>
             <tr>
+              <th>接收人</th>
+              <td>
+                <input name="cReceive" type="radio" value="Gen" checked="checked"/>總經理
+                <input name="cReceive" type="radio" value="viceP"/>副總
+                <input name="cReceive" type="radio" value="ds"/>業務設計部
+                <input name="cReceive" type="radio" value="fs"/>廠務部
+                <input name="cReceive" type="radio" value="None"/>無
+              </td>
+            </tr>
+            <tr>
               <th>檔案</th>
               <td>
                 <input name="cFile" type="file">

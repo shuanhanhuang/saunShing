@@ -62,6 +62,29 @@
                 <table class="table">
                   {% if unit.cLock == "否" %}
                     <tr>
+                      <tr>
+                        <th>檔案</th>
+                        <td>
+                          
+                          {% if Open == True %}
+                            <input name="cFile" type="file" >
+                          {% else %}
+                            <a href="/open1/{{unit.id}}/load" class="btn btn-primary">更新檔案</a>
+                          {% endif %}
+                          </td>
+                      </tr>
+                      <tr>
+                        <th>發文者</th>
+                        <td><input type="text" id="cAuther" name="cAuther" value={{unit.cAuther}}></td>
+                      </tr>
+                      <!-- <tr>
+                        <th>編號</th>
+                        <td><input type="text" id="cNumber" name="cNumber" value={{unit.cNumber}}></td>
+                      </tr> -->
+                      <tr>
+                        <th>日期</th>
+                        <td><input type="text" id="cDate" name="cDate" value={{unit.cDate}}></td>
+                      </tr>
                         <th>部門別</th>
                         {% if unit.cDepartment == "總經理室" %}
                             <td >
@@ -208,6 +231,75 @@
                         <th>完成日期</th>
                         <td><input type="text" id="cEndDate" name="cEndDate" value={{unit.cEndDate}}></td>
                     </tr>
+                    </tr>
+                      <th>接收人</th>
+                      {% if unit.cReceive == "Gen" %}
+                          <td >
+                              <input name="cReceive" type="radio" id="cReceive1" value="Gen" checked="checked" />
+                              總經理
+                              <input name="cReceive" type="radio" id="cReceive2" value="viceP" />
+                              副總
+                              <input name="cReceive" type="radio" id="cReceive3" value="fs" />
+                              廠務部
+                              <input name="cReceive" type="radio" id="cReceive4" value="ds" />
+                              業務設計部
+                              <input name="cReceive" type="radio" id="cReceive5" value="None" />
+                              無                         
+                          </td>
+                      {% elif unit.cReceive == "viceP" %}
+                          <td >
+                            <input name="cReceive" type="radio" id="cReceive1" value="Gen"/>
+                            總經理
+                            <input name="cReceive" type="radio" id="cReceive2" value="viceP" checked="checked"/>
+                            副總
+                            <input name="cReceive" type="radio" id="cReceive3" value="fs" />
+                            廠務部
+                            <input name="cReceive" type="radio" id="cReceive4" value="ds" />
+                            業務設計部
+                            <input name="cReceive" type="radio" id="cReceive5" value="None" />
+                            無                         
+                          </td>
+                      {% elif unit.cReceive == "fs" %}
+                          <td >
+                            <input name="cReceive" type="radio" id="cReceive1" value="Gen" />
+                            總經理
+                            <input name="cReceive" type="radio" id="cReceive2" value="viceP" />
+                            副總
+                            <input name="cReceive" type="radio" id="cReceive3" value="fs" checked="checked"/>
+                            廠務部
+                            <input name="cReceive" type="radio" id="cReceive4" value="ds" />
+                            業務設計部
+                            <input name="cReceive" type="radio" id="cReceive5" value="None" />
+                            無                         
+                          </td>
+                      {% elif unit.cReceive == "ds" %}
+                          <td >
+                            <input name="cReceive" type="radio" id="cReceive1" value="Gen" />
+                            總經理
+                            <input name="cReceive" type="radio" id="cReceive2" value="viceP" />
+                            副總
+                            <input name="cReceive" type="radio" id="cReceive3" value="fs" />
+                            廠務部
+                            <input name="cReceive" type="radio" id="cReceive4" value="ds" checked="checked"/>
+                            業務設計部
+                            <input name="cReceive" type="radio" id="cReceive5" value="None" />
+                            無                         
+                          </td>
+                      {% else %}
+                          <td >
+                            <input name="cReceive" type="radio" id="cReceive1" value="Gen"  />
+                            總經理
+                            <input name="cReceive" type="radio" id="cReceive2" value="viceP" />
+                            副總
+                            <input name="cReceive" type="radio" id="cReceive3" value="fs" />
+                            廠務部
+                            <input name="cReceive" type="radio" id="cReceive4" value="ds" />
+                            業務設計部
+                            <input name="cReceive" type="radio" id="cReceive5" value="None" checked="checked"/>
+                            無                         
+                          </td>
+                      {% endif %}
+                    </tr>
                     {% if authenticate == True %}
                       <tr>
                         <th>鎖定</th>
@@ -266,6 +358,7 @@
       function Logout(){
         $(location).attr("href","/logout/");
       }
+
 
     </script>
 </body>

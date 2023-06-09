@@ -11,7 +11,9 @@ class Home(models.Model):
     cDate = models.DateField(null=False)#日期
     cEndDate = models.DateField(blank=True, null=True)
     cLock = models.CharField(max_length=5,null=False,default='否')
-    cDoc = models.FileField(blank=True,null=True)
+    cReceive  = models.CharField(max_length=20,blank=True,null=True)
+    cFile = models.FileField(blank=True, null=True)
+    # cCheckuplaod = models.CharField(max_length=5,null=False,default='否')
 4+1
 class Signed (models.Model):
     cNumber = models.CharField(max_length=50, default='', null=False)#編號

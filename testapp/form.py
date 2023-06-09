@@ -10,9 +10,9 @@ class HomeForm(forms.Form):
     cDate = forms.DateField(initial=datetime.now())#日期
     cEndDate = forms.DateField(initial=datetime.now(),required=False)
     cLock = forms.CharField(max_length=5,initial="否")
-    cDoc = forms.FileField()
-
-			
+    cReceive = forms.CharField(max_length=20,required=False)
+    # cCheckuplaod = forms.CharField(max_length=5,initial="否")
+    cFile = forms.FileField(required=False)
 
 class SignedForm (forms.Form):
 	cNumber = forms.CharField(max_length=50,initial='免填',disabled=True)

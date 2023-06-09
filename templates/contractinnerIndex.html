@@ -23,14 +23,23 @@
     
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/contractallIndex/">回工程發包議價記錄單<span class="sr-only">(current)</span></a>
-          </li>
-          {% if home.cLock == "否" %}
-            <li class="nav-item active">
-              <a class="nav-link" href="/contractinnerPost/{{id.cNumber}}/{{unit.id}}">新增<span class="sr-only">(current)</span></a>
+          <ul class="navbar-nav ml-2">
+            <li class="nav-item">
+              <button class="btn btn-success my-2 my-sm-0" onclick="BacktoContract()">回工程發包議價記錄單</button>
             </li>
+          </ul>
+          {% if home.cLock == "否" %}
+            <ul class="navbar-nav ml-2">
+              <li class="nav-item">
+                <button class="btn btn-light my-2 my-sm-0" id="{{id.cNumber}}/{{unit.id}}" onclick="New(event)">新增</button>
+              </li>
+            </ul>
           {% endif %}
+          <ul class="navbar-nav ml-2">
+            <li class="nav-item">
+              <button class="btn btn-warning my-2 my-sm-0" id="{{username}}" onclick="perosonIndex(event)">待簽</button>
+            </li>
+          </ul>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
               Dropdown
@@ -129,16 +138,19 @@
         $(location).attr("href","/contractinnerView/"+id+"/");
       }
 
-      // function New(event){
-      //   var id = event.target.id
-      //   $(location).attr("href","/contractinnerPost/"+id+"/");
-      //   // /postinnerMeeting/{{id}}/
-      // }
+      function perosonIndex(event){
+        var id = event.target.id
+        $(location).attr("href","/perosonIndex/"+id+"/");
+      }
 
-      // function BacktoContract(){
-      //   var id = event.target.id
-      //   $(location).attr("href","/contractIndex/"+id+'/');
-      // }
+      function BacktoContract(){
+        $(location).attr("href","/contractallIndex/");
+      }
+      function New(event){
+        var id = event.target.id
+        $(location).attr('href','/contractinnerPost/'+id);
+      }
+
 
   </script>
 

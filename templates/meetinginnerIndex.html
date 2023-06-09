@@ -20,17 +20,27 @@
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <!-- /meetingIndex/{{id.cNumber}}/{{unit.id}} -->
+
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/meetingallIndex/">回會議記錄<span class="sr-only">(current)</span></a>
-          </li>
-          {% if home.cLock == "否" %}
-            <li class="nav-item active">
-              <a class="nav-link" href="/meetinginnerPost/{{id.cNumber}}/{{unit.id}}">新增<span class="sr-only">(current)</span></a>
+          <ul class="navbar-nav ml-2">
+            <li class="nav-item">
+              <button class="btn btn-success my-2 my-sm-0" onclick="BacktoMeeting()">回會議記錄</button>
             </li>
+          </ul>
+          
+          {% if home.cLock == "否" %}
+            <ul class="navbar-nav ml-2">
+              <li class="nav-item">
+                <button class="btn btn-light my-2 my-sm-0" id="{{id.cNumber}}/{{unit.id}}" onclick="New(event)">新增</button>
+              </li>
+            </ul>
           {% endif %}
+          <ul class="navbar-nav ml-2">
+            <li class="nav-item">
+              <button class="btn btn-warning my-2 my-sm-0" id="{{username}}" onclick="perosonIndex(event)">待簽</button>
+            </li>
+          </ul>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
               Dropdown
@@ -127,18 +137,20 @@
         $(location).attr("href","/meetinginnerView/"+id+"/");
       }
 
-      // function New(event){
-      //   var id = event.target.id
-      //   $(location).attr("href","/meetinginnerPost/"+id+"/");
-      // }
+      function perosonIndex(event){
+        var id = event.target.id
+        $(location).attr("href","/perosonIndex/"+id+"/");
+      }
 
-      // function BacktoMeeting(){
-      //   var id = event.target.id
-      //   $(location).attr("href","/meetingIndex/"+id+'/');
-      // }
-      
+      function BacktoMeeting(){
+        var id = event.target.id
+        $(location).attr("href","/meetingallIndex/");
+      }
 
-
+      function New(event){
+        var id = event.target.id
+        $(location).attr("href","/meetinginnerPost/"+id);
+      }
 
   </script>
 

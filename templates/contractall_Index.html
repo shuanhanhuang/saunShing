@@ -26,6 +26,11 @@
           <li class="nav-item active">
             <a class="nav-link disabled">工程發包議價記錄單 <span class="sr-only">(current)</span></a>
           </li>
+          <ul class="navbar-nav ml-2">
+            <li class="nav-item">
+              <button class="btn btn-warning my-2 my-sm-0" id="{{username}}" onclick="perosonIndex(event)">待簽</button>
+            </li>
+          </ul>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
               Dropdown
@@ -115,6 +120,11 @@
     function View(){
         var id = event.target.id
         $(location).attr("href","/contractView/"+id+"/");
+    }
+
+    function perosonIndex(event){
+        var id = event.target.id
+        $(location).attr("href","/perosonIndex/"+id+"/");
     }
 
   </script>
