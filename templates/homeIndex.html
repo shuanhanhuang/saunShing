@@ -74,10 +74,14 @@
   <div class="card card-body">
     <form method="GET">
       <div class="ml-5">
+        編號: {{homeFilter.form.cNumber}}
         種類: {{homeFilter.form.cType}}
         發文者: {{homeFilter.form.cAuther}}
         部門別: {{homeFilter.form.cDepartment}}
-        文件進度: {{homeFilter.form.cProgress}}
+        <p></p>
+        <span class="mt-2">文件進度: {{homeFilter.form.cProgress}}</span>
+        <span class="mt-2">日期: {{homeFilter.form.cDate}}</span>
+        <span class="mt-2">完成日期: {{homeFilter.form.cEndDate}}</span>
         <input type="submit" class="btn btn-primary" value="查詢" />
       </div>      
     </form>

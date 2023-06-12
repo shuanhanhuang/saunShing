@@ -48,7 +48,7 @@ def HomePost(request):
             elif(homeform.cleaned_data['cType'] == "設計變更通知單"):
                 cNumber = "B"+str(cDate.year)+str(cDate.month)+str(cDate.day)+count+str(Acount)
             cAuther = firstname
-            cEndDate =  datetime.now() #取得表單輸入資料
+            cEndDate =  homeform.cleaned_data['cEndDate'] #取得表單輸入資料
             cProgress =  homeform.cleaned_data['cProgress']
             cLock = homeform.cleaned_data['cLock']
             cReceive = homeform.cleaned_data['cReceive']
