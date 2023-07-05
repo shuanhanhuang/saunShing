@@ -52,7 +52,6 @@
       <div class="row">
         <h2 class="mt-2">工程發包議價紀錄單 資料表新增</h2>
       </div>
-      <p style="color:red; font-weight: bold; font-size: larger;">※如果付款方式為支票，請在備註欄備註「當月結__天票」</p>
       <p style="color:red; font-weight: bold; font-size: larger;">※{{message}}</p>
     </div>
 
@@ -67,14 +66,15 @@
             <tr><th>工地名稱/地點</th><td>{{contractform.cLocation}}</td></tr>
             <tr><th>發包內容</th><td>{{contractform.cContent}}</td></tr>
             <tr><th>確認訂單</th><td>{{contractform.cConfirm}}</td></tr>
+            <tr><th>工程預算</th><td>{{contractform.cBudget}}</td></tr>
             <tr>
                 <th>付款方式</th>
                 <td>
-                    <input name="cPayMode" type="radio" value="現金" checked="checked"/>現金
-                    <input name="cPayMode" type="radio" value="支票"/>支票
+                    <input name="cPayMode" type="radio" value="現金" checked="checked" id="1"/>現金
+                    <input name="cPayMode" type="radio" value="支票" id="Other"/>支票
+                    <input name="cPayMode" type="text" value="當月結__天票" id="other" />
                 </td>
             </tr>
-            <tr><th>工程預算</th><td>{{contractform.cBudget}}</td></tr>
             <tr><th>備註</th><td>{{contractform.cOther}}</td></tr>
             {% if username == "Gen"%}
               <tr>
@@ -99,6 +99,7 @@
             <tr><th>承辦人簽名</th><td>{{contractform.cUndertaker}}</td></tr>
             <tr>
                 <th align="center">
+                <input type="hidden" name="cPayMode" id="textvalue1" value="現金">
                 <input type="submit" class="btn btn-primary" name="button" id="button" value="送出">
                 <input type="reset" class="btn btn-danger" name="button2" id="button2" value="重設">
             </th>
@@ -112,6 +113,39 @@
       function Logout(){
         $(location).attr("href","/logout/");
       }
+
+      $(document).ready(function(){
+        $("#other").hide();
+        var test2 = "支票，"
+        $('#Other').click(function () {
+          // var test2 = "支票，"
+          if ($(this).is(':checked')) {
+            $("#other").show();
+
+          }
+          else {
+            $("#other").html('當月結__天票');
+            $("#other").hide();
+          }
+          test2 = "支票，" + $("#other").val()
+          $("#textvalue1").val(test2);
+        });
+
+        $("#other").on("input", function () {
+          test2 = "支票，" + $(this).val();
+          $("#textvalue1").val(test2);
+
+        });
+
+        $('#1').click(function () {
+
+          $("#other").html('當月結__天票');
+          $("#other").hide();
+          test2 = $(this).val()
+          $("#textvalue1").val(test2);
+
+        });
+      })
     </script>
   
 

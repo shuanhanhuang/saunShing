@@ -13,6 +13,8 @@ from testapp.filter import HomeFilter
 from django.template.loader import render_to_string
 import tempfile
 from django.db.models import Sum
+from django.core.files.storage import FileSystemStorage
+from . import models
 
 Acount = 0
 # Bcount = 0
@@ -36,17 +38,28 @@ def HomePost(request):
                 else:
                     count = "0"
             else:
-                count =""
+                count = ""
+            
+            if(cDate.day //10 == 0):
+                date = "0" + str(cDate.day)
+            else:
+                date = str(cDate.day)
+
+            if(cDate.month //10 == 0):
+                month = "0" + str(cDate.month)
+            else:
+                month = str(cDate.month)
+            
             if(homeform.cleaned_data['cType'] == "簽呈"):
-                cNumber = "A"+str(cDate.year)+str(cDate.month)+str(cDate.day)+count+str(Acount)
+                cNumber = "A"+str(cDate.year)+month+date+count+str(Acount)
             elif(homeform.cleaned_data['cType'] == "會議記錄"):
-                cNumber = "D"+str(cDate.year)+str(cDate.month)+str(cDate.day)+count+str(Acount)
+                cNumber = "D"+str(cDate.year)+month+date+count+str(Acount)
             elif(homeform.cleaned_data['cType'] == "內部連絡單"):
-                cNumber = "E"+str(cDate.year)+str(cDate.month)+str(cDate.day)+count+str(Acount)
+                cNumber = "E"+str(cDate.year)+month+date+count+str(Acount)
             elif(homeform.cleaned_data['cType'] == "工程發包議價記錄單"):
-                cNumber = "C"+str(cDate.year)+str(cDate.month)+str(cDate.day)+count+str(Acount)
+                cNumber = "C"+str(cDate.year)+month+date+count+str(Acount)
             elif(homeform.cleaned_data['cType'] == "設計變更通知單"):
-                cNumber = "B"+str(cDate.year)+str(cDate.month)+str(cDate.day)+count+str(Acount)
+                cNumber = "B"+str(cDate.year)+month+date+count+str(Acount)
             cAuther = firstname
             cEndDate =  homeform.cleaned_data['cEndDate'] #取得表單輸入資料
             cProgress =  homeform.cleaned_data['cProgress']
@@ -116,6 +129,7 @@ def homeEdit(request,id=None,mode=None):
         return render(request, "homeEdit.html", locals())
     elif mode == "save": # 由 edit2.html 按 submit
         unit = Home.objects.get(id=id)  #取得要修改的資料記錄
+        # homeform = HomeForm(request.POST,request.FILES)
         if(unit.cLock == "是"):
             unit.cLock=request.POST['cLock']
         else: 
@@ -125,8 +139,11 @@ def homeEdit(request,id=None,mode=None):
             unit.cProgress = request.POST['cProgress']
             unit.cReceive = request.POST['cReceive']
             if Open == True:
-                unit.cFile = request.POST['cFile']
                 open = False
+                try:
+                    unit.cFile = request.FILES['cFile']
+                except:
+                    unit.cFile = request.POST["cFile"]
             if (authenticate == True):
                 unit.cLock=request.POST['cLock']
         unit.save()  #寫入資料庫

@@ -55,7 +55,7 @@
       <p style="color:red; font-weight: bold; font-size: larger;">{{message}}</p>
     </div>
 
-    <form action="/homeEdit/{{unit.id}}/save" method="POST" name="form1">
+    <form action="/homeEdit/{{unit.id}}/save" method="POST" name="form1" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="container">
             <div class="row">
@@ -65,9 +65,9 @@
                       <tr>
                         <th>檔案</th>
                         <td>
-                          
+                          <!-- <input name="cFile" type="file"> -->
                           {% if Open == True %}
-                            <input name="cFile" type="file" >
+                            <input name="cFile" type="file">
                           {% else %}
                             <a href="/open1/{{unit.id}}/load" class="btn btn-primary">更新檔案</a>
                           {% endif %}

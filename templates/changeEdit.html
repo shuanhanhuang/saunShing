@@ -169,6 +169,7 @@
                             製造單位要求改變
                             <input name="cChangereason" type="radio" id="cChangereason4" value="其他" />
                             其他
+                            <input name="cChangereason" type="text" id="other" value="">
                         </td>
                         {% elif unit.cChangereason == "設計錯誤" %}
                         <td>
@@ -181,6 +182,8 @@
                             製造單位要求改變
                             <input name="cChangereason" type="radio" id="cChangereason4" value="其他" />
                             其他
+                            <input name="cChangereason" type="text" id="other" value="">
+
                         </td>
                         {% elif unit.cChangereason == "製造單位要求改變" %}
                         <td>
@@ -193,6 +196,7 @@
                             製造單位要求改變
                             <input name="cChangereason" type="radio" id="cChangereason4" value="其他" />
                             其他
+                            <input name="cChangereason" type="text" id="other" value="">
                             {% else %}
                         <td>
                             <input name="cChangereason" type="radio" id="cChangereason1" value="客戶需求改變" />
@@ -340,27 +344,29 @@
                 test = test.substring(0, test.length - 1)
                 $("#textvalue").val(test);
             })
-            if($("#other").val()==undefined){
+            if($("#other").val()==undefined || $("#other").val()== ""){
                 $("#other").hide();
             
-
             }
             else{
                 $("#other").val()
-                console.log( $("#other").val())
             }
                 
             $('#cChangereason4').click(function () {
                 var test2 = ""
+                $("#other").show();
                 if ($(this).is(':checked')) {
                     $("#other").show();
-
                 }
                 else {
                     $("#other").html('');
                     $("#other").hide();
                 }
+                test2 = $("#other").val()
+                $("#textvalue1").val(test2);
             });
+
+
 
             $("#other").on("input", function () {
                 test2 = $(this).val();
@@ -376,7 +382,7 @@
                 $("#textvalue1").val(test2);
 
             });
-            $('#cChangereason1').click(function () {
+            $('#cChangereason2').click(function () {
 
                 $("#other").html('');
                 $("#other").hide();
