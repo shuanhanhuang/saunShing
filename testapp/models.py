@@ -3,17 +3,22 @@ from django.db import models
 # Create your models here.
 #7
 class Home(models.Model):
+    TYPE = (("簽呈","簽呈"),("會議記錄","會議記錄"),("內部連絡單","內部連絡單"),
+            ("工程發包議價記錄單","工程發包議價記錄單"),("設計變更通知單","設計變更通知單"))
+    DEP = (("總經理室","總經理室"),("稽核室","稽核室"),("文管中心","文管中心"),
+            ("管理部","管理部"),("業務設計部","業務設計部"),("廠務部","廠務部"))
+    PRO = (("草稿","草稿"),("流程中","流程中"),("廢單","廢單"),("結案","結案"))
     cNumber = models.CharField(max_length=50, default='', null=False)
     cAuther = models.CharField(max_length=20, null=False)#姓名
-    cDepartment = models.CharField(max_length=50,null=False)#單位
-    cType = models.CharField(max_length=10,default=" ",null=False)
-    cProgress = models.CharField(max_length=20,null=False,default='')
+    cDepartment = models.CharField(max_length=50,null=False, choices=DEP)#單位
+    cType = models.CharField(max_length=10,default=" ",null=False, choices=TYPE)
+    cProgress = models.CharField(max_length=20,null=False,default='',choices=PRO)
     cDate = models.DateField(null=False)#日期
     cEndDate = models.DateField(blank=True, null=True)
     cLock = models.CharField(max_length=5,null=False,default='否')
-    cReceive  = models.CharField(max_length=20,blank=True,null=True)
+    cReceive  = models.CharField(max_length=20,blank=True,null=True,)
     cFile = models.FileField(blank=True, null=True)
-    # cCheckuplaod = models.CharField(max_length=5,null=False,default='否')
+
 4+1
 class Signed (models.Model):
     cNumber = models.CharField(max_length=50, default='', null=False)#編號
@@ -21,6 +26,7 @@ class Signed (models.Model):
     cSubject = models.CharField(max_length=255, default='', null=False)#主旨
     cDiscription = models.TextField(blank=True)#說明
     home = models.OneToOneField(Home, on_delete=models.CASCADE,default='')
+
 #11+1
 class Meeting (models.Model):
     cNumber = models.CharField(max_length=50, default='', null=False)
@@ -35,6 +41,7 @@ class Meeting (models.Model):
     cViceGeneral_Sign = models.CharField(max_length=20, blank=True) #副總簽名
     cManger_Sign = models.CharField(max_length=20, blank=True)#主管簽名
     home = models.OneToOneField(Home, on_delete=models.CASCADE,default='')
+
 #4+1   
 class MeetingInner(models.Model):
     cContent = models.TextField(blank=True)
@@ -42,6 +49,7 @@ class MeetingInner(models.Model):
     cExpectDate = models.CharField(max_length=20, default='', blank=True)
     cOther = models.TextField(blank=True)
     innermeeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, default="" ,related_name='details')
+
 #7+1
 class Contact (models.Model):
     cNumber = models.CharField(max_length=50, default='', null=False)#編號
@@ -52,6 +60,7 @@ class Contact (models.Model):
     cDiscription = models.TextField(blank=True)#說明
     cOption = models.TextField(blank=True)#各審核人員意見
     home = models.OneToOneField(Home, on_delete=models.CASCADE,default='')
+
 #12+1
 class Contract(models.Model):
     cNumber = models.CharField(max_length=50, default='', null=False) #編號
@@ -68,6 +77,7 @@ class Contract(models.Model):
     cDepartmentManager_Sign = models.CharField(max_length=20, blank=True) #單位主管簽名
     cUndertaker = models.CharField(max_length=20,blank=True)#承辦人
     home = models.OneToOneField(Home, on_delete=models.CASCADE,default='')
+
 #5+1
 class ContractInner(models.Model):
     cContractor = models.CharField(max_length=20, null=False) #承包商
