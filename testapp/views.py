@@ -49,7 +49,7 @@ def HomePost(request):
                 month = "0" + str(cDate.month)
             else:
                 month = str(cDate.month)
-            
+
             if(homeform.cleaned_data['cType'] == "簽呈"):
                 cNumber = "A"+str(cDate.year)+month+date+count+str(Acount)
             elif(homeform.cleaned_data['cType'] == "會議記錄"):
