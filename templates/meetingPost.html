@@ -35,7 +35,7 @@
           </ul>
           <ul class="navbar-nav ml-2">
             <li class="nav-item active">
-              <a class="nav-link disabled" style="color: green;">{{username}} <span class="sr-only">(current)</span></a>
+              <a class="nav-link disabled" style="color: green;">{{firstname}} <span class="sr-only">(current)</span></a>
             </li>
           </ul>
           <ul class="navbar-nav ml-2">
@@ -75,7 +75,7 @@
             <tr><th>主題</th><td>{{meetingform.cTopic}}</td></tr>
             <tr><th>列席人員</th><td>{{meetingform.cAttendees1}}</td></tr>
             <tr><th>出席人員</th><td>{{meetingform.cAttendees2}}</td></tr>
-            {% if username == "viceP" %}
+            {% if username == "	08907008" %}
               <tr><th>副總簽名</th><td>{{meetingform.cViceGeneral_Sign}}</td></tr>
             {% elif authenticate == True %}
               <tr><th>主管簽名</th><td>{{meetingform.cManger_Sign}}</td></tr>

@@ -22,7 +22,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="/homeIndex/">Home</a>
+            <a class="navbar-brand" href="/homeIndex/">首頁</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -33,7 +33,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                             aria-expanded="false">
-                            Dropdown
+                            其他表單
                         </a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="/signallIndex/">簽呈資料</a>
@@ -46,7 +46,7 @@
                 </ul>
                 <ul class="navbar-nav ml-2">
                     <li class="nav-item active">
-                        <a class="nav-link disabled" style="color: green;">{{username}} <span
+                        <a class="nav-link disabled" style="color: green;">{{firstname}} <span
                                 class="sr-only">(current)</span></a>
                     </li>
                 </ul>
@@ -242,21 +242,23 @@
                         <th>變更潛在風險說明</th>
                         <td><textarea id="cRisk" name="cRisk">{{unit.cRisk}}</textarea></td>
                     </tr>
-                    {% if firstname == "廠務部" %}
+                    {% if lastname == "廠務部" %}
                     <tr>
                         <th>廠務部意見</th>
                         <td><textarea id="cOption_FS" name="cOption_FS">{{unit.cOption_FS}}</textarea></td>
                         <th>簽名</th>
                         <td><input type="text" id="cFs_Sign" name="cFs_Sign" value={{unit.cFs_Sign}}></td>
                     </tr>
-                    {% elif firstname == "設計部" %}
+                    {% endif %}
+                    {% if lastname == "業務設計部" %}
                     <tr>
                         <th>業務設計部意見</th>
                         <td><textarea id="cOption_Design" name="cOption_Design">{{unit.cOption_Design}}</textarea></td>
                         <th>簽名</th>
                         <td><input type="text" id="cDesign_Sign" name="cDesign_Sign" value={{unit.cDesign_Sign}}></td>
                     </tr>
-                    {% elif firstname == "品管部" %}
+                    {% endif %}
+                    {% if lastname == "品管課" %}
                     <tr>
                         <th>品管課意見</th>
                         <td><textarea id="cOption_Quality" name="cOption_Quality">{{unit.cOption_Quality}}</textarea>
@@ -265,7 +267,8 @@
                         <td><input type="text" id="cQuality_Sign" name="cQuality_Sign" value={{unit.cQuality_Sign}}>
                         </td>
                     </tr>
-                    {% elif firstname == "採購部" %}
+                    {% endif %}
+                    {% if firstname == "蔡榕蓉" %}
                     <tr>
                         <th>採購課意見</th>
                         <td><textarea id="cOption_Purchase" name="cOption_Purchase">{{unit.cOption_Purchase}}</textarea>

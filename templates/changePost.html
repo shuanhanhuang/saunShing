@@ -13,7 +13,7 @@
   
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
-        <a class="navbar-brand" href="/homeIndex/">Home</a>
+        <a class="navbar-brand" href="/homeIndex/">首頁</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -22,7 +22,7 @@
           <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                Dropdown
+                其他表單
               </a>
               <div class="dropdown-menu">
                 <a class="dropdown-item" href="/signallIndex/">簽呈資料</a>
@@ -35,7 +35,7 @@
           </ul>
           <ul class="navbar-nav ml-2">
             <li class="nav-item active">
-              <a class="nav-link disabled" style="color: green;">{{username}} <span class="sr-only">(current)</span></a>
+              <a class="nav-link disabled" style="color: green;">{{firstname}} <span class="sr-only">(current)</span></a>
             </li>
           </ul>
           <ul class="navbar-nav ml-2">
@@ -94,22 +94,25 @@
             <tr><th>影響項目</th><td>{{changeform.cAffectitem}}</td></tr>
             <tr><th>變更要點說明</th><td>{{changeform.cKeypoint}}</td></tr>
             <tr><th>變更潛在風險說明</th><td>{{changeform.cRisk}}</td></tr>
-            {% if username == "fs" %}
+            {% if lastname == "廠務部" %}
             <tr>
                 <th>廠務部意見</th><td>{{changeform.cOption_FS}}</td>
                 <th>簽名</th><td>{{changeform.cFs_Sign}}</td>
             </tr>
-            {% elif username == "ds" %}
+            {% endif %}
+            {% if lastname == "業務設計部" %}
             <tr>
                 <th>業務設計部意見</th><td>{{changeform.cOption_Design}}</td>
                 <th>簽名</th><td>{{changeform.cDesign_Sign}}</td>
             </tr>
-            {% elif username == "qs" %}
+            {% endif %}
+            {% if lastname == "品管課" %}
             <tr>
                 <th>品管課意見</th><td>{{changeform.cOption_Quality}}</td>
                 <th>簽名</th><td>{{changeform.cQuality_Sign}}</td>
             </tr>
-            {% elif username == "ps" %}
+            {% endif %}
+            {% if firstname == "蔡榕蓉" %}
             <tr>
                 <th>採購課意見</th><td>{{changeform.cOption_Purchase}}</td>
                 <th>簽名</th><td>{{changeform.cPurchase_Sign}}</td>
@@ -129,12 +132,14 @@
             </tr>
             <tr><th>技術通報</th>
                 <td>
-                <input name="cTech_bulletin" type="radio"  value="是" checked="checked"/>是
-                <input name="cTech_bulletin" type="radio" value="否"/>否
+                  <input name="cTech_bulletin" type="radio"  value="是" checked="checked"/>是
+                  <input name="cTech_bulletin" type="radio" value="否"/>否
                 </td>
             </tr>
-            <tr><th>核准人</th><td>{{changeform.cApproved}}</td></tr>
-            <tr><th>審查人</th><td>{{changeform.cReview}}</td></tr>
+            {% if authenticate == True %}
+              <tr><th>核准人</th><td>{{changeform.cApproved}}</td></tr>
+              <tr><th>審查人</th><td>{{changeform.cReview}}</td></tr>
+            {% endif %}
             <tr><th>承辦人</th><td>{{changeform.cUndertaker}}</td></tr>
             <tr>
               <th align="center">

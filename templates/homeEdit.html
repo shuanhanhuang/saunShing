@@ -36,7 +36,7 @@
           </ul>
           <ul class="navbar-nav ml-2">
             <li class="nav-item active">
-              <a class="nav-link disabled" style="color: green;">{{username}} <span class="sr-only">(current)</span></a>
+              <a class="nav-link disabled" style="color: green;">{{firstname}} <span class="sr-only">(current)</span></a>
             </li>
           </ul>
           <ul class="navbar-nav ml-2">
@@ -239,9 +239,9 @@
                               總經理
                               <input name="cReceive" type="radio" id="cReceive2" value="viceP" />
                               副總
-                              <input name="cReceive" type="radio" id="cReceive3" value="fs" />
+                              <input name="cReceive" type="radio" id="cReceive3" value="Section" />
                               廠務部
-                              <input name="cReceive" type="radio" id="cReceive4" value="ds" />
+                              <input name="cReceive" type="radio" id="cReceive4" value="ViceSection" />
                               業務設計部
                               <input name="cReceive" type="radio" id="cReceive5" value="None" />
                               無                         
@@ -252,35 +252,35 @@
                             總經理
                             <input name="cReceive" type="radio" id="cReceive2" value="viceP" checked="checked"/>
                             副總
-                            <input name="cReceive" type="radio" id="cReceive3" value="fs" />
+                            <input name="cReceive" type="radio" id="cReceive3" value="Section" />
                             廠務部
-                            <input name="cReceive" type="radio" id="cReceive4" value="ds" />
+                            <input name="cReceive" type="radio" id="cReceive4" value="ViceSection" />
                             業務設計部
                             <input name="cReceive" type="radio" id="cReceive5" value="None" />
                             無                         
                           </td>
-                      {% elif unit.cReceive == "fs" %}
+                      {% elif unit.cReceive == "Section" %}
                           <td >
                             <input name="cReceive" type="radio" id="cReceive1" value="Gen" />
                             總經理
                             <input name="cReceive" type="radio" id="cReceive2" value="viceP" />
                             副總
-                            <input name="cReceive" type="radio" id="cReceive3" value="fs" checked="checked"/>
+                            <input name="cReceive" type="radio" id="cReceive3" value="Section" checked="checked"/>
                             廠務部
-                            <input name="cReceive" type="radio" id="cReceive4" value="ds" />
+                            <input name="cReceive" type="radio" id="cReceive4" value="ViceSection" />
                             業務設計部
                             <input name="cReceive" type="radio" id="cReceive5" value="None" />
                             無                         
                           </td>
-                      {% elif unit.cReceive == "ds" %}
+                      {% elif unit.cReceive == "ViceSection" %}
                           <td >
                             <input name="cReceive" type="radio" id="cReceive1" value="Gen" />
                             總經理
                             <input name="cReceive" type="radio" id="cReceive2" value="viceP" />
                             副總
-                            <input name="cReceive" type="radio" id="cReceive3" value="fs" />
+                            <input name="cReceive" type="radio" id="cReceive3" value="Section" />
                             廠務部
-                            <input name="cReceive" type="radio" id="cReceive4" value="ds" checked="checked"/>
+                            <input name="cReceive" type="radio" id="cReceive4" value="ViceSection" checked="checked"/>
                             業務設計部
                             <input name="cReceive" type="radio" id="cReceive5" value="None" />
                             無                         
@@ -291,9 +291,9 @@
                             總經理
                             <input name="cReceive" type="radio" id="cReceive2" value="viceP" />
                             副總
-                            <input name="cReceive" type="radio" id="cReceive3" value="fs" />
+                            <input name="cReceive" type="radio" id="cReceive3" value="Section" />
                             廠務部
-                            <input name="cReceive" type="radio" id="cReceive4" value="ds" />
+                            <input name="cReceive" type="radio" id="cReceive4" value="ViceSection" />
                             業務設計部
                             <input name="cReceive" type="radio" id="cReceive5" value="None" checked="checked"/>
                             無                         

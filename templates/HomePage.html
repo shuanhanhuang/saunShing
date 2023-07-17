@@ -21,7 +21,7 @@
           <h4 class="card-title d-flex justify-content-center">文件登記系統</h4>
           <p class="card-text">
             {% if request.user.is_authenticated %}
-              <p>歡迎光臨:{{name}}</p>
+              <p>歡迎光臨:{{firstname}}</p>
               <button id='enterbtn' class="btn btn-success mb-2">進入系統</button>
               <button id="logoutbtn" class="btn btn-danger mb-2">登出</button>
             {% else %}

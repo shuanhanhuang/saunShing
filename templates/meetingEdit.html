@@ -37,7 +37,7 @@
           </ul>
           <ul class="navbar-nav ml-2">
             <li class="nav-item active">
-              <a class="nav-link disabled" style="color: green;">{{username}} <span class="sr-only">(current)</span></a>
+              <a class="nav-link disabled" style="color: green;">{{firstname}} <span class="sr-only">(current)</span></a>
             </li>
           </ul>
           <ul class="navbar-nav ml-2">
@@ -139,7 +139,7 @@
                         <th>出席人數</th>
                         <td><textarea  id="cAttendees2" name="cAttendees2">{{unit.cAttendees2}}</textarea></td>
                     </tr>
-                    {% if firstname == "副總" %}
+                    {% if firstname == "郭文河" %}
                         <tr>
                             <th>副總簽名</th>
                             <td><input type="text" id="cViceGeneral_Sign" name="cViceGeneral_Sign" value={{unit.cViceGeneral_Sign}}></td>

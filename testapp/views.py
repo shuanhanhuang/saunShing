@@ -11,10 +11,10 @@ from django.db.models import Q
 from testapp.filter import HomeFilter
 # from weasyprint import HTML
 from django.template.loader import render_to_string
-import tempfile
+from django import template
 from django.db.models import Sum
 from django.core.files.storage import FileSystemStorage
-from . import models
+from django.contrib.auth.models import Group
 
 Acount = 0
 # Bcount = 0
@@ -49,7 +49,7 @@ def HomePost(request):
                 month = "0" + str(cDate.month)
             else:
                 month = str(cDate.month)
-
+            
             if(homeform.cleaned_data['cType'] == "簽呈"):
                 cNumber = "A"+str(cDate.year)+month+date+count+str(Acount)
             elif(homeform.cleaned_data['cType'] == "會議記錄"):
@@ -90,6 +90,7 @@ def homeIndex(request):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     if 'q' in request.GET:
         q = request.GET['q']
         multiple_q = Q(Q(cNumber__icontains=q) | Q(cType__icontains=q) | Q(cAuther__icontains=q) | Q(cProgress__icontains=q) | Q(cDate__icontains=q) | Q(cEndDate__icontains=q))
@@ -113,6 +114,7 @@ def homeEdit(request,id=None,mode=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     if mode == "load":  # 由 index.html 按 編輯二 鈕
         unit = Home.objects.get(id=id)  #取得要修改的資料記  
         strdate=str(unit.cDate)
@@ -184,6 +186,7 @@ def perosonIndex(request,cUsername = None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     all = Home.objects.filter(cReceive = cUsername)
     allHomeCount = len(all)
     return render(request, "perosonIndex.html",locals())
@@ -193,6 +196,7 @@ def signPost(request,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     home = Home.objects.get(cNumber=cNumber)
     unitinner = Signed.objects.filter(home=home).order_by("id")
     if request.method == 'POST':
@@ -217,6 +221,7 @@ def signView(request,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     home = Home.objects.get(cNumber=cNumber)
     sign = Signed.objects.get(cNumber=cNumber)
     return render(request, "signView.html",locals())
@@ -226,6 +231,7 @@ def signPdf(request,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     home = Home.objects.get(cNumber=cNumber)
     sign = Signed.objects.get(cNumber=cNumber)
     return render(request, "signPdf.html",locals())
@@ -234,6 +240,7 @@ def signallIndex(request):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     if 'q' in request.GET:
         q = request.GET['q']
         multiple_q = Q(Q(cNumber__icontains=q) | Q(cSubject__icontains=q))
@@ -247,6 +254,7 @@ def signEdit(request,id=None,mode=None,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     index = Home.objects.get(cNumber = cNumber)
     if mode == "load":  # 由 index.html 按 編輯二 鈕
         unit = Signed.objects.get(id = id)  #取得要修改的資料記
@@ -266,6 +274,7 @@ def meetingPost(request,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     home = Home.objects.get(cNumber=cNumber)
     unitinner = Meeting.objects.filter(home=home).order_by("id")
     if request.method == 'POST':
@@ -312,7 +321,7 @@ def meetingEdit(request,id=None,mode=None,cNumber=None):
         unit.cAttendees1=request.POST['cAttendees1']
         unit.cAttendees2=request.POST['cAttendees2']
         unit.cLeader = request.POST['cLeader']
-        if(firstname == "副總"):
+        if(firstname == "郭文河"):
             unit.cViceGeneral_Sign = request.POST['cViceGeneral_Sign']
         elif(authenticate == True):
             unit.cManger_Sign = request.POST['cManger_Sign']
@@ -325,6 +334,7 @@ def meetingView(request,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     home = Home.objects.get(cNumber=cNumber)
     meeting = Meeting.objects.get(cNumber=cNumber)
     return render(request, "meetingView.html",locals())
@@ -333,6 +343,7 @@ def meetingallIndex(request):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     if 'q' in request.GET:
         q = request.GET['q']
         multiple_q = Q(Q(cNumber__icontains=q) | Q(cTopic__icontains=q) | Q(cMeetingType__icontains=q))
@@ -348,6 +359,7 @@ def meetinginnerPost(request,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     innermeeting = Meeting.objects.get(cNumber = cNumber)
     unitinner = MeetingInner.objects.filter(innermeeting=innermeeting).order_by("id")
     if request.method == "POST":  #如果是以POST方式才處理
@@ -371,6 +383,7 @@ def meetinginnerEdit(request,id=None,mode=None,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     index = Meeting.objects.get(cNumber = cNumber)
     if mode == "load":  # 由 index.html 按 編輯二 鈕
         unit = MeetingInner.objects.get(id=id)  #取得要修改的資料記
@@ -390,6 +403,7 @@ def meetinginnerIndex(request,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     id = Meeting.objects.get(cNumber = cNumber)
     if 'q' in request.GET:
         q = request.GET['q']
@@ -404,6 +418,7 @@ def meetinginnerView(request,cNumber=None,id=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     home = Meeting.objects.get(cNumber=cNumber)
     meetinginner = MeetingInner.objects.get(id=id)
     return render(request, "meetinginnerView.html",locals())
@@ -427,6 +442,7 @@ def contactPost(request,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     home = Home.objects.get(cNumber=cNumber)
     unitinner = Contact.objects.filter(home=home).order_by("id")
     if request.method == 'POST':
@@ -455,6 +471,7 @@ def contactView(request,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     home = Home.objects.get(cNumber=cNumber)
     contact = Contact.objects.get(cNumber=cNumber)
     return render(request, "contactView.html",locals())
@@ -463,6 +480,7 @@ def contactallIndex(request):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     if 'q' in request.GET:
         q = request.GET['q']
         multiple_q = Q(Q(cNumber__icontains=q) | Q(cSubject__icontains=q) | Q(cDecisionDep__icontains=q))
@@ -476,6 +494,7 @@ def contactEdit(request,id=None,mode=None,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     index = Home.objects.get(cNumber = cNumber)
     if mode == "load":  # 由 index.html 按 編輯二 鈕
         unit = Contact.objects.get(id = id)  #取得要修改的資料記
@@ -497,6 +516,7 @@ def contractPost(request,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     home = Home.objects.get(cNumber=cNumber)
     unitinner = Contract.objects.filter(home=home).order_by("id")
     if request.method == 'POST':
@@ -531,6 +551,7 @@ def contractView(request,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     home = Home.objects.get(cNumber=cNumber)
     contract = Contract.objects.get(cNumber=cNumber)
     return render(request, "contractView.html",locals())
@@ -539,6 +560,7 @@ def contractallIndex(request):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     if 'q' in request.GET:
         q = request.GET['q']
         multiple_q = Q(Q(cNumber__icontains=q) | Q(cClient__icontains=q) | Q(cLocation__icontains=q) | Q(cContent__icontains=q))
@@ -566,9 +588,9 @@ def contractEdit(request,id=None,mode=None,cNumber=None):
         unit.cBudget = request.POST['cBudget']
         unit.cOther = request.POST['cOther']
         unit.cConfirm=request.POST['cConfirm']
-        if firstname == "總座":
+        if firstname == "郭文龍":
             unit.cGeneral_Sign=request.POST['cGeneral_Sign']
-        elif firstname == "副總":
+        elif firstname == "郭文河":
             unit.cViceGeneral_Sign=request.POST['cViceGeneral_Sign']
         elif authenticate == True:
             unit.cManager_Sign = request.POST['cManager_Sign']
@@ -583,6 +605,7 @@ def contractinnerPost(request,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     innercontract = Contract.objects.get(cNumber = cNumber)
     unitinner = ContractInner.objects.filter(innercontract=innercontract).order_by("id")
     if request.method == "POST":  #如果是以POST方式才處理
@@ -607,6 +630,7 @@ def contractinnerEdit(request,id=None,mode=None,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     index = Contract.objects.get(cNumber = cNumber)
     if mode == "load":  # 由 index.html 按 編輯二 鈕
         unit = ContractInner.objects.get(id=id)  #取得要修改的資料記
@@ -627,6 +651,7 @@ def contractinnerIndex(request,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     id = Contract.objects.get(cNumber = cNumber)
     if 'q' in request.GET:
         q = request.GET['q']
@@ -641,6 +666,7 @@ def contractinnerView(request,cNumber=None,id=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     home = Contract.objects.get(cNumber=cNumber)
     contractinner = ContractInner.objects.get(id=id)
     return render(request, "contractinnerView.html",locals())
@@ -649,6 +675,7 @@ def contractinnerDelete(request,id=None,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     index = Contract.objects.get(cNumber = cNumber)
     if id!=None:
         if request.method == "POST":  #如果是以POST方式才處理
@@ -661,11 +688,24 @@ def contractinnerDelete(request,id=None,cNumber=None):
             message = "讀取錯誤!"
     return render(request, "contractinnerDelete.html", locals())
 
+
 #設計變更通知單
 def changePost(request,cNumber=None):
+    factory = {"侯宗仁":"廠務部","高麗華":"廠務部","蔡榕蓉":"廠務部","馮文明":"廠務部","陳恆瑞":"廠務部"
+               ,"郭文欽":"廠務部","葉莉萱":"廠務部","莊曜嘉":"廠務部","楊恭擇":"廠務部","高如媛":"廠務部"
+               ,"廖士瑋":"廠務部","廖源龍":"廠務部","楊智全":"廠務部","陳春能":"廠務部","梁國纘":"廠務部"
+               ,"黃春北":"廠務部","楊功亮":"廠務部","阮進士":"廠務部","鄭春峰":"廠務部","陳文戰":"廠務部"
+               ,"陳庭孟":"廠務部","陳文聯":"廠務部","呂美慧":"廠務部","何純":"廠務部","陳泓諭":"廠務部"
+               ,"梅文純":"廠務部","陳文量":"廠務部","黃春越":"廠務部","梅維慶":"廠務部","鄭文愛":"廠務部"
+               ,"陳駿騰":"廠務部"}
+    business = {"林志勳":"業務部","徐崇信":"業務部","王韋盛":"業務部","王竣平":"業務部","簡瑞泓":"業務部"
+                ,"鄭任雯":"業務部","郭曉穎":"業務部","邱郁晴":"業務部","郭雪芬":"業務部","李政晃":"業務部"
+                ,"李芳純":"業務部","陳佳欣":"業務部","蔡孟亭":"業務部","許寶玲":"業務部","黃睿堂":"業務部"}
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
+        lastname = request.user.last_name
     home = Home.objects.get(cNumber=cNumber)
     unitinner = Change.objects.filter(home=home).order_by("id")
     if request.method == 'POST':
@@ -714,6 +754,8 @@ def changeView(request,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        group = request.user.group.filter()
+        firstname = request.user.first_name
     home = Home.objects.get(cNumber=cNumber)
     change = Change.objects.get(cNumber=cNumber)
     return render(request, "changeView.html",locals())
@@ -722,6 +764,7 @@ def changeallIndex(request):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
+        firstname = request.user.first_name
     if 'q' in request.GET:
         q = request.GET['q']
         multiple_q = Q(Q(cNumber__icontains=q) | Q(cProjectName__icontains=q) | Q(cChangeitem__icontains=q) | Q(cChangereason__icontains=q) | Q(cHowChange__icontains=q))
@@ -732,10 +775,21 @@ def changeallIndex(request):
     return render(request, "changeall_Index.html",locals())
 
 def changeEdit(request,id=None,mode=None,cNumber=None):
+    factory = {"侯宗仁":"廠務部","高麗華":"廠務部","蔡榕蓉":"廠務部","馮文明":"廠務部","陳恆瑞":"廠務部"
+               ,"郭文欽":"廠務部","葉莉萱":"廠務部","莊曜嘉":"廠務部","楊恭擇":"廠務部","高如媛":"廠務部"
+               ,"廖士瑋":"廠務部","廖源龍":"廠務部","楊智全":"廠務部","陳春能":"廠務部","梁國纘":"廠務部"
+               ,"黃春北":"廠務部","楊功亮":"廠務部","阮進士":"廠務部","鄭春峰":"廠務部","陳文戰":"廠務部"
+               ,"陳庭孟":"廠務部","陳文聯":"廠務部","呂美慧":"廠務部","何純":"廠務部","陳泓諭":"廠務部"
+               ,"梅文純":"廠務部","陳文量":"廠務部","黃春越":"廠務部","梅維慶":"廠務部","鄭文愛":"廠務部"
+               ,"陳駿騰":"廠務部"}
+    business = {"林志勳":"業務部","徐崇信":"業務部","王韋盛":"業務部","王竣平":"業務部","簡瑞泓":"業務部"
+                ,"鄭任雯":"業務部","郭曉穎":"業務部","邱郁晴":"業務部","郭雪芬":"業務部","李政晃":"業務部"
+                ,"李芳純":"業務部","陳佳欣":"業務部","蔡孟亭":"業務部","許寶玲":"業務部","黃睿堂":"業務部"}
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
         firstname = request.user.first_name
+        lastname = request.user.last_name
     index = Home.objects.get(cNumber = cNumber)
     if mode == "load":  # 由 index.html 按 編輯二 鈕
         unit = Change.objects.get(id = id)  #取得要修改的資料記
@@ -795,4 +849,5 @@ def logout(request):
 def HomePage(request):
 	if request.user.is_authenticated:
 		name=request.user.username
+		firstname = request.user.first_name
 	return render(request, "HomePage.html", locals())
