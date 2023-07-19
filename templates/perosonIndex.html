@@ -126,7 +126,7 @@
                         <button type="button" class="btn btn-outline-warning" id="Detail/{{unit.cNumber}}" onclick="Detail(event)">詳細內容</button>
                         <button type="button" class="btn btn-outline-info" id="{{unit.id}}" onclick="Edit(event)">編輯</button>
                         <button type="button" class="btn btn-outline-secondary" id="{{unit.id}}" onclick="Delete(event)">刪除</button>
-                    </td>
+                      </td>
                     {% elif unit.cLock == "是" and authenticate == True %}
                     <td>
                         <button type="button" class="btn btn-outline-info" id="{{unit.id}}" onclick="Edit(event)">編輯</button>
@@ -178,6 +178,7 @@
       function home(){
         $(location).attr("href","/homePost/")
       }
+    
 
 
   </script>

@@ -19,6 +19,12 @@ class Home(models.Model):
     cReceive  = models.CharField(max_length=20,blank=True,null=True,)
     cFile = models.FileField(blank=True, null=True)
 
+# class Returned(models.Model):
+#     cName = models.CharField(max_length=20, blank=True)
+#     cIllustrate = models.TextField(blank=True)
+#     cTransfer = models.CharField(max_length=20,blank=True,null=True,)
+#     returnTo = models.ForeignKey(Home, on_delete=models.CASCADE, default="" ,related_name='details')
+
 4+1
 class Signed (models.Model):
     cNumber = models.CharField(max_length=50, default='', null=False)#編號

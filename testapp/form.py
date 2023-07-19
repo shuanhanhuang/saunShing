@@ -13,6 +13,11 @@ class HomeForm(forms.Form):
     cReceive = forms.CharField(max_length=20,required=False)
     # cCheckuplaod = forms.CharField(max_length=5,initial="否")
     cFile = forms.FileField(required=False)
+    
+# class ReturnedForm(forms.Form):
+# 	cName = forms.CharField(max_length=20,initial="免填",disabled=True)#姓名
+# 	cIllustrate = forms.CharField(widget=forms.Textarea, required=False)
+# 	cTransfer = forms.CharField(max_length=20,required=False)
 
 class SignedForm (forms.Form):
 	cNumber = forms.CharField(max_length=50,initial='免填',disabled=True)

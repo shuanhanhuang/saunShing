@@ -27,6 +27,7 @@ from testapp.views import HomePage,login,logout,perosonIndex,open1,\
     contractallIndex,contractPost,contractEdit,contractView,\
     contractinnerDelete,contractinnerIndex,contractinnerEdit,contractinnerPost,contractinnerView,\
     changeallIndex,changeView,changeEdit,changePost
+
 urlpatterns = [
     path('',HomePage),
     path('HomePage/',HomePage),
@@ -77,7 +78,6 @@ urlpatterns = [
     path('changeView/<str:cNumber>/',changeView),
     path('changeEdit/<str:cNumber>/<int:id>/<str:mode>',changeEdit),
     path('changePost/<str:cNumber>/',changePost),
-
 
     path('admin/', admin.site.urls),
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

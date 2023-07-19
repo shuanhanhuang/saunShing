@@ -164,6 +164,44 @@ def homeDelete(request,id=None):
 			message = "讀取錯誤!"
 	return render(request, "homeDelete.html", locals())
 
+# def returnedPost(request,cNumber=None):
+#     if request.user.is_authenticated:
+#         username=request.user.username
+#         authenticate=request.user.is_staff
+#         firstname = request.user.first_name
+#     returnedHome = Home.objects.get(cNumber = cNumber)
+#     if request.method == 'POST':
+#         returnedform = ReturnedForm(request.POST)
+#         if returnedform.is_valid():
+#             cName = firstname
+#             cIllustrate =  returnedform.cleaned_data['cIllustrate']
+#             cTransfer =  returnedform.cleaned_data['cTransfer']
+#             returnedunit = Returned.objects.create(returnedHome=returnedHome, cName= cName, cIllustrate=cIllustrate, cTransfer=cTransfer)
+#             returnedunit.save()
+#             return redirect('/returnedIndex/')
+#         else:
+#              message="驗證錯誤"
+#     else:
+#          message='被駁回者為必選'
+#     returnedform = ReturnedForm()
+#     return render(request, "returnedPost.html", locals())
+
+# def returnedIndex(request,cNumber=None):
+#     home = Home.objects.get(cNumber = cNumber)
+#     if request.user.is_authenticated:
+#         username=request.user.username
+#         authenticate=request.user.is_staff
+#         firstname = request.user.first_name
+#     if 'q' in request.GET:
+#         q = request.GET['q']
+#         multiple_q = Q(Q(cName__icontains=q) | Q(cIllustrate__icontains=q) | Q(cTransfer__icontains=q))
+#         returned = Returned.objects.filter(multiple_q)
+#     else:
+#         unitreturn = Returned.objects.filter(returnTo=home).order_by("id")
+#     allunitreturnCount = len(unitreturn)
+#     return render(request, "returned_Index.html",locals())
+
+
 def Detail(request,cNumber=None):
     index = Home.objects.get(cNumber = cNumber)
     if index.cType == "簽呈":
@@ -691,16 +729,16 @@ def contractinnerDelete(request,id=None,cNumber=None):
 
 #設計變更通知單
 def changePost(request,cNumber=None):
-    factory = {"侯宗仁":"廠務部","高麗華":"廠務部","蔡榕蓉":"廠務部","馮文明":"廠務部","陳恆瑞":"廠務部"
-               ,"郭文欽":"廠務部","葉莉萱":"廠務部","莊曜嘉":"廠務部","楊恭擇":"廠務部","高如媛":"廠務部"
-               ,"廖士瑋":"廠務部","廖源龍":"廠務部","楊智全":"廠務部","陳春能":"廠務部","梁國纘":"廠務部"
-               ,"黃春北":"廠務部","楊功亮":"廠務部","阮進士":"廠務部","鄭春峰":"廠務部","陳文戰":"廠務部"
-               ,"陳庭孟":"廠務部","陳文聯":"廠務部","呂美慧":"廠務部","何純":"廠務部","陳泓諭":"廠務部"
-               ,"梅文純":"廠務部","陳文量":"廠務部","黃春越":"廠務部","梅維慶":"廠務部","鄭文愛":"廠務部"
-               ,"陳駿騰":"廠務部"}
-    business = {"林志勳":"業務部","徐崇信":"業務部","王韋盛":"業務部","王竣平":"業務部","簡瑞泓":"業務部"
-                ,"鄭任雯":"業務部","郭曉穎":"業務部","邱郁晴":"業務部","郭雪芬":"業務部","李政晃":"業務部"
-                ,"李芳純":"業務部","陳佳欣":"業務部","蔡孟亭":"業務部","許寶玲":"業務部","黃睿堂":"業務部"}
+    # factory = {"侯宗仁":"廠務部","高麗華":"廠務部","蔡榕蓉":"廠務部","馮文明":"廠務部","陳恆瑞":"廠務部"
+    #            ,"郭文欽":"廠務部","葉莉萱":"廠務部","莊曜嘉":"廠務部","楊恭擇":"廠務部","高如媛":"廠務部"
+    #            ,"廖士瑋":"廠務部","廖源龍":"廠務部","楊智全":"廠務部","陳春能":"廠務部","梁國纘":"廠務部"
+    #            ,"黃春北":"廠務部","楊功亮":"廠務部","阮進士":"廠務部","鄭春峰":"廠務部","陳文戰":"廠務部"
+    #            ,"陳庭孟":"廠務部","陳文聯":"廠務部","呂美慧":"廠務部","何純":"廠務部","陳泓諭":"廠務部"
+    #            ,"梅文純":"廠務部","陳文量":"廠務部","黃春越":"廠務部","梅維慶":"廠務部","鄭文愛":"廠務部"
+    #            ,"陳駿騰":"廠務部"}
+    # business = {"林志勳":"業務部","徐崇信":"業務部","王韋盛":"業務部","王竣平":"業務部","簡瑞泓":"業務部"
+    #             ,"鄭任雯":"業務部","郭曉穎":"業務部","邱郁晴":"業務部","郭雪芬":"業務部","李政晃":"業務部"
+    #             ,"李芳純":"業務部","陳佳欣":"業務部","蔡孟亭":"業務部","許寶玲":"業務部","黃睿堂":"業務部"}
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
@@ -775,16 +813,16 @@ def changeallIndex(request):
     return render(request, "changeall_Index.html",locals())
 
 def changeEdit(request,id=None,mode=None,cNumber=None):
-    factory = {"侯宗仁":"廠務部","高麗華":"廠務部","蔡榕蓉":"廠務部","馮文明":"廠務部","陳恆瑞":"廠務部"
-               ,"郭文欽":"廠務部","葉莉萱":"廠務部","莊曜嘉":"廠務部","楊恭擇":"廠務部","高如媛":"廠務部"
-               ,"廖士瑋":"廠務部","廖源龍":"廠務部","楊智全":"廠務部","陳春能":"廠務部","梁國纘":"廠務部"
-               ,"黃春北":"廠務部","楊功亮":"廠務部","阮進士":"廠務部","鄭春峰":"廠務部","陳文戰":"廠務部"
-               ,"陳庭孟":"廠務部","陳文聯":"廠務部","呂美慧":"廠務部","何純":"廠務部","陳泓諭":"廠務部"
-               ,"梅文純":"廠務部","陳文量":"廠務部","黃春越":"廠務部","梅維慶":"廠務部","鄭文愛":"廠務部"
-               ,"陳駿騰":"廠務部"}
-    business = {"林志勳":"業務部","徐崇信":"業務部","王韋盛":"業務部","王竣平":"業務部","簡瑞泓":"業務部"
-                ,"鄭任雯":"業務部","郭曉穎":"業務部","邱郁晴":"業務部","郭雪芬":"業務部","李政晃":"業務部"
-                ,"李芳純":"業務部","陳佳欣":"業務部","蔡孟亭":"業務部","許寶玲":"業務部","黃睿堂":"業務部"}
+    # factory = {"侯宗仁":"廠務部","高麗華":"廠務部","蔡榕蓉":"廠務部","馮文明":"廠務部","陳恆瑞":"廠務部"
+    #            ,"郭文欽":"廠務部","葉莉萱":"廠務部","莊曜嘉":"廠務部","楊恭擇":"廠務部","高如媛":"廠務部"
+    #            ,"廖士瑋":"廠務部","廖源龍":"廠務部","楊智全":"廠務部","陳春能":"廠務部","梁國纘":"廠務部"
+    #            ,"黃春北":"廠務部","楊功亮":"廠務部","阮進士":"廠務部","鄭春峰":"廠務部","陳文戰":"廠務部"
+    #            ,"陳庭孟":"廠務部","陳文聯":"廠務部","呂美慧":"廠務部","何純":"廠務部","陳泓諭":"廠務部"
+    #            ,"梅文純":"廠務部","陳文量":"廠務部","黃春越":"廠務部","梅維慶":"廠務部","鄭文愛":"廠務部"
+    #            ,"陳駿騰":"廠務部"}
+    # business = {"林志勳":"業務部","徐崇信":"業務部","王韋盛":"業務部","王竣平":"業務部","簡瑞泓":"業務部"
+    #             ,"鄭任雯":"業務部","郭曉穎":"業務部","邱郁晴":"業務部","郭雪芬":"業務部","李政晃":"業務部"
+    #             ,"李芳純":"業務部","陳佳欣":"業務部","蔡孟亭":"業務部","許寶玲":"業務部","黃睿堂":"業務部"}
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
