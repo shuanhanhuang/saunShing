@@ -111,6 +111,7 @@ def open1(request,id=None,mode=None):
 def homeEdit(request,id=None,mode=None):
     global open
     Open = open
+    homeform = HomeForm(request.POST,request.FILES)
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
@@ -131,7 +132,7 @@ def homeEdit(request,id=None,mode=None):
         return render(request, "homeEdit.html", locals())
     elif mode == "save": # 由 edit2.html 按 submit
         unit = Home.objects.get(id=id)  #取得要修改的資料記錄
-        # homeform = HomeForm(request.POST,request.FILES)
+        
         if(unit.cLock == "是"):
             unit.cLock=request.POST['cLock']
         else: 
@@ -244,7 +245,9 @@ def signPost(request,cNumber=None):
             cJob_title = signedform.cleaned_data['cJob_title']
             cSubject =  signedform.cleaned_data['cSubject']
             cDiscription =  signedform.cleaned_data['cDiscription']
-            signunit = Signed.objects.create(home=home, cNumber=cNumber,cJob_title= cJob_title, cSubject=cSubject, cDiscription=cDiscription)
+            cProposed = signedform.cleaned_data['cProposed']
+            cCheck = signedform.cleaned_data['cCheck']
+            signunit = Signed.objects.create(home=home, cNumber=cNumber,cJob_title= cJob_title, cSubject=cSubject, cDiscription=cDiscription,cProposed=cProposed,cCheck=cCheck)
             signunit.save()
             return redirect('/signallIndex/')
         else:
@@ -302,6 +305,9 @@ def signEdit(request,id=None,mode=None,cNumber=None):
         unit.cJob_title = request.POST['cJob_title']
         unit.cSubject=request.POST['cSubject']
         unit.cDiscription=request.POST['cDiscription']
+        unit.cProposed=request.POST['cProposed']
+        if authenticate == True:
+            unit.cCheck=request.POST['cCheck']
         unit.save()  #寫入資料庫
         message = '已修改...'
         return redirect('/signallIndex/')

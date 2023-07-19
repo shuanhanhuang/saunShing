@@ -8,6 +8,7 @@ class Home(models.Model):
     DEP = (("總經理室","總經理室"),("稽核室","稽核室"),("文管中心","文管中心"),
             ("管理部","管理部"),("業務設計部","業務設計部"),("廠務部","廠務部"))
     PRO = (("草稿","草稿"),("流程中","流程中"),("廢單","廢單"),("結案","結案"))
+    REC = (("None","無"),("郭文龍","郭文龍"),("侯國興","侯國興"),("郭文河","郭文河"),("高晟琅","高晟琅"),("黃睿堂","黃睿堂"),("鄭任雯","鄭任雯"),("高麗華","高麗華"),("侯宗仁","侯宗仁"),("黃美禎","黃美禎"),("江水木","江水木"),("吳建進","吳建進"),("王韋盛","王韋盛"),("陳佳欣","陳佳欣"),("蔡孟亭","蔡孟亭"),("馮文明","馮文明"),("陳恆瑞","陳恆瑞"),("郭文欽","郭文欽"),("陳春能","陳春能"),("黃春北","黃春北"))
     cNumber = models.CharField(max_length=50, default='', null=False)
     cAuther = models.CharField(max_length=20, null=False)#姓名
     cDepartment = models.CharField(max_length=50,null=False, choices=DEP)#單位
@@ -16,7 +17,9 @@ class Home(models.Model):
     cDate = models.DateField(null=False)#日期
     cEndDate = models.DateField(blank=True, null=True)
     cLock = models.CharField(max_length=5,null=False,default='否')
-    cReceive  = models.CharField(max_length=20,blank=True,null=True,)
+    cReceive  = models.CharField(max_length=20,blank=True,null=True,choices=REC)
+    cProposed=models.TextField(blank=True)#擬辦
+    cCheck=models.TextField(blank=True)#批示
     cFile = models.FileField(blank=True, null=True)
 
 # class Returned(models.Model):

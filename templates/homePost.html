@@ -101,11 +101,11 @@
             <tr>
               <th>接收人</th>
               <td>
-                <input name="cReceive" type="radio" value="08804001" checked="checked"/>總經理
-                <input name="cReceive" type="radio" value="08907008"/>副總
-                <input name="cReceive" type="radio" value="10909430"/>黃美禎課長
-                <input name="cReceive" type="radio" value="09807118"/>吳建進副課長
-                <input name="cReceive" type="radio" value="None"/>無
+                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                  {% for key,value in homeform.REC %}
+                      <option value="{{ key }}" name="cReceive">{{ value }}</option>
+                  {% endfor %}
+                </select>
               </td>
             </tr>
             <tr>

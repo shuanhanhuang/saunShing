@@ -233,71 +233,223 @@
                     </tr>
                     </tr>
                       <th>接收人</th>
-                      {% if unit.cReceive == "08804001" %}
-                          <td >
-                              <input name="cReceive" type="radio" id="cReceive1" value="08804001" checked="checked" />
-                              總經理
-                              <input name="cReceive" type="radio" id="cReceive2" value="08907008" />
-                              副總
-                              <input name="cReceive" type="radio" id="cReceive3" value="10909430" />
-                              廠務部
-                              <input name="cReceive" type="radio" id="cReceive4" value="09807118" />
-                              業務設計部
-                              <input name="cReceive" type="radio" id="cReceive5" value="None" />
-                              無                         
-                          </td>
-                      {% elif unit.cReceive == "08907008" %}
-                          <td >
-                            <input name="cReceive" type="radio" id="cReceive1" value="08804001"/>
-                            總經理
-                            <input name="cReceive" type="radio" id="cReceive2" value="08907008" checked="checked"/>
-                            副總
-                            <input name="cReceive" type="radio" id="cReceive3" value="10909430" />
-                            廠務部
-                            <input name="cReceive" type="radio" id="cReceive4" value="09807118" />
-                            業務設計部
-                            <input name="cReceive" type="radio" id="cReceive5" value="None" />
-                            無                         
-                          </td>
-                      {% elif unit.cReceive == "10909430" %}
-                          <td >
-                            <input name="cReceive" type="radio" id="cReceive1" value="08804001" />
-                            總經理
-                            <input name="cReceive" type="radio" id="cReceive2" value="08907008" />
-                            副總
-                            <input name="cReceive" type="radio" id="cReceive3" value="10909430" checked="checked"/>
-                            廠務部
-                            <input name="cReceive" type="radio" id="cReceive4" value="09807118" />
-                            業務設計部
-                            <input name="cReceive" type="radio" id="cReceive5" value="None" />
-                            無                         
-                          </td>
-                      {% elif unit.cReceive == "09807118" %}
-                          <td >
-                            <input name="cReceive" type="radio" id="cReceive1" value="08804001" />
-                            總經理
-                            <input name="cReceive" type="radio" id="cReceive2" value="08907008" />
-                            副總
-                            <input name="cReceive" type="radio" id="cReceive3" value="10909430" />
-                            廠務部
-                            <input name="cReceive" type="radio" id="cReceive4" value="09807118" checked="checked"/>
-                            業務設計部
-                            <input name="cReceive" type="radio" id="cReceive5" value="None" />
-                            無                         
-                          </td>
+                      {% if unit.cReceive == "郭文龍" %}
+                        <td>
+                          <select class="form-control" id="taskTypeSelect" name="cReceive">
+                            <option value="郭文龍" name="cReceive">郭文龍</option>
+                            {% for key,value in homeform.REC %}
+                              {% if key != "郭文龍" %}
+                                <option value="{{ key }}" name="cReceive">{{value}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>
+                        </td>
+                      {% elif unit.cReceive == "侯國興" %}
+                        <td>
+                          <select class="form-control" id="taskTypeSelect" name="cReceive">
+                            <option value="侯國興" name="cReceive">侯國興</option>
+                            {% for key,value in homeform.REC %}
+                              {% if key != "侯國興" %}
+                                <option value="{{ key }}" name="cReceive">{{value}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>                         
+                        </td>
+                      {% elif unit.cReceive == "郭文河" %}
+                        <td>
+                          <select class="form-control" id="taskTypeSelect" name="cReceive">
+                            <option value="郭文河" name="cReceive">郭文河</option>
+                            {% for key,value in homeform.REC %}
+                              {% if key != "郭文河" %}
+                                <option value="{{ key }}" name="cReceive">{{value}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>                         
+                        </td>
+                      {% elif unit.cReceive == "高晟琅" %}
+                        <td>
+                          <select class="form-control" id="taskTypeSelect" name="cReceive">
+                            <option value="高晟琅" name="cReceive">高晟琅</option>
+                            {% for key,value in homeform.REC %}
+                              {% if key != "高晟琅" %}
+                                <option value="{{ key }}" name="cReceive">{{value}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>                         
+                        </td>
+                      {% elif unit.cReceive == "黃睿堂" %}
+                        <td>
+                          <select class="form-control" id="taskTypeSelect" name="cReceive">
+                            <option value="黃睿堂" name="cReceive">黃睿堂</option>
+                            {% for key,value in homeform.REC %}
+                              {% if key != "黃睿堂" %}
+                                <option value="{{ key }}" name="cReceive">{{value}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>                         
+                        </td>
+                      {% elif unit.cReceive == "鄭任雯" %}
+                        <td>
+                          <select class="form-control" id="taskTypeSelect" name="cReceive">
+                            <option value="鄭任雯" name="cReceive">鄭任雯</option>
+                            {% for key,value in homeform.REC %}
+                              {% if key != "鄭任雯" %}
+                                <option value="{{ key }}" name="cReceive">{{value}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>                         
+                        </td>
+                      {% elif unit.cReceive == "高麗華" %}
+                        <td>
+                          <select class="form-control" id="taskTypeSelect" name="cReceive">
+                            <option value="高麗華" name="cReceive">高麗華</option>
+                            {% for key,value in homeform.REC %}
+                              {% if key != "高麗華" %}
+                                <option value="{{ key }}" name="cReceive">{{value}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>                         
+                        </td>
+                      {% elif unit.cReceive == "侯宗仁" %}
+                        <td>
+                          <select class="form-control" id="taskTypeSelect" name="cReceive">
+                            <option value="侯宗仁" name="cReceive">侯宗仁</option>
+                            {% for key,value in homeform.REC %}
+                              {% if key != "侯宗仁" %}
+                                <option value="{{ key }}" name="cReceive">{{value}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>                         
+                        </td>
+                      {% elif unit.cReceive == "黃美禎" %}
+                        <td >
+                          <select class="form-control" id="taskTypeSelect" name="cReceive">
+                            <option value="黃美禎" name="cReceive">黃美禎</option>
+                            {% for key,value in homeform.REC %}
+                              {% if key != "黃美禎" %}
+                                <option value="{{ key }}" name="cReceive">{{value}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>                         
+                        </td>
+                      {% elif unit.cReceive == "江水木" %}
+                        <td >
+                          <select class="form-control" id="taskTypeSelect" name="cReceive">
+                            <option value="江水木" name="cReceive">江水木</option>
+                            {% for key,value in homeform.REC %}
+                              {% if key != "江水木" %}
+                                <option value="{{ key }}" name="cReceive">{{value}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>                         
+                        </td>
+                      {% elif unit.cReceive == "吳建進" %}
+                        <td >
+                          <select class="form-control" id="taskTypeSelect" name="cReceive">
+                            <option value="吳建進" name="cReceive">吳建進</option>
+                            {% for key,value in homeform.REC %}
+                              {% if key != "吳建進" %}
+                                <option value="{{ key }}" name="cReceive">{{value}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>                         
+                        </td>
+                      {% elif unit.cReceive == "王韋盛" %}
+                        <td >
+                          <select class="form-control" id="taskTypeSelect" name="cReceive">
+                            <option value="王韋盛" name="cReceive">王韋盛</option>
+                            {% for key,value in homeform.REC %}
+                              {% if key != "王韋盛" %}
+                                <option value="{{ key }}" name="cReceive">{{value}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>                         
+                        </td>
+                      {% elif unit.cReceive == "陳佳欣" %}
+                        <td >
+                          <select class="form-control" id="taskTypeSelect" name="cReceive">
+                            <option value="陳佳欣" name="cReceive">陳佳欣</option>
+                            {% for key,value in homeform.REC %}
+                              {% if key != "陳佳欣" %}
+                                <option value="{{ key }}" name="cReceive">{{value}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>                         
+                        </td>
+                      {% elif unit.cReceive == "蔡孟亭" %}
+                        <td >
+                          <select class="form-control" id="taskTypeSelect" name="cReceive">
+                            <option value="蔡孟亭" name="cReceive">蔡孟亭</option>
+                            {% for key,value in homeform.REC %}
+                              {% if key != "蔡孟亭" %}
+                                <option value="{{ key }}" name="cReceive">{{value}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>                         
+                        </td>
+                      {% elif unit.cReceive == "馮文明" %}
+                        <td >
+                          <select class="form-control" id="taskTypeSelect" name="cReceive">
+                            <option value="馮文明" name="cReceive">馮文明</option>
+                            {% for key,value in homeform.REC %}
+                              {% if key != "馮文明" %}
+                                <option value="{{ key }}" name="cReceive">{{value}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>                         
+                        </td>
+                      {% elif unit.cReceive == "陳恆瑞" %}
+                        <td >
+                          <select class="form-control" id="taskTypeSelect" name="cReceive">
+                            <option value="陳恆瑞" name="cReceive">陳恆瑞</option>
+                            {% for key,value in homeform.REC %}
+                              {% if key != "陳恆瑞" %}
+                                <option value="{{ key }}" name="cReceive">{{value}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>                         
+                        </td>
+                      {% elif unit.cReceive == "郭文欽" %}
+                        <td >
+                          <select class="form-control" id="taskTypeSelect" name="cReceive">
+                            <option value="郭文欽" name="cReceive">郭文欽</option>
+                            {% for key,value in homeform.REC %}
+                              {% if key != "郭文欽" %}
+                                <option value="{{ key }}" name="cReceive">{{value}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>                         
+                        </td>
+                      {% elif unit.cReceive == "陳春能" %}
+                        <td >
+                          <select class="form-control" id="taskTypeSelect" name="cReceive">
+                            <option value="陳春能" name="cReceive">陳春能</option>
+                            {% for key,value in homeform.REC %}
+                              {% if key != "陳春能" %}
+                                <option value="{{ key }}" name="cReceive">{{value}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>                         
+                        </td>
+                      {% elif unit.cReceive == "黃春北" %}
+                        <td >
+                          <select class="form-control" id="taskTypeSelect" name="cReceive">
+                            <option value="黃春北" name="cReceive">黃春北</option>
+                            {% for key,value in homeform.REC %}
+                              {% if key != "黃春北" %}
+                                <option value="{{ key }}" name="cReceive">{{value}}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>                         
+                        </td>
                       {% else %}
-                          <td >
-                            <input name="cReceive" type="radio" id="cReceive1" value="08804001"  />
-                            總經理
-                            <input name="cReceive" type="radio" id="cReceive2" value="08907008" />
-                            副總
-                            <input name="cReceive" type="radio" id="cReceive3" value="10909430" />
-                            廠務部
-                            <input name="cReceive" type="radio" id="cReceive4" value="09807118" />
-                            業務設計部
-                            <input name="cReceive" type="radio" id="cReceive5" value="None" checked="checked"/>
-                            無                         
-                          </td>
+                        <td >
+                          <select class="form-control" id="taskTypeSelect" name="cReceive">
+                            {% for key,value in homeform.REC %}
+                              <option value="{{ key }}" name="cReceive">{{value}}</option>
+                            {% endfor %}
+                          </select>                         
+                        </td>
                       {% endif %}
                     </tr>
                     {% if authenticate == True %}
