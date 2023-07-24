@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0  shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    {% load static %}
+    <title>資料表新增</title>
+  </head>
+  <body>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+  
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="/homeIndex/">首頁</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                其他表單
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="/signallIndex/">簽呈資料</a>
+                <a class="dropdown-item" href="/meetingallIndex/">會議記錄資料</a>
+                <a class="dropdown-item" href="/contactallIndex/">內部連絡單資料</a>
+                <a class="dropdown-item" href="/contractallIndex/">工程發包議價記錄單</a>
+                <a class="dropdown-item" href="/changeallIndex/">設計變更通知單</a>
+              </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-2">
+            <li class="nav-item active">
+              <a class="nav-link disabled" style="color: green;">{{firstname}} <span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-2">
+            <li class="nav-item">
+              <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <h2 class="mt-2">內部連絡單 資料表新增</h2>
+      </div>
+      <p style="color:red; font-weight: bold; font-size: larger;">{{message}}</p>
+    </div>
+
+    <form action="." method="post" name="form1">
+      {% csrf_token %}
+      <div class="container">
+        <div class="row">
+          <table class="table">
+            <tr><th>編號</th><td>{{contactform.cNumber}}</td> </tr> 
+            <tr><th>發文主管</th><td>{{unitinner.cAutherManager}}</td></tr>
+            <tr><th>決策單位</th>
+                <td>
+                <input name="cDecisionDep" type="radio"  value="總經理" checked="checked"/>總經理
+                <input name="cDecisionDep" type="radio" value="顧問"/>顧問
+                <input name="cDecisionDep" type="radio" value="協理"/>協理
+                </td>
+            </tr>
+            <tr>
+                <th>執行單位</th>
+                <td>
+                    <input type="checkbox" name="option" class="check_box_list" value="管理部" {% if '管理部' in unitinner.cImplementDep %}checked{% endif %}>
+                    <label for="管理部">管理部
+                    <input type="checkbox" name="option" class="check_box_list" value="工程部" {% if '工程部' in unitinner.cImplementDep %}checked{% endif %}>
+                    <label for="工程部">工程部
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <input type="checkbox" name="option" class="check_box_list" value="業務部-部門經理" {% if '業務部-部門經理' in unitinner.cImplementDep %}checked{% endif %}>
+                    <label for="業務部-部門經理">業務部-部門經理
+                    <input type="checkbox" name="option" class="check_box_list" value="業務部-專案經理" {% if '業務部-專案經理' in unitinner.cImplementDep %}checked{% endif %}>
+                    <label for="業務部-專案經理">業務部-專案經理
+                    <input type="checkbox" name="option" class="check_box_list" value="業務部-設計專員" {% if '業務部-設計專員' in unitinner.cImplementDep %}checked{% endif %}>
+                    <label for="業務部-設計專員">業務部-設計專員
+                    <input type="checkbox" name="option" class="check_box_list" value="業務部-業務助理" {% if '業務部-業務助理' in unitinner.cImplementDep %}checked{% endif %}>
+                    <label for="業務部-業務助理">業務部-業務助理
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <input type="checkbox" name="option" class="check_box_list" value="廠務部-採購" {% if '廠務部-採購' in unitinner.cImplementDep %}checked{% endif %}>
+                    <label for="廠務部-採購">廠務部-採購
+                    <input type="checkbox" name="option" class="check_box_list" value="廠務部-生技" {% if '廠務部-生技' in unitinner.cImplementDep %}checked{% endif %}>
+                    <label for="廠務部-生技">廠務部-生技    
+                    <input type="checkbox" name="option" class="check_box_list" value="廠務部-廠務" {% if '廠務部-廠務' in unitinner.cImplementDep %}checked{% endif %}>
+                    <label for="廠務部-廠務">廠務部-廠務
+                    <input type="checkbox" name="option" class="check_box_list" value="廠務部-倉管" {% if '廠務部-倉管' in unitinner.cImplementDep %}checked{% endif %}>
+                    <label for="廠務部-倉管">廠務部-倉管
+                    <input type="checkbox" name="option" class="check_box_list" value="廠務部-品管" {% if '廠務部-品管' in unitinner.cImplementDep %}checked{% endif %}>
+                    <label for="廠務部-品管">廠務部-品管
+                </td>
+            </tr>
+            <tr><th>主旨</th><td>{{contactform.cSubject}}</td></tr>
+            <tr><th>說明</th><td>{{unitinner.cDiscription}}</td></tr>
+            <tr><th>審核人員意見</th><td>{{unitinner.cOption}}</td></tr>
+            <!-- <tr><th>審核人員意見</th><td>{{unitinner.cImplementDep}}</td></tr> -->
+            <tr>
+              <th align="center">
+                <input type="hidden" name="cImplementDep" id="textvalue" value="{{unitinner.cImplementDep}}">
+                <input type="submit" class="btn btn-primary" name="button" id="button" value="送出">
+                <input type="reset"  class="btn btn-danger" name="button2" id="button2" value="重設">
+              </th>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </form>
+
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $(".check_box_list").click(function(){
+                var test = ""
+                $(".check_box_list:checked").each(function(){
+                    test+=$(this).val()+","
+                });
+                test= test.substring(0,test.length-1)
+                $("#textvalue").val(test);
+            })
+        })
+        function Logout(){
+          $(location).attr("href","/logout/");
+        }
+
+    </script>
+  
+
+
+  </body>
+</html>

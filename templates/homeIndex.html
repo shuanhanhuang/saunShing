@@ -93,7 +93,7 @@
       <div class="row">
         <table class="table">
           <thead>
-            <th scope="col">筆數</th>
+            <!-- <th scope="col">筆數</th> -->
             <th scope="col">編號</th>
             <th scope="col">種類</th>
             <th scope="col">發文者</th>
@@ -107,7 +107,7 @@
           <tbody>
             {% for unit in all %}
             <tr>
-              <td>{{unit.id}}</td>
+              <!-- <td>{{unit.id}}</td> -->
               <td>{{unit.cNumber}}</td>
               <td>{{unit.cType}}</td>
               <td>{{unit.cAuther}}</td>
@@ -132,7 +132,8 @@
                 <td>
                   <button type="button" class="btn btn-outline-warning mb-2" id="Detail/{{unit.cNumber}}" onclick="Detail(event)">詳細內容</button>
                   <button type="button" class="btn btn-outline-info mb-2" id="{{unit.id}}" onclick="Edit(event)">編輯</button>
-                  <button type="button" class="btn btn-outline-secondary mb-2" id="{{unit.id}}" onclick="Delete(event)">刪除</button>
+                  <button type="button" class="btn btn-outline-danger mb-2" id="{{unit.id}}" onclick="Delete(event)">刪除</button>
+                  <button type="button" class="btn btn-outline-secondary mb-2" id="{{unit.cNumber}}" onclick="Copy(event)">複製表單</button>
                 </td>
                 {% else %}
                   {% if unit.cType == "簽呈" %}
@@ -213,6 +214,13 @@
         var id = event.target.id
         $(location).attr("href","/"+id+"/");
       }
+
+      function Copy(event){
+        var id = event.target.id
+        $(location).attr("href","/copy/"+id+"/")
+      }
+
+    
 
 
   </script> 

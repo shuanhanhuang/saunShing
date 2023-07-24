@@ -5,8 +5,8 @@ from django.shortcuts import render, redirect
 from datetime import datetime
 from django.contrib import auth
 from django.contrib.auth.models import User
-from testapp.form import HomeForm,SignedForm,MeetingInnerForm,MeetingForm,ContactForm,ContractForm,ContractInnerForm,ChangeForm
-from testapp.models import Home,Signed,MeetingInner,Meeting,Contact,Contract,ContractInner,Change
+from testapp.form import HomeForm,SignedForm,MeetingInnerForm,MeetingForm,ContactForm,ContractForm,ContractInnerForm,ChangeForm,ReturnedForm
+from testapp.models import Home,Signed,MeetingInner,Meeting,Contact,Contract,ContractInner,Change,Returned
 from django.db.models import Q
 from testapp.filter import HomeFilter
 # from weasyprint import HTML
@@ -165,42 +165,59 @@ def homeDelete(request,id=None):
 			message = "讀取錯誤!"
 	return render(request, "homeDelete.html", locals())
 
-# def returnedPost(request,cNumber=None):
-#     if request.user.is_authenticated:
-#         username=request.user.username
-#         authenticate=request.user.is_staff
-#         firstname = request.user.first_name
-#     returnedHome = Home.objects.get(cNumber = cNumber)
-#     if request.method == 'POST':
-#         returnedform = ReturnedForm(request.POST)
-#         if returnedform.is_valid():
-#             cName = firstname
-#             cIllustrate =  returnedform.cleaned_data['cIllustrate']
-#             cTransfer =  returnedform.cleaned_data['cTransfer']
-#             returnedunit = Returned.objects.create(returnedHome=returnedHome, cName= cName, cIllustrate=cIllustrate, cTransfer=cTransfer)
-#             returnedunit.save()
-#             return redirect('/returnedIndex/')
-#         else:
-#              message="驗證錯誤"
-#     else:
-#          message='被駁回者為必選'
-#     returnedform = ReturnedForm()
-#     return render(request, "returnedPost.html", locals())
 
-# def returnedIndex(request,cNumber=None):
-#     home = Home.objects.get(cNumber = cNumber)
-#     if request.user.is_authenticated:
-#         username=request.user.username
-#         authenticate=request.user.is_staff
-#         firstname = request.user.first_name
-#     if 'q' in request.GET:
-#         q = request.GET['q']
-#         multiple_q = Q(Q(cName__icontains=q) | Q(cIllustrate__icontains=q) | Q(cTransfer__icontains=q))
-#         returned = Returned.objects.filter(multiple_q)
-#     else:
-#         unitreturn = Returned.objects.filter(returnTo=home).order_by("id")
-#     allunitreturnCount = len(unitreturn)
-#     return render(request, "returned_Index.html",locals())
+def returnedDelete(request,id2=None,id=None):
+	if id!=None:
+		if request.method == "POST":  #如果是以POST方式才處理
+			id=request.POST['cId'] #取得表單輸入的編號
+		try:
+			unit = Returned.objects.get(id=id)
+			unit.delete()
+			return redirect('/returnedIndex/'+str(id2)+'/')
+		except:
+			message = "讀取錯誤!"
+	return render(request, "returnedDelete.html", locals())
+
+
+def returnedPost(request,id=None):
+    if request.user.is_authenticated:
+        username=request.user.username
+        authenticate=request.user.is_staff
+        firstname = request.user.first_name
+    returnedHome = Home.objects.get(id=id)
+    unitinner = Returned.objects.filter(returnTo=returnedHome).order_by("id")
+    if request.method == 'POST':
+        returnedform = ReturnedForm(request.POST)
+        if returnedform.is_valid():
+            cName = firstname
+            cIllustrate =  returnedform.cleaned_data['cIllustrate']
+            returnedHome.cReceive = request.POST['cReceive']
+            returnedHome.save()
+            cTransfer = returnedHome.cReceive
+            returnedunit = Returned.objects.create(returnTo=returnedHome, cName=cName, cIllustrate=cIllustrate, cTransfer=cTransfer)
+            returnedunit.save()
+            return redirect('/returnedIndex/'+ str(id) +'/')
+        else:
+             message="驗證錯誤"
+    else:
+         message='被駁回者為必選'
+    returnedform = ReturnedForm()
+    return render(request, "returnedPost.html", locals())
+
+def returnedIndex(request,id=None):
+    home = Home.objects.get(id = id)
+    if request.user.is_authenticated:
+        username=request.user.username
+        authenticate=request.user.is_staff
+        firstname = request.user.first_name
+    if 'q' in request.GET:
+        q = request.GET['q']
+        multiple_q = Q(Q(cName__icontains=q) | Q(cIllustrate__icontains=q) | Q(cTransfer__icontains=q))
+        returned = Returned.objects.filter(multiple_q)
+    else:
+        unitreturn = Returned.objects.filter(returnTo=home).order_by("id")
+    allunitreturnCount = len(unitreturn)
+    return render(request, "returnedIndex.html",locals())
 
 
 def Detail(request,cNumber=None):
@@ -229,6 +246,30 @@ def perosonIndex(request,cUsername = None):
     all = Home.objects.filter(cReceive = cUsername)
     allHomeCount = len(all)
     return render(request, "perosonIndex.html",locals())
+
+def signCopyPost(request,cNumber=None,thisNumber=None):# cNumber複製的;thisNumber被複製
+    if request.user.is_authenticated:
+        username=request.user.username
+        authenticate=request.user.is_staff
+        firstname = request.user.first_name
+    home = Home.objects.get(cNumber=cNumber)
+    unitinner = Signed.objects.get(cNumber=thisNumber)
+    if request.method == 'POST':
+        signedform = SignedForm(request.POST)
+        if signedform.is_valid():
+            cNumber =  cNumber
+            cJob_title = unitinner.cJob_title
+            cSubject =  unitinner.cSubject
+            cDiscription =  unitinner.cDiscription
+            cProposed = unitinner.cProposed
+            cCheck = signedform.cleaned_data['cCheck']
+            signunit = Signed.objects.create(home=home, cNumber=cNumber,cJob_title= cJob_title, cSubject=cSubject, cDiscription=cDiscription,cProposed=cProposed,cCheck=cCheck)
+            signunit.save()
+            return redirect('/signallIndex/')
+        else:
+            message="驗證錯誤"
+    signedform = SignedForm({'cSubject':unitinner.cSubject}) #有必填欄位要寫進去
+    return render(request, "signCopyPost.html", locals())
 
 #簽呈
 def signPost(request,cNumber=None):
@@ -266,6 +307,71 @@ def signView(request,cNumber=None):
     home = Home.objects.get(cNumber=cNumber)
     sign = Signed.objects.get(cNumber=cNumber)
     return render(request, "signView.html",locals())
+
+def copy(request,cNumber1=None):
+    global Acount
+    if request.user.is_authenticated:
+        username=request.user.username
+        authenticate=request.user.is_staff
+        firstname = request.user.first_name
+        home = Home.objects.get(cNumber=cNumber1)
+    if request.method == 'POST':
+        homeform = HomeForm(request.POST,request.FILES)  #建立forms物件
+        if homeform.is_valid():
+            Acount= Acount+1
+            cType = home.cType
+            cDepartment =home.cDepartment
+            cDate = datetime.now()
+            if(Acount//100 == 0):
+                if((Acount%100)//10 ==0):
+                    count = "00"
+                else:
+                    count = "0"
+            else:
+                count = ""
+            if(cDate.day //10 == 0):
+                date = "0" + str(cDate.day)
+            else:
+                date = str(cDate.day)
+
+            if(cDate.month //10 == 0):
+                month = "0" + str(cDate.month)
+            else:
+                month = str(cDate.month)
+            if(home.cType == "簽呈"):
+                cNumber = "A"+str(cDate.year)+month+date+count+str(Acount)
+            elif(home.cType == "會議記錄"):
+                cNumber = "D"+str(cDate.year)+month+date+count+str(Acount)
+            elif(home.cType == "內部連絡單"):
+                cNumber = "E"+str(cDate.year)+month+date+count+str(Acount)
+            elif(home.cType == "工程發包議價記錄單"):
+                cNumber = "C"+str(cDate.year)+month+date+count+str(Acount)
+            elif(home.cType == "設計變更通知單"):
+                cNumber = "B"+str(cDate.year)+month+date+count+str(Acount)
+            cAuther = firstname
+            cEndDate =  datetime.now() #取得表單輸入資料
+            cProgress =  home.cProgress
+            cLock = home.cLock
+            cReceive = firstname
+            cFile = home.cFile
+            unit = Home.objects.create(cType=cType,cNumber=cNumber,cAuther=cAuther, cDate=cDate, cDepartment=cDepartment, cEndDate=cEndDate, cProgress=cProgress,cLock=cLock,cReceive=cReceive,cFile=cFile)
+            ome = unit.save()
+            if cType == "簽呈":
+                return redirect('/signCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/')
+            elif cType == '會議記錄':
+                return redirect('/meetingCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/')
+            elif cType == '內部連絡單':
+                return redirect('/contactCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/')
+            elif cType == '工程發包議價記錄單':
+                return redirect('/contractCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/')
+            elif cType == '設計變更通知單':
+                return redirect('/changeCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/')
+        else:
+            message = '驗證碼錯誤！'
+    else:
+        message = '姓名、主旨必須輸入！'
+    homeform = HomeForm()
+    return render(request, "homePost.html", locals())
 
 
 def signPdf(request,cNumber=None):
@@ -312,6 +418,37 @@ def signEdit(request,id=None,mode=None,cNumber=None):
         message = '已修改...'
         return redirect('/signallIndex/')
 
+
+def meetingCopyPost(request,cNumber=None,thisNumber=None):
+    if request.user.is_authenticated:
+        username=request.user.username
+        authenticate=request.user.is_staff
+        firstname = request.user.first_name
+    home = Home.objects.get(cNumber=cNumber)
+    unitinner = Meeting.objects.get(cNumber=thisNumber)
+    if request.method == 'POST':
+        meetingform = MeetingForm(request.POST)
+        if meetingform.is_valid():
+            cNumber =  cNumber
+            cMeetingType = unitinner.cMeetingType
+            cRecoder = unitinner.cRecoder
+            cLocation = unitinner.cLocation
+            cTime = unitinner.cTime
+            cLeader = unitinner.cLeader
+            cTopic =  unitinner.cTopic
+            cAttendees1 =  unitinner.cAttendees1
+            cAttendees2 =  unitinner.cAttendees2
+            cViceGeneral_Sign =  meetingform.cleaned_data['cViceGeneral_Sign']
+            cManger_Sign =  meetingform.cleaned_data['cManger_Sign']
+            # Save the signature data with the associated document
+            unit = Meeting.objects.create(home=home,cNumber=cNumber, cRecoder=cRecoder, cMeetingType=cMeetingType, cLocation=cLocation, cTime=cTime, cLeader=cLeader, cTopic=cTopic, cAttendees1=cAttendees1, cAttendees2=cAttendees2, cManger_Sign=cManger_Sign, cViceGeneral_Sign=cViceGeneral_Sign)
+            unit.save()  #寫入資料庫
+            return redirect('/meetingallIndex/')
+        else:
+             message="驗證錯誤"
+    meetingform = MeetingForm({'cMeetingType':unitinner.cMeetingType,'cLocation':unitinner.cLocation,'cTime':unitinner.cTime,
+                               'cLeader':unitinner.cLeader,'cRecoder':unitinner.cRecoder,'cTopic':unitinner.cTopic})
+    return render(request, "meetingCopyPost.html", locals())
 
 #會議記錄 
 def meetingPost(request,cNumber=None):
@@ -397,7 +534,6 @@ def meetingallIndex(request):
     meetingallCount = len(meetingall)
     return render(request, "meetingall_Index.html",locals())
 
-
 #會議記錄-會議內容
 def meetinginnerPost(request,cNumber=None):
     if request.user.is_authenticated:
@@ -480,6 +616,30 @@ def meetinginnerDelete(request,id=None,cNumber=None):
             message = "讀取錯誤!"
     return render(request, "meetinginnerDelete.html", locals())
 
+def contactCopyPost(request,cNumber=None,thisNumber=None):
+    if request.user.is_authenticated:
+        username=request.user.username
+        authenticate=request.user.is_staff
+        firstname = request.user.first_name
+    home = Home.objects.get(cNumber=cNumber)
+    unitinner = Contact.objects.get(cNumber=thisNumber)
+    if request.method == 'POST':
+        contactform = ContactForm(request.POST)
+        if contactform.is_valid():
+            cNumber =  home.cNumber
+            cAutherManager = unitinner.cAutherManager
+            cDecisionDep = unitinner.cDecisionDep
+            cImplementDep = unitinner.cImplementDep
+            cOption = contactform.cleaned_data['cOption']
+            cSubject =  unitinner.cSubject
+            cDiscription =  unitinner.cDiscription
+            unit = Contact.objects.create(home=home, cNumber=cNumber, cAutherManager=cAutherManager, cDecisionDep=cDecisionDep, cSubject=cSubject, cImplementDep=cImplementDep, cDiscription=cDiscription, cOption=cOption)
+            unit.save()  #寫入資料庫
+            return redirect('/contactallIndex/')
+        else:
+             message="執行單位未選填"
+    contactform = ContactForm({'cSubject':unitinner.cSubject,'cImplementDep':unitinner.cImplementDep})
+    return render(request, "contactCopyPost.html", locals())
 
 # 內部連絡單
 def contactPost(request,cNumber=None):
@@ -554,7 +714,39 @@ def contactEdit(request,id=None,mode=None,cNumber=None):
         unit.save()  #寫入資料庫
         message = '已修改...'
         return redirect('/contactallIndex/')
-    
+
+def contractCopyPost(request,cNumber=None,thisNumber=None):
+    if request.user.is_authenticated:
+        username=request.user.username
+        authenticate=request.user.is_staff
+        firstname = request.user.first_name
+    home = Home.objects.get(cNumber=cNumber)
+    unitinner = Contract.objects.get(cNumber=thisNumber)
+    if request.method == 'POST':
+        contractform = ContractForm(request.POST)
+        if contractform.is_valid():
+            cNumber =  home.cNumber
+            cClient = unitinner.cClient
+            cLocation = unitinner.cLocation
+            cContent = unitinner.cContent
+            cPayMode = unitinner.cPayMode
+            cBudget =  unitinner.cBudget
+            cOther =  unitinner.cOther
+            cConfirm =  unitinner.cConfirm
+            cGeneral_Sign = contractform.cleaned_data['cGeneral_Sign']
+            cViceGeneral_Sign =  contractform.cleaned_data['cViceGeneral_Sign']
+            cManager_Sign =  contractform.cleaned_data['cManager_Sign']
+            cDepartmentManager_Sign =  contractform.cleaned_data['cDepartmentManager_Sign']
+            cUndertaker = unitinner.cUndertaker
+            unit = Contract.objects.create(home=home, cNumber=cNumber, cClient=cClient, cLocation=cLocation, cContent=cContent, cPayMode=cPayMode, cOther=cOther, cBudget=cBudget, cConfirm=cConfirm, cGeneral_Sign=cGeneral_Sign,
+                                          cViceGeneral_Sign=cViceGeneral_Sign,cManager_Sign=cManager_Sign,cDepartmentManager_Sign=cDepartmentManager_Sign, cUndertaker=cUndertaker)
+            unit.save()  #寫入資料庫
+            return redirect('/contractallIndex/')
+        else:
+             message="驗證錯誤"
+    contractform = ContractForm({'cClient':unitinner.cClient,'cLocation':unitinner.cLocation,'cPayMode':unitinner.cPayMode})
+    return render(request, "contractCopyPost.html", locals())
+
 #工程發包議價記錄單
 def contractPost(request,cNumber=None):
     if request.user.is_authenticated:
@@ -732,19 +924,55 @@ def contractinnerDelete(request,id=None,cNumber=None):
             message = "讀取錯誤!"
     return render(request, "contractinnerDelete.html", locals())
 
+def changeCopyPost(request,cNumber=None,thisNumber=None):
+    if request.user.is_authenticated:
+        username=request.user.username
+        authenticate=request.user.is_staff
+        firstname = request.user.first_name
+        lastname = request.user.last_name
+    home = Home.objects.get(cNumber=cNumber)
+    unitinner = Change.objects.get(cNumber=thisNumber)
+    if request.method == 'POST':
+        changeform = ChangeForm(request.POST)
+        if changeform.is_valid():
+            cNumber =  home.cNumber
+            cProjectName = unitinner.cProjectName
+            cChangeitem = unitinner.cChangeitem
+            cChangereason = unitinner.cChangereason
+            cHowChange = unitinner.cHowChange
+            cAffectitem = unitinner.cAffectitem
+            cRisk =  unitinner.cRisk
+            cKeypoint = unitinner.cKeypoint
+            cCC =  unitinner.cCC
+            cEarn = unitinner.cEarn
+            cTech_bulletin = unitinner.cTech_bulletin
+            cApproved =  unitinner.cKeypoint
+            cReview =  unitinner.cReview
+            cUndertaker =  unitinner.cUndertaker
+            cOption_FS =  changeform.cleaned_data['cOption_FS']
+            cFs_Sign =  changeform.cleaned_data['cFs_Sign']
+            cOption_Design =  changeform.cleaned_data['cOption_Design']
+            cDesign_Sign =  changeform.cleaned_data['cDesign_Sign']
+            cOption_Quality =  changeform.cleaned_data['cOption_Quality']
+            cQuality_Sign =  changeform.cleaned_data['cQuality_Sign']
+            cOption_Purchase =  changeform.cleaned_data['cOption_Purchase']
+            cPurchase_Sign = changeform.cleaned_data['cPurchase_Sign']
+            unit = Change.objects.create(home=home, cNumber=cNumber, cProjectName=cProjectName, cChangeitem=cChangeitem, cChangereason=cChangereason, cAffectitem=cAffectitem,
+                                          cRisk=cRisk,cKeypoint=cKeypoint, cOption_FS=cOption_FS,cOption_Design=cOption_Design,
+                                          cOption_Quality=cOption_Quality,cOption_Purchase=cOption_Purchase,cCC=cCC,cEarn=cEarn,
+                                          cTech_bulletin=cTech_bulletin,cApproved=cApproved,cReview=cReview,cUndertaker=cUndertaker,
+                                          cFs_Sign=cFs_Sign,cDesign_Sign=cDesign_Sign,cQuality_Sign=cQuality_Sign,cPurchase_Sign=cPurchase_Sign,cHowChange=cHowChange)
+            unit.save()  #寫入資料庫
+            return redirect('/changeallIndex/')
+        else:
+             message="副本未選填"
+    else:
+         message='專案名稱和副本必須輸入或勾選'
+    changeform = ChangeForm({'cProjectName':unitinner.cProjectName,'cCC':unitinner.cCC})
+    return render(request, "changeCopyPost.html", locals())
 
 #設計變更通知單
 def changePost(request,cNumber=None):
-    # factory = {"侯宗仁":"廠務部","高麗華":"廠務部","蔡榕蓉":"廠務部","馮文明":"廠務部","陳恆瑞":"廠務部"
-    #            ,"郭文欽":"廠務部","葉莉萱":"廠務部","莊曜嘉":"廠務部","楊恭擇":"廠務部","高如媛":"廠務部"
-    #            ,"廖士瑋":"廠務部","廖源龍":"廠務部","楊智全":"廠務部","陳春能":"廠務部","梁國纘":"廠務部"
-    #            ,"黃春北":"廠務部","楊功亮":"廠務部","阮進士":"廠務部","鄭春峰":"廠務部","陳文戰":"廠務部"
-    #            ,"陳庭孟":"廠務部","陳文聯":"廠務部","呂美慧":"廠務部","何純":"廠務部","陳泓諭":"廠務部"
-    #            ,"梅文純":"廠務部","陳文量":"廠務部","黃春越":"廠務部","梅維慶":"廠務部","鄭文愛":"廠務部"
-    #            ,"陳駿騰":"廠務部"}
-    # business = {"林志勳":"業務部","徐崇信":"業務部","王韋盛":"業務部","王竣平":"業務部","簡瑞泓":"業務部"
-    #             ,"鄭任雯":"業務部","郭曉穎":"業務部","邱郁晴":"業務部","郭雪芬":"業務部","李政晃":"業務部"
-    #             ,"李芳純":"業務部","陳佳欣":"業務部","蔡孟亭":"業務部","許寶玲":"業務部","黃睿堂":"業務部"}
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
@@ -769,9 +997,6 @@ def changePost(request,cNumber=None):
             cApproved =  changeform.cleaned_data['cKeypoint']
             cReview =  changeform.cleaned_data['cReview']
             cUndertaker =  changeform.cleaned_data['cUndertaker']
-            if request.user.is_authenticated:
-                username=request.user.username
-                authenticate=request.user.is_staff
             cOption_FS =  changeform.cleaned_data['cOption_FS']
             cFs_Sign =  changeform.cleaned_data['cFs_Sign']
             cOption_Design =  changeform.cleaned_data['cOption_Design']
@@ -819,16 +1044,6 @@ def changeallIndex(request):
     return render(request, "changeall_Index.html",locals())
 
 def changeEdit(request,id=None,mode=None,cNumber=None):
-    # factory = {"侯宗仁":"廠務部","高麗華":"廠務部","蔡榕蓉":"廠務部","馮文明":"廠務部","陳恆瑞":"廠務部"
-    #            ,"郭文欽":"廠務部","葉莉萱":"廠務部","莊曜嘉":"廠務部","楊恭擇":"廠務部","高如媛":"廠務部"
-    #            ,"廖士瑋":"廠務部","廖源龍":"廠務部","楊智全":"廠務部","陳春能":"廠務部","梁國纘":"廠務部"
-    #            ,"黃春北":"廠務部","楊功亮":"廠務部","阮進士":"廠務部","鄭春峰":"廠務部","陳文戰":"廠務部"
-    #            ,"陳庭孟":"廠務部","陳文聯":"廠務部","呂美慧":"廠務部","何純":"廠務部","陳泓諭":"廠務部"
-    #            ,"梅文純":"廠務部","陳文量":"廠務部","黃春越":"廠務部","梅維慶":"廠務部","鄭文愛":"廠務部"
-    #            ,"陳駿騰":"廠務部"}
-    # business = {"林志勳":"業務部","徐崇信":"業務部","王韋盛":"業務部","王竣平":"業務部","簡瑞泓":"業務部"
-    #             ,"鄭任雯":"業務部","郭曉穎":"業務部","邱郁晴":"業務部","郭雪芬":"業務部","李政晃":"業務部"
-    #             ,"李芳純":"業務部","陳佳欣":"業務部","蔡孟亭":"業務部","許寶玲":"業務部","黃睿堂":"業務部"}
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff

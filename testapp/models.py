@@ -18,15 +18,13 @@ class Home(models.Model):
     cEndDate = models.DateField(blank=True, null=True)
     cLock = models.CharField(max_length=5,null=False,default='否')
     cReceive  = models.CharField(max_length=20,blank=True,null=True,choices=REC)
-    cProposed=models.TextField(blank=True)#擬辦
-    cCheck=models.TextField(blank=True)#批示
     cFile = models.FileField(blank=True, null=True)
 
-# class Returned(models.Model):
-#     cName = models.CharField(max_length=20, blank=True)
-#     cIllustrate = models.TextField(blank=True)
-#     cTransfer = models.CharField(max_length=20,blank=True,null=True,)
-#     returnTo = models.ForeignKey(Home, on_delete=models.CASCADE, default="" ,related_name='details')
+class Returned(models.Model):
+    cName = models.CharField(max_length=20, blank=True)#誰駁回的(姓名)
+    cIllustrate = models.TextField(blank=True)
+    cTransfer = models.CharField(max_length=20, blank=True)#被駁回的(姓名)
+    returnTo = models.ForeignKey(Home, on_delete=models.CASCADE, default="" ,related_name='details')
 
 4+1
 class Signed (models.Model):
@@ -34,6 +32,8 @@ class Signed (models.Model):
     cJob_title = models.CharField(max_length=50,blank=True)#職稱
     cSubject = models.CharField(max_length=255, default='', null=False)#主旨
     cDiscription = models.TextField(blank=True)#說明
+    cProposed=models.TextField(blank=True)#擬辦
+    cCheck=models.TextField(blank=True)#批示
     home = models.OneToOneField(Home, on_delete=models.CASCADE,default='')
 
 #11+1
