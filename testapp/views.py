@@ -215,8 +215,8 @@ def returnedIndex(request,id=None):
         multiple_q = Q(Q(cName__icontains=q) | Q(cIllustrate__icontains=q) | Q(cTransfer__icontains=q))
         returned = Returned.objects.filter(multiple_q)
     else:
-        unitreturn = Returned.objects.filter(returnTo=home).order_by("id")
-    allunitreturnCount = len(unitreturn)
+        returned = Returned.objects.filter(returnTo=home).order_by("id")
+    allunitreturnCount = len(returned)
     return render(request, "returnedIndex.html",locals())
 
 
@@ -1023,7 +1023,6 @@ def changeView(request,cNumber=None):
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
-        group = request.user.group.filter()
         firstname = request.user.first_name
     home = Home.objects.get(cNumber=cNumber)
     change = Change.objects.get(cNumber=cNumber)
