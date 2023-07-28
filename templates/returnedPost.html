@@ -65,11 +65,21 @@
             <tr><th>駁回理由</th><td>{{returnedform.cIllustrate}}</td></tr>
             <tr>
                 <th>被駁回人</th>
-                {% if returnedHome.cReceive == "郭文龍" %}
+                <td >
+                  <select class="form-control" id="taskTypeSelect" name="cReceive">
+                  <option value={{returnedHome.cAuther}} name="cReceive">{{returnedHome.cAuther}}</option>
+                  {% for key,value in returnedform.REC %}
+                      {% if key != "{{returnedHome.cAuther}}" %}
+                      <option value="{{ key }}" name="cReceive">{{value}}</option>
+                      {% endif %}
+                  {% endfor %}
+                  </select>                         
+              </td>
+                <!-- {% if returnedHome.cReceive == "郭文龍" %}
                 <td>
                     <select class="form-control" id="taskTypeSelect" name="cReceive">
                     <option value="郭文龍" name="cReceive">郭文龍</option>
-                    {% for key,value in returnedform.REC %}
+                    {% for key,value in returnedform.REC2 %}
                         {% if key != "郭文龍" %}
                         <option value="{{ key }}" name="cReceive">{{value}}</option>
                         {% endif %}
@@ -274,7 +284,18 @@
                     {% endfor %}
                     </select>                         
                 </td>
-                {% else %}
+                {% elif returnedHome.cReceive == "廖士瑋" %}
+                <td >
+                    <select class="form-control" id="taskTypeSelect" name="cReceive">
+                    <option value="廖士瑋" name="cReceive">廖士瑋</option>
+                    {% for key,value in returnedform.REC %}
+                        {% if key != "廖士瑋" %}
+                        <option value="{{ key }}" name="cReceive">{{value}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>                         
+                </td> -->
+                <!-- {% else %}
                 <td >
                     <select class="form-control" id="taskTypeSelect" name="cReceive">
                     {% for key,value in returnedform.REC %}
@@ -282,7 +303,7 @@
                     {% endfor %}
                     </select>                         
                 </td>
-                {% endif %}
+                {% endif %} -->
             </tr>
             <tr>
                 <th align="center" scope="col">
