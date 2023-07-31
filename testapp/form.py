@@ -14,11 +14,13 @@ class HomeForm(forms.Form):
     cReceive = forms.CharField(max_length=20,required=False,widget=forms.Select(choices=REC))
     cFile = forms.FileField(required=False)
     
+class CountForm(forms.Form):
+	count = forms.IntegerField(initial=0,required=False)
+    
 class ReturnedForm(forms.Form):
 	REC = (("None","無"),("郭文龍","郭文龍"),("侯國興","侯國興"),("郭文河","郭文河"),("高晟琅","高晟琅"),("黃睿堂","黃睿堂"),("鄭任雯","鄭任雯"),("高麗華","高麗華"),("侯宗仁","侯宗仁"),("黃美禎","黃美禎"),("江水木","江水木"),("吳建進","吳建進"),("王韋盛","王韋盛"),("陳佳欣","陳佳欣"),("蔡孟亭","蔡孟亭"),("馮文明","馮文明"),("陳恆瑞","陳恆瑞"),("郭文欽","郭文欽"),("陳春能","陳春能"),("黃春北","黃春北"))
-	REC2= (("None","無"),("郭文龍","郭文龍"),("侯國興","侯國興"),("郭文河","郭文河"),("高晟琅","高晟琅"),("黃睿堂","黃睿堂"),("鄭任雯","鄭任雯"),("高麗華","高麗華"),("侯宗仁","侯宗仁"),("黃美禎","黃美禎"),("江水木","江水木"),("吳建進","吳建進"),("王韋盛","王韋盛"),("陳佳欣","陳佳欣"),("蔡孟亭","蔡孟亭"),("馮文明","馮文明"),("陳恆瑞","陳恆瑞"),("郭文欽","郭文欽"),("陳春能","陳春能"),("黃春北","黃春北"))
 	cName = forms.CharField(max_length=20,initial="免填",disabled=True)#誰駁回的(姓名)
-	cTransfer = forms.CharField(max_length=20,initial="免填",disabled=True)#被駁回的(姓名)
+	cTransfer = forms.CharField(max_length=20,initial="免填",required=False)#被駁回的(姓名)
 	cIllustrate = forms.CharField(widget=forms.Textarea, required=False)
 
 class SignedForm (forms.Form):

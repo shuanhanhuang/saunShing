@@ -27,7 +27,7 @@ from testapp.views import HomePage,login,logout,perosonIndex,open1,\
     contractallIndex,contractPost,contractEdit,contractView,\
     contractinnerDelete,contractinnerIndex,contractinnerEdit,contractinnerPost,contractinnerView,\
     changeallIndex,changeView,changeEdit,changePost,\
-    copy,signCopyPost,meetingCopyPost,contactCopyPost,contractCopyPost,changeCopyPost,\
+    homeCopyPost,signCopyPost,meetingCopyPost,contactCopyPost,contractCopyPost,changeCopyPost,\
     returnedPost,returnedIndex,returnedDelete
 
 urlpatterns = [
@@ -81,7 +81,7 @@ urlpatterns = [
     path('changeEdit/<str:cNumber>/<int:id>/<str:mode>',changeEdit),
     path('changePost/<str:cNumber>/',changePost),
 
-    path('copy/<str:cNumber1>/',copy),
+    path('homeCopyPost/<str:cNumber1>/',homeCopyPost),
     path('signCopyPost/<str:cNumber>/<str:thisNumber>/',signCopyPost),
     path('meetingCopyPost/<str:cNumber>/<str:thisNumber>/',meetingCopyPost),
     path('contactCopyPost/<str:cNumber>/<str:thisNumber>/',contactCopyPost),

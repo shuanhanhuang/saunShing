@@ -67,265 +67,680 @@
     </div>
 
 
-    <form action="/changeEdit/{{index.cNumber}}/{{unit.id}}/save" method="POST" name="form1">
+    <form action="/changeEdit/{{unithome.cNumber}}/{{unit.id}}/save" method="POST" name="form1">
         {% csrf_token %}
         <div class="container">
             <div class="row">
                 <table class="table">
-                    <tr>
-                        <th>專案名稱</th>
-                        <td><input type="text" id="cProjectName" name="cProjectName" value={{unit.cProjectName}}></td>
-                    </tr>
-                    <tr>
-                        <th>核准人</th>
-                        <td><input type="text" id="cApproved" name="cApproved" value={{unit.cApproved}}></td>
-                    </tr>
-                    <tr>
-                        <th>審查人</th>
-                        <td><input type="text" id="cReview" name="cReview" value={{unit.cReview}}></td>
-                    </tr>
-                    <tr>
-                        <th>承辦人</th>
-                        <td><input type="text" id="cUndertaker" name="cUndertaker" value={{unit.cUndertaker}}></td>
-                    </tr>
-                    <tr>
-                        <th>變更方式</th>
-                        {% if unit.cHowChange == "設計變更(永久)" %}
-                        <td>
-                            <input name="cHowChange" type="radio" id="cHowChange1" value="設計變更(永久)" checked="checked" />
-                            設計變更(永久)
-                            <input name="cHowChange" type="radio" id="cHowChange2" value="設計變更(個案)" />
-                            設計變更(個案)
-                        </td>
+                    {% if unithome.cLock == "否" %}
+                        <tr>
+                            <th>發文者</th>
+                            <td><input type="text" id="cAuther" name="cAuther" value={{unithome.cAuther}}></td>
+                        </tr>
+                        <tr>
+                            <th>日期</th>
+                            <td><input type="text" id="cDate" name="cDate" value={{unithome.cDate}}></td>
+                        </tr>
+                        <tr>
+                        <th>部門別</th>
+                        {% if unithome.cDepartment == "總經理室" %}
+                            <td >
+                                <input name="cDepartment" type="radio" id="cDepartment1" value="總經理室" checked="checked" />
+                                總經理室
+                                <input name="cDepartment" type="radio" id="cDepartment2" value="稽核室" />
+                                稽核室
+                                <input name="cDepartment" type="radio" id="cDepartment3" value="文管中心" />
+                                文管中心
+                                <input name="cDepartment" type="radio" id="cDepartment4" value="管理部" />
+                                管理部
+                                <input name="cDepartment" type="radio" id="cDepartment5" value="業務設計部" />
+                                業務設計部
+                                <input name="cDepartment" type="radio" id="cDepartment6" value="廠務部" />
+                                廠務部
+                            </td>
+                        {% elif unithome.cDepartment == "稽核室" %}
+                            <td >
+                                <input name="cDepartment" type="radio" id="cDepartment1" value="總經理室"  />
+                                總經理室
+                                <input name="cDepartment" type="radio" id="cDepartment2" value="稽核室" checked="checked"/>
+                                稽核室
+                                <input name="cDepartment" type="radio" id="cDepartment3" value="文管中心" />
+                                文管中心
+                                <input name="cDepartment" type="radio" id="cDepartment4" value="管理部" />
+                                管理部
+                                <input name="cDepartment" type="radio" id="cDepartment5" value="業務設計部" />
+                                業務設計部
+                                <input name="cDepartment" type="radio" id="cDepartment6" value="廠務部" />
+                                廠務部
+                            </td>
+                        {% elif unithome.cDepartment == "文管中心" %}
+                            <td >
+                                <input name="cDepartment" type="radio" id="cDepartment1" value="總經理室"  />
+                                總經理室
+                                <input name="cDepartment" type="radio" id="cDepartment2" value="稽核室" />
+                                稽核室
+                                <input name="cDepartment" type="radio" id="cDepartment3" value="文管中心" checked="checked"/>
+                                文管中心
+                                <input name="cDepartment" type="radio" id="cDepartment4" value="管理部" />
+                                管理部
+                                <input name="cDepartment" type="radio" id="cDepartment5" value="業務設計部" />
+                                業務設計部
+                                <input name="cDepartment" type="radio" id="cDepartment6" value="廠務部" />
+                                廠務部
+                            </td>
+                        {% elif unithome.cDepartment == "管理部" %}
+                            <td >
+                                <input name="cDepartment" type="radio" id="cDepartment1" value="總經理室"  />
+                                總經理室
+                                <input name="cDepartment" type="radio" id="cDepartment2" value="稽核室" />
+                                稽核室
+                                <input name="cDepartment" type="radio" id="cDepartment3" value="文管中心" />
+                                文管中心
+                                <input name="cDepartment" type="radio" id="cDepartment4" value="管理部" checked="checked"/>
+                                管理部
+                                <input name="cDepartment" type="radio" id="cDepartment5" value="業務設計部" />
+                                業務設計部
+                                <input name="cDepartment" type="radio" id="cDepartment6" value="廠務部" />
+                                廠務部
+                            </td>
+                        {% elif unithome.cDepartment == " 業務設計部" %}
+                            <td >
+                                <input name="cDepartment" type="radio" id="cDepartment1" value="總經理室"  />
+                                總經理室
+                                <input name="cDepartment" type="radio" id="cDepartment2" value="稽核室" />
+                                稽核室
+                                <input name="cDepartment" type="radio" id="cDepartment3" value="文管中心" />
+                                文管中心
+                                <input name="cDepartment" type="radio" id="cDepartment4" value="管理部" />
+                                管理部
+                                <input name="cDepartment" type="radio" id="cDepartment5" value="業務設計部" checked="checked"/>
+                                業務設計部
+                                <input name="cDepartment" type="radio" id="cDepartment6" value="廠務部" />
+                                廠務部
+                            </td>
                         {% else %}
-                        <td>
-                            <input name="cHowChange" type="radio" id="cHowChange1" value="設計變更(永久)" />
-                            設計變更(永久)
-                            <input name="cHowChange" type="radio" id="cHowChange2" value="設計變更(個案)" checked="checked" />
-                            設計變更(個案)
-                        </td>
+                            <td >
+                                <input name="cDepartment" type="radio" id="cDepartment1" value="總經理室"  />
+                                總經理室
+                                <input name="cDepartment" type="radio" id="cDepartment2" value="稽核室" />
+                                稽核室
+                                <input name="cDepartment" type="radio" id="cDepartment3" value="文管中心" />
+                                文管中心
+                                <input name="cDepartment" type="radio" id="cDepartment4" value="管理部" />
+                                管理部
+                                <input name="cDepartment" type="radio" id="cDepartment5" value="業務設計部" />
+                                業務設計部
+                                <input name="cDepartment" type="radio" id="cDepartment6" value="廠務部" checked="checked"/>
+                                廠務部
+                            </td>
                         {% endif %}
-                    </tr>
-                    <tr>
-                        <th>變更項目</th>
-                        {% if unit.cChangeitem == "設計圖面" %}
-                        <td>
-                            <input name="cChangeitem" type="radio" id="cChangeitem1" value="設計圖面" checked="checked" />
-                            設計圖面
-                            <input name="cChangeitem" type="radio" id="cChangeitem2" value="產品/工程規範" />
-                            產品/工程規範
-                            <input name="cChangeitem" type="radio" id="cChangeitem3" value="標準料表(BOM)" />
-                            標準料表(BOM)
-                            <input name="cChangeitem" type="radio" id="cChangeitem4" value="檢驗標準" />
-                            檢驗標準
-                        </td>
-                        {% elif unit.cChangeitem == "產品/工程規範" %}
-                        <td>
-                            <input name="cChangeitem" type="radio" id="cChangeitem1" value="設計圖面" />
-                            設計圖面
-                            <input name="cChangeitem" type="radio" id="cChangeitem2" value="產品/工程規範"
-                                checked="checked" />
-                            產品/工程規範
-                            <input name="cChangeitem" type="radio" id="cChangeitem3" value="標準料表(BOM)" />
-                            標準料表(BOM)
-                            <input name="cChangeitem" type="radio" id="cChangeitem4" value="檢驗標準" />
-                            檢驗標準
-                        </td>
-                        {% elif unit.cChangeitem == "標準料表(BOM)" %}
-                        <td>
-                            <input name="cChangeitem" type="radio" id="cChangeitem1" value="設計圖面" />
-                            設計圖面
-                            <input name="cChangeitem" type="radio" id="cChangeitem2" value="產品/工程規範" />
-                            產品/工程規範
-                            <input name="cChangeitem" type="radio" id="cChangeitem3" value="標準料表(BOM)"
-                                checked="checked" />
-                            標準料表(BOM)
-                            <input name="cChangeitem" type="radio" id="cChangeitem4" value="檢驗標準" />
-                            檢驗標準
-                        </td>
-                        {% else %}
-                        <td>
-                            <input name="cChangeitem" type="radio" id="cChangeitem1" value="設計圖面" />
-                            設計圖面
-                            <input name="cChangeitem" type="radio" id="cChangeitem2" value="產品/工程規範" />
-                            產品/工程規範
-                            <input name="cChangeitem" type="radio" id="cChangeitem3" value="標準料表(BOM)" />
-                            標準料表(BOM)
-                            <input name="cChangeitem" type="radio" id="cChangeitem4" value="檢驗標準" checked="checked" />
-                            檢驗標準
-                        </td>
-                        {% endif %}
-                    </tr>
-                    <tr>
-                        <th>變更原因</th>
-                        {% if unit.cChangereason == "客戶需求改變" %}
-                        <td>
-                            <input name="cChangereason" type="radio" id="cChangereason1" value="客戶需求改變"
-                             checked="checked" />
-                            客戶需求改變
-                            <input name="cChangereason" type="radio" id="cChangereason2" value="設計錯誤" />
-                            設計錯誤
-                            <input name="cChangereason" type="radio" id="cChangereason3" value="製造單位要求改變" />
-                            製造單位要求改變
-                            <input name="cChangereason" type="radio" id="cChangereason4" value="其他" />
-                            其他
-                            <input name="cChangereason" type="text" id="other" value="">
-                        </td>
-                        {% elif unit.cChangereason == "設計錯誤" %}
-                        <td>
-                            <input name="cChangereason" type="radio" id="cChangereason1" value="客戶需求改變" />
-                            客戶需求改變
-                            <input name="cChangereason" type="radio" id="cChangereason2" value="設計錯誤"
-                                checked="checked" />
-                            設計錯誤
-                            <input name="cChangereason" type="radio" id="cChangereason3" value="製造單位要求改變" />
-                            製造單位要求改變
-                            <input name="cChangereason" type="radio" id="cChangereason4" value="其他" />
-                            其他
-                            <input name="cChangereason" type="text" id="other" value="">
-
-                        </td>
-                        {% elif unit.cChangereason == "製造單位要求改變" %}
-                        <td>
-                            <input name="cChangereason" type="radio" id="cChangereason1" value="客戶需求改變" />
-                            客戶需求改變
-                            <input name="cChangereason" type="radio" id="cChangereason2" value="設計錯誤" />
-                            設計錯誤
-                            <input name="cChangereason" type="radio" id="cChangereason3" value="製造單位要求改變"
-                                checked="checked" />
-                            製造單位要求改變
-                            <input name="cChangereason" type="radio" id="cChangereason4" value="其他" />
-                            其他
-                            <input name="cChangereason" type="text" id="other" value="">
+                        </tr>
+                        <tr>
+                            <th>文件進度</th>
+                            {% if unithome.cProgress == "草稿" %}
+                                <td >
+                                <input name="cProgress" type="radio" id="cProgress1" value="草稿" checked="checked" />
+                                草稿
+                                <input name="cProgress" type="radio" id="cProgress2" value="流程中" />
+                                流程中
+                                <input name="cProgress" type="radio" id="cProgress3" value="廢單" />
+                                廢單
+                                <input name="cProgress" type="radio" id="cProgress4" value="結案" />
+                                結案
+                                </td>
+                            {% elif unithome.cProgress == "流程中" %}
+                                <td >
+                                    <input name="cProgress" type="radio" id="cProgress1" value="草稿"  />
+                                    草稿
+                                    <input name="cProgress" type="radio" id="cProgress2" value="流程中" checked="checked"/>
+                                    流程中
+                                    <input name="cProgress" type="radio" id="cProgress3" value="廢單" />
+                                    廢單
+                                    <input name="cProgress" type="radio" id="cProgress4" value="結案" />
+                                    結案
+                                </td>
+                            {% elif unithome.cProgress == "廢單" %}
+                                <td >
+                                    <input name="cProgress" type="radio" id="cProgress1" value="草稿"  />
+                                    草稿
+                                    <input name="cProgress" type="radio" id="cProgress2" value="流程中" />
+                                    流程中
+                                    <input name="cProgress" type="radio" id="cProgress3" value="廢單" checked="checked"/>
+                                    廢單
+                                    <input name="cProgress" type="radio" id="cProgress4" value="結案" />
+                                    結案
+                                </td>
                             {% else %}
-                        <td>
-                            <input name="cChangereason" type="radio" id="cChangereason1" value="客戶需求改變" />
-                            客戶需求改變
-                            <input name="cChangereason" type="radio" id="cChangereason2" value="設計錯誤" />
-                            設計錯誤
-                            <input name="cChangereason" type="radio" id="cChangereason3" value="製造單位要求改變" />
-                            製造單位要求改變
-                            <input name="cChangereason" type="radio" id="cChangereason4" value="其他" checked="checked" />
-                            其他
-                            <input name="cChangereason" type="text" id="other" value={{unit.cChangereason}}>
-
-                        </td>
+                                <td >
+                                    <input name="cProgress" type="radio" id="cProgress1" value="草稿" />
+                                    草稿
+                                    <input name="cProgress" type="radio" id="cProgress2" value="流程中" />
+                                    流程中
+                                    <input name="cProgress" type="radio" id="cProgress3" value="廢單" />
+                                    廢單
+                                    <input name="cProgress" type="radio" id="cProgress4" value="結案" checked="checked"/>
+                                    結案
+                                </td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <th>完成日期</th>
+                            <td><input type="text" id="cEndDate" name="cEndDate" value={{unithome.cEndDate}}></td>
+                        </tr>
+                        {% if authenticate == True %}
+                        <tr>
+                            <th>鎖定</th>
+                            {% if unithome.cLock == "否" %}
+                            <td>
+                                <input name="cLock" type="radio" id="cLock1" value="否" checked="checked" />
+                                否
+                                <input name="cLock" type="radio" id="cLock2" value="是" />
+                                是
+                            </td>
+                            {% else %}
+                            <td>
+                                <input name="cLock" type="radio" id="cLock1" value="否"  />
+                                否
+                                <input name="cLock" type="radio" id="cLock2" value="是" checked="checked"/>
+                                是
+                            </td>
+                            {% endif %}
+                        </tr>
                         {% endif %}
-                    </tr>
-                    <tr>
-                        <th>有償/無償</th>
-                        {% if unit.cEarn == "有償" %}
-                        <td>
-                            <input name="cEarn" type="radio" id="cEarn1" value="有償" checked="checked" />
-                            有償
-                            <input name="cEarn" type="radio" id="cEarn2" value="無償" />
-                            無償
-                        </td>
-                        {% else %}
-                        <td>
-                            <input name="cEarn" type="radio" id="cEarn3" value="有償" />
-                            有償
-                            <input name="cEarn" type="radio" id="cEarn4" value="無償" checked="checked" />
-                            無償
-                        </td>
-                        {% endif %}
-                    </tr>
-                    <tr>
-                        <th>影響項目</th>
-                        <td><textarea id="cAffectitem" name="cAffectitem">{{unit.cAffectitem}}</textarea></td>
-                    </tr>
-                    <tr>
-                        <th>變更要點說明</th>
-                        <td><textarea id="Keypoint" name="cKeypoint">{{unit.cKeypoint}}</textarea></td>
-                    </tr>
-                    <tr>
-                        <th>變更潛在風險說明</th>
-                        <td><textarea id="cRisk" name="cRisk">{{unit.cRisk}}</textarea></td>
-                    </tr>
-                    {% if lastname == "廠務部" %}
-                    <tr>
-                        <th>廠務部意見</th>
-                        <td><textarea id="cOption_FS" name="cOption_FS">{{unit.cOption_FS}}</textarea></td>
-                        <th>簽名</th>
-                        <td><input type="text" id="cFs_Sign" name="cFs_Sign" value={{unit.cFs_Sign}}></td>
-                    </tr>
-                    {% endif %}
-                    {% if lastname == "業務設計部" %}
-                    <tr>
-                        <th>業務設計部意見</th>
-                        <td><textarea id="cOption_Design" name="cOption_Design">{{unit.cOption_Design}}</textarea></td>
-                        <th>簽名</th>
-                        <td><input type="text" id="cDesign_Sign" name="cDesign_Sign" value={{unit.cDesign_Sign}}></td>
-                    </tr>
-                    {% endif %}
-                    {% if lastname == "品管課" %}
-                    <tr>
-                        <th>品管課意見</th>
-                        <td><textarea id="cOption_Quality" name="cOption_Quality">{{unit.cOption_Quality}}</textarea>
-                        </td>
-                        <th>簽名</th>
-                        <td><input type="text" id="cQuality_Sign" name="cQuality_Sign" value={{unit.cQuality_Sign}}>
-                        </td>
-                    </tr>
-                    {% endif %}
-                    {% if firstname == "蔡榕蓉" %}
-                    <tr>
-                        <th>採購課意見</th>
-                        <td><textarea id="cOption_Purchase" name="cOption_Purchase">{{unit.cOption_Purchase}}</textarea>
-                        </td>
-                        <th>簽名</th>
-                        <td><input type="text" id="cPurchase_Sign" name="cPurchase_Sign" value={{unit.cPurchase_Sign}}>
-                        </td>
-                    </tr>
-                    {% endif %}
-
-                    <tr>
-                        <th>副本印製</th>
-                        <td>
-                            <input type="checkbox" name="option" class="check_box_list" value="業務" {% if '業務' in unit.cCC %}checked{% endif %}>
-                            <label for="業務">業務
-                            <input type="checkbox" name="option" class="check_box_list" value="設計" {% if '設計' in unit.cCC %}checked{% endif %}>
-                            <label for="設計">設計
-                            <input type="checkbox" name="option" class="check_box_list" value="管理" {% if '管理' in unit.cCC %}checked{% endif %}>
-                            <label for="管理">管理
-                            <input type="checkbox" name="option" class="check_box_list" value="顧問" {% if '顧問' in unit.cCC %}checked{% endif %}>
-                            <label for="顧問">顧問
-                            <input type="checkbox" name="option" class="check_box_list" value="工程" {% if '工程' in unit.cCC %}checked{% endif %}>
-                            <label for="工程">工程
-                            <input type="checkbox" name="option" class="check_box_list" value="廠務"{% if '廠務' in unit.cCC %}checked{% endif %}>
-                            <label for="廠務">廠務
-                            <input type="checkbox" name="option" class="check_box_list" value="品管" {% if '品管' in unit.cCC %}checked{% endif %}>
-                            <label for="品管">品管
-                            <input type="checkbox" name="option" class="check_box_list" value="無" {% if '無' in unit.cCC %}checked{% endif %}>
-                            <label for="無">無
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>技術通報</th>
-                        {% if unit.cTech_bulletin == "是" %}
-                        <td>
-                            <input name="cTech_bulletin" type="radio" id="cTech_bulletin1" value="是"
+                        <tr>
+                            <th>專案名稱</th>
+                            <td><input type="text" id="cProjectName" name="cProjectName" value={{unit.cProjectName}}></td>
+                        </tr>
+                        <tr>
+                            <th>核准人</th>
+                            <td><input type="text" id="cApproved" name="cApproved" value={{unit.cApproved}}></td>
+                        </tr>
+                        <tr>
+                            <th>審查人</th>
+                            <td><input type="text" id="cReview" name="cReview" value={{unit.cReview}}></td>
+                        </tr>
+                        <tr>
+                            <th>承辦人</th>
+                            <td><input type="text" id="cUndertaker" name="cUndertaker" value={{unit.cUndertaker}}></td>
+                        </tr>
+                        <tr>
+                            <th>變更方式</th>
+                            {% if unit.cHowChange == "設計變更(永久)" %}
+                            <td>
+                                <input name="cHowChange" type="radio" id="cHowChange1" value="設計變更(永久)" checked="checked" />
+                                設計變更(永久)
+                                <input name="cHowChange" type="radio" id="cHowChange2" value="設計變更(個案)" />
+                                設計變更(個案)
+                            </td>
+                            {% else %}
+                            <td>
+                                <input name="cHowChange" type="radio" id="cHowChange1" value="設計變更(永久)" />
+                                設計變更(永久)
+                                <input name="cHowChange" type="radio" id="cHowChange2" value="設計變更(個案)" checked="checked" />
+                                設計變更(個案)
+                            </td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <th>變更項目</th>
+                            {% if unit.cChangeitem == "設計圖面" %}
+                            <td>
+                                <input name="cChangeitem" type="radio" id="cChangeitem1" value="設計圖面" checked="checked" />
+                                設計圖面
+                                <input name="cChangeitem" type="radio" id="cChangeitem2" value="產品/工程規範" />
+                                產品/工程規範
+                                <input name="cChangeitem" type="radio" id="cChangeitem3" value="標準料表(BOM)" />
+                                標準料表(BOM)
+                                <input name="cChangeitem" type="radio" id="cChangeitem4" value="檢驗標準" />
+                                檢驗標準
+                            </td>
+                            {% elif unit.cChangeitem == "產品/工程規範" %}
+                            <td>
+                                <input name="cChangeitem" type="radio" id="cChangeitem1" value="設計圖面" />
+                                設計圖面
+                                <input name="cChangeitem" type="radio" id="cChangeitem2" value="產品/工程規範"
+                                    checked="checked" />
+                                產品/工程規範
+                                <input name="cChangeitem" type="radio" id="cChangeitem3" value="標準料表(BOM)" />
+                                標準料表(BOM)
+                                <input name="cChangeitem" type="radio" id="cChangeitem4" value="檢驗標準" />
+                                檢驗標準
+                            </td>
+                            {% elif unit.cChangeitem == "標準料表(BOM)" %}
+                            <td>
+                                <input name="cChangeitem" type="radio" id="cChangeitem1" value="設計圖面" />
+                                設計圖面
+                                <input name="cChangeitem" type="radio" id="cChangeitem2" value="產品/工程規範" />
+                                產品/工程規範
+                                <input name="cChangeitem" type="radio" id="cChangeitem3" value="標準料表(BOM)"
+                                    checked="checked" />
+                                標準料表(BOM)
+                                <input name="cChangeitem" type="radio" id="cChangeitem4" value="檢驗標準" />
+                                檢驗標準
+                            </td>
+                            {% else %}
+                            <td>
+                                <input name="cChangeitem" type="radio" id="cChangeitem1" value="設計圖面" />
+                                設計圖面
+                                <input name="cChangeitem" type="radio" id="cChangeitem2" value="產品/工程規範" />
+                                產品/工程規範
+                                <input name="cChangeitem" type="radio" id="cChangeitem3" value="標準料表(BOM)" />
+                                標準料表(BOM)
+                                <input name="cChangeitem" type="radio" id="cChangeitem4" value="檢驗標準" checked="checked" />
+                                檢驗標準
+                            </td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <th>變更原因</th>
+                            {% if unit.cChangereason == "客戶需求改變" %}
+                            <td>
+                                <input name="cChangereason" type="radio" id="cChangereason1" value="客戶需求改變"
                                 checked="checked" />
-                            是
-                            <input name="cTech_bulletin" type="radio" id="cTech_bulletin2" value="否" />
-                            否
-                        </td>
-                        {% else %}
-                        <td>
-                            <input name="cTech_bulletin" type="radio" id="cTech_bulletin1" value="是" />
-                            是
-                            <input name="cTech_bulletin" type="radio" id="cTech_bulletin2" value="否"
-                                checked="checked" />
-                            否
-                        </td>
+                                客戶需求改變
+                                <input name="cChangereason" type="radio" id="cChangereason2" value="設計錯誤" />
+                                設計錯誤
+                                <input name="cChangereason" type="radio" id="cChangereason3" value="製造單位要求改變" />
+                                製造單位要求改變
+                                <input name="cChangereason" type="radio" id="cChangereason4" value="其他" />
+                                其他
+                                <input name="cChangereason" type="text" id="other" value="">
+                            </td>
+                            {% elif unit.cChangereason == "設計錯誤" %}
+                            <td>
+                                <input name="cChangereason" type="radio" id="cChangereason1" value="客戶需求改變" />
+                                客戶需求改變
+                                <input name="cChangereason" type="radio" id="cChangereason2" value="設計錯誤"
+                                    checked="checked" />
+                                設計錯誤
+                                <input name="cChangereason" type="radio" id="cChangereason3" value="製造單位要求改變" />
+                                製造單位要求改變
+                                <input name="cChangereason" type="radio" id="cChangereason4" value="其他" />
+                                其他
+                                <input name="cChangereason" type="text" id="other" value="">
+
+                            </td>
+                            {% elif unit.cChangereason == "製造單位要求改變" %}
+                            <td>
+                                <input name="cChangereason" type="radio" id="cChangereason1" value="客戶需求改變" />
+                                客戶需求改變
+                                <input name="cChangereason" type="radio" id="cChangereason2" value="設計錯誤" />
+                                設計錯誤
+                                <input name="cChangereason" type="radio" id="cChangereason3" value="製造單位要求改變"
+                                    checked="checked" />
+                                製造單位要求改變
+                                <input name="cChangereason" type="radio" id="cChangereason4" value="其他" />
+                                其他
+                                <input name="cChangereason" type="text" id="other" value="">
+                                {% else %}
+                            <td>
+                                <input name="cChangereason" type="radio" id="cChangereason1" value="客戶需求改變" />
+                                客戶需求改變
+                                <input name="cChangereason" type="radio" id="cChangereason2" value="設計錯誤" />
+                                設計錯誤
+                                <input name="cChangereason" type="radio" id="cChangereason3" value="製造單位要求改變" />
+                                製造單位要求改變
+                                <input name="cChangereason" type="radio" id="cChangereason4" value="其他" checked="checked" />
+                                其他
+                                <input name="cChangereason" type="text" id="other" value={{unit.cChangereason}}>
+
+                            </td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <th>有償/無償</th>
+                            {% if unit.cEarn == "有償" %}
+                            <td>
+                                <input name="cEarn" type="radio" id="cEarn1" value="有償" checked="checked" />
+                                有償
+                                <input name="cEarn" type="radio" id="cEarn2" value="無償" />
+                                無償
+                            </td>
+                            {% else %}
+                            <td>
+                                <input name="cEarn" type="radio" id="cEarn3" value="有償" />
+                                有償
+                                <input name="cEarn" type="radio" id="cEarn4" value="無償" checked="checked" />
+                                無償
+                            </td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <th>影響項目</th>
+                            <td><textarea id="cAffectitem" name="cAffectitem">{{unit.cAffectitem}}</textarea></td>
+                        </tr>
+                        <tr>
+                            <th>變更要點說明</th>
+                            <td><textarea id="Keypoint" name="cKeypoint">{{unit.cKeypoint}}</textarea></td>
+                        </tr>
+                        <tr>
+                            <th>變更潛在風險說明</th>
+                            <td><textarea id="cRisk" name="cRisk">{{unit.cRisk}}</textarea></td>
+                        </tr>
+                        {% if lastname == "廠務部" %}
+                        <tr>
+                            <th>廠務部意見</th>
+                            <td><textarea id="cOption_FS" name="cOption_FS">{{unit.cOption_FS}}</textarea></td>
+                            <th>簽名</th>
+                            <td><input type="text" id="cFs_Sign" name="cFs_Sign" value={{unit.cFs_Sign}}></td>
+                        </tr>
                         {% endif %}
-                    </tr>
+                        {% if lastname == "業務設計部" %}
+                        <tr>
+                            <th>業務設計部意見</th>
+                            <td><textarea id="cOption_Design" name="cOption_Design">{{unit.cOption_Design}}</textarea></td>
+                            <th>簽名</th>
+                            <td><input type="text" id="cDesign_Sign" name="cDesign_Sign" value={{unit.cDesign_Sign}}></td>
+                        </tr>
+                        {% endif %}
+                        {% if lastname == "品管課" %}
+                        <tr>
+                            <th>品管課意見</th>
+                            <td><textarea id="cOption_Quality" name="cOption_Quality">{{unit.cOption_Quality}}</textarea>
+                            </td>
+                            <th>簽名</th>
+                            <td><input type="text" id="cQuality_Sign" name="cQuality_Sign" value={{unit.cQuality_Sign}}>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% if firstname == "蔡榕蓉" %}
+                        <tr>
+                            <th>採購課意見</th>
+                            <td><textarea id="cOption_Purchase" name="cOption_Purchase">{{unit.cOption_Purchase}}</textarea>
+                            </td>
+                            <th>簽名</th>
+                            <td><input type="text" id="cPurchase_Sign" name="cPurchase_Sign" value={{unit.cPurchase_Sign}}>
+                            </td>
+                        </tr>
+                        {% endif %}
+
+                        <tr>
+                            <th>副本印製</th>
+                            <td>
+                                <input type="checkbox" name="option" class="check_box_list" value="業務" {% if '業務' in unit.cCC %}checked{% endif %}>
+                                <label for="業務">業務
+                                <input type="checkbox" name="option" class="check_box_list" value="設計" {% if '設計' in unit.cCC %}checked{% endif %}>
+                                <label for="設計">設計
+                                <input type="checkbox" name="option" class="check_box_list" value="管理" {% if '管理' in unit.cCC %}checked{% endif %}>
+                                <label for="管理">管理
+                                <input type="checkbox" name="option" class="check_box_list" value="顧問" {% if '顧問' in unit.cCC %}checked{% endif %}>
+                                <label for="顧問">顧問
+                                <input type="checkbox" name="option" class="check_box_list" value="工程" {% if '工程' in unit.cCC %}checked{% endif %}>
+                                <label for="工程">工程
+                                <input type="checkbox" name="option" class="check_box_list" value="廠務"{% if '廠務' in unit.cCC %}checked{% endif %}>
+                                <label for="廠務">廠務
+                                <input type="checkbox" name="option" class="check_box_list" value="品管" {% if '品管' in unit.cCC %}checked{% endif %}>
+                                <label for="品管">品管
+                                <input type="checkbox" name="option" class="check_box_list" value="無" {% if '無' in unit.cCC %}checked{% endif %}>
+                                <label for="無">無
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>技術通報</th>
+                            {% if unit.cTech_bulletin == "是" %}
+                            <td>
+                                <input name="cTech_bulletin" type="radio" id="cTech_bulletin1" value="是"
+                                    checked="checked" />
+                                是
+                                <input name="cTech_bulletin" type="radio" id="cTech_bulletin2" value="否" />
+                                否
+                            </td>
+                            {% else %}
+                            <td>
+                                <input name="cTech_bulletin" type="radio" id="cTech_bulletin1" value="是" />
+                                是
+                                <input name="cTech_bulletin" type="radio" id="cTech_bulletin2" value="否"
+                                    checked="checked" />
+                                否
+                            </td>
+                            {% endif %}
+                        </tr>
+                        <tr><th>接收人</th>
+                            {% if unithome.cReceive == "郭文龍" %}
+                            <td>
+                                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                                <option value="郭文龍" name="cReceive">郭文龍</option>
+                                {% for key,value in homeform.REC %}
+                                    {% if key != "郭文龍" %}
+                                    <option value="{{ key }}" name="cReceive">{{value}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>
+                            </td>
+                            {% elif unithome.cReceive == "侯國興" %}
+                            <td>
+                                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                                <option value="侯國興" name="cReceive">侯國興</option>
+                                {% for key,value in homeform.REC %}
+                                    {% if key != "侯國興" %}
+                                    <option value="{{ key }}" name="cReceive">{{value}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>                         
+                            </td>
+                            {% elif unithome.cReceive == "郭文河" %}
+                            <td>
+                                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                                <option value="郭文河" name="cReceive">郭文河</option>
+                                {% for key,value in homeform.REC %}
+                                    {% if key != "郭文河" %}
+                                    <option value="{{ key }}" name="cReceive">{{value}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>                         
+                            </td>
+                            {% elif unithome.cReceive == "高晟琅" %}
+                            <td>
+                                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                                <option value="高晟琅" name="cReceive">高晟琅</option>
+                                {% for key,value in homeform.REC %}
+                                    {% if key != "高晟琅" %}
+                                    <option value="{{ key }}" name="cReceive">{{value}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>                         
+                            </td>
+                            {% elif unithome.cReceive == "黃睿堂" %}
+                            <td>
+                                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                                <option value="黃睿堂" name="cReceive">黃睿堂</option>
+                                {% for key,value in homeform.REC %}
+                                    {% if key != "黃睿堂" %}
+                                    <option value="{{ key }}" name="cReceive">{{value}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>                         
+                            </td>
+                            {% elif unithome.cReceive == "鄭任雯" %}
+                            <td>
+                                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                                <option value="鄭任雯" name="cReceive">鄭任雯</option>
+                                {% for key,value in homeform.REC %}
+                                    {% if key != "鄭任雯" %}
+                                    <option value="{{ key }}" name="cReceive">{{value}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>                         
+                            </td>
+                            {% elif unithome.cReceive == "高麗華" %}
+                            <td>
+                                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                                <option value="高麗華" name="cReceive">高麗華</option>
+                                {% for key,value in homeform.REC %}
+                                    {% if key != "高麗華" %}
+                                    <option value="{{ key }}" name="cReceive">{{value}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>                         
+                            </td>
+                            {% elif unithome.cReceive == "侯宗仁" %}
+                            <td>
+                                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                                <option value="侯宗仁" name="cReceive">侯宗仁</option>
+                                {% for key,value in homeform.REC %}
+                                    {% if key != "侯宗仁" %}
+                                    <option value="{{ key }}" name="cReceive">{{value}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>                         
+                            </td>
+                            {% elif unithome.cReceive == "黃美禎" %}
+                            <td >
+                                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                                <option value="黃美禎" name="cReceive">黃美禎</option>
+                                {% for key,value in homeform.REC %}
+                                    {% if key != "黃美禎" %}
+                                    <option value="{{ key }}" name="cReceive">{{value}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>                         
+                            </td>
+                            {% elif unithome.cReceive == "江水木" %}
+                            <td >
+                                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                                <option value="江水木" name="cReceive">江水木</option>
+                                {% for key,value in homeform.REC %}
+                                    {% if key != "江水木" %}
+                                    <option value="{{ key }}" name="cReceive">{{value}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>                         
+                            </td>
+                            {% elif unithome.cReceive == "吳建進" %}
+                            <td >
+                                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                                <option value="吳建進" name="cReceive">吳建進</option>
+                                {% for key,value in homeform.REC %}
+                                    {% if key != "吳建進" %}
+                                    <option value="{{ key }}" name="cReceive">{{value}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>                         
+                            </td>
+                            {% elif unithome.cReceive == "王韋盛" %}
+                            <td >
+                                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                                <option value="王韋盛" name="cReceive">王韋盛</option>
+                                {% for key,value in homeform.REC %}
+                                    {% if key != "王韋盛" %}
+                                    <option value="{{ key }}" name="cReceive">{{value}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>                         
+                            </td>
+                            {% elif unithome.cReceive == "陳佳欣" %}
+                            <td >
+                                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                                <option value="陳佳欣" name="cReceive">陳佳欣</option>
+                                {% for key,value in homeform.REC %}
+                                    {% if key != "陳佳欣" %}
+                                    <option value="{{ key }}" name="cReceive">{{value}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>                         
+                            </td>
+                            {% elif unithome.cReceive == "蔡孟亭" %}
+                            <td >
+                                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                                <option value="蔡孟亭" name="cReceive">蔡孟亭</option>
+                                {% for key,value in homeform.REC %}
+                                    {% if key != "蔡孟亭" %}
+                                    <option value="{{ key }}" name="cReceive">{{value}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>                         
+                            </td>
+                            {% elif unithome.cReceive == "馮文明" %}
+                            <td >
+                                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                                <option value="馮文明" name="cReceive">馮文明</option>
+                                {% for key,value in homeform.REC %}
+                                    {% if key != "馮文明" %}
+                                    <option value="{{ key }}" name="cReceive">{{value}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>                         
+                            </td>
+                            {% elif unithome.cReceive == "陳恆瑞" %}
+                            <td >
+                                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                                <option value="陳恆瑞" name="cReceive">陳恆瑞</option>
+                                {% for key,value in homeform.REC %}
+                                    {% if key != "陳恆瑞" %}
+                                    <option value="{{ key }}" name="cReceive">{{value}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>                         
+                            </td>
+                            {% elif unithome.cReceive == "郭文欽" %}
+                            <td >
+                                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                                <option value="郭文欽" name="cReceive">郭文欽</option>
+                                {% for key,value in homeform.REC %}
+                                    {% if key != "郭文欽" %}
+                                    <option value="{{ key }}" name="cReceive">{{value}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>                         
+                            </td>
+                            {% elif unithome.cReceive == "陳春能" %}
+                            <td >
+                                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                                <option value="陳春能" name="cReceive">陳春能</option>
+                                {% for key,value in homeform.REC %}
+                                    {% if key != "陳春能" %}
+                                    <option value="{{ key }}" name="cReceive">{{value}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>                         
+                            </td>
+                            {% elif unithome.cReceive == "黃春北" %}
+                            <td >
+                                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                                <option value="黃春北" name="cReceive">黃春北</option>
+                                {% for key,value in homeform.REC %}
+                                    {% if key != "黃春北" %}
+                                    <option value="{{ key }}" name="cReceive">{{value}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>                         
+                            </td>
+                            {% else %}
+                            <td >
+                                <select class="form-control" id="taskTypeSelect" name="cReceive">
+                                {% for key,value in homeform.REC %}
+                                    <option value="{{ key }}" name="cReceive">{{value}}</option>
+                                {% endfor %}
+                                </select>                         
+                            </td>
+                            {% endif %}
+                        </tr>
+                    {% else %}
+                        <tr>
+                          <th>鎖定</th>
+                          {% if unithome.cLock == "否" %}
+                            <td>
+                              <input name="cLock" type="radio" id="cLock1" value="否" checked="checked" />
+                              否
+                              <input name="cLock" type="radio" id="cLock2" value="是" />
+                              是
+                            </td>
+                          {% else %}
+                            <td>
+                              <input name="cLock" type="radio" id="cLock1" value="否"  />
+                              否
+                              <input name="cLock" type="radio" id="cLock2" value="是" checked="checked"/>
+                              是
+                            </td>
+                          {% endif %}
+                        </tr>
+                    {% endif %}
 
                     <tr>
                         <th colspan="2" align="center">
-                            <input type="hidden" name="cCC" id="textvalue">
-                            <input type="hidden" name="cChangereason" id="textvalue1" value={{unit.cChangereason}}>
+                            <input type="hidden" name="cCC" id="textvalue" value="{{unit.cCC}}">
+                            <input type="hidden" name="cChangereason" id="textvalue1" value="{{unit.cChangereason}}">
                             <button type="submit" class="btn btn-primary" value="Submit">送出</button>
                             <input type="reset" class="btn btn-danger" name="button2" id="button2" value="重設">
                         </th>

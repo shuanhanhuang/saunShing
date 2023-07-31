@@ -25,6 +25,11 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/contractallIndex/">回議價表 <span class="sr-only">(current)</span></a>
             </li>
+            <ul class="navbar-nav ml-2">
+              <li class="nav-item">
+                <button class="btn btn-warning my-2 my-sm-0" id="{{firstname}}" onclick="perosonIndex(event)">待簽</button>
+              </li>
+            </ul>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                 其他表單
@@ -96,25 +101,25 @@
                         <td>{{contract.cOther}}</td>
                     </tr>
                     <tr>
+                      <th>承辦人簽名</th>
+                      <td>{{contract.cUndertaker}}</td>
+                    </tr>
+                    <tr>
+                      <th>單位主管簽名</th>
+                      <td>{{contract.cDepartmentManager_Sign}}</td>
+                    </tr>
+                    <tr>
+                      <th>部門主管簽名</th>
+                      <td>{{contract.cManager_Sign}}</td>
+                    </tr>
+                    <tr>
+                      <th>副總經理簽名</th>
+                      <td>{{contract.cViceGeneral_Sign}}</td>
+                    </tr>
+                    <tr>
                         <th>總經理簽名</th>
                         <td>{{contract.cGeneral_Sign}}</td>
-                    </tr>
-                    <tr>
-                        <th>副總經理簽名</th>
-                        <td>{{contract.cViceGeneral_Sign}}</td>
-                    </tr>
-                    <tr>
-                        <th>部門主管簽名</th>
-                        <td>{{contract.cManager_Sign}}</td>
-                    </tr>
-                    <tr>
-                        <th>單位主管簽名</th>
-                        <td>{{contract.cDepartmentManager_Sign}}</td>
-                    </tr>
-                    <tr>
-                        <th>承辦人簽名</th>
-                        <td>{{contract.cUndertaker}}</td>
-                    </tr>
+                    </tr> 
                 </table>
             </div>
         </div>
@@ -126,6 +131,10 @@
       
       function Logout(){
           $(location).attr("href","/logout/");
+      }
+      function perosonIndex(event){
+        var id = event.target.id
+        $(location).attr("href","/perosonIndex/"+id+"/");
       }
 
     </script>

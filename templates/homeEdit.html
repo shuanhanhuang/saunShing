@@ -61,7 +61,6 @@
             <div class="row">
                 <table class="table">
                   {% if unit.cLock == "否" %}
-                    <tr>
                       <tr>
                         <th>檔案</th>
                         <td>
@@ -73,19 +72,16 @@
                           {% endif %}
                           </td>
                       </tr>
-                      <tr>
+                      <!-- <tr>
                         <th>發文者</th>
                         <td><input type="text" id="cAuther" name="cAuther" value={{unit.cAuther}}></td>
                       </tr>
-                      <!-- <tr>
-                        <th>編號</th>
-                        <td><input type="text" id="cNumber" name="cNumber" value={{unit.cNumber}}></td>
-                      </tr> -->
                       <tr>
                         <th>日期</th>
                         <td><input type="text" id="cDate" name="cDate" value={{unit.cDate}}></td>
                       </tr>
-                        <th>部門別</th>
+                      <tr>
+                      <th>部門別</th>
                         {% if unit.cDepartment == "總經理室" %}
                             <td >
                                 <input name="cDepartment" type="radio" id="cDepartment1" value="總經理室" checked="checked" />
@@ -96,12 +92,12 @@
                                 文管中心
                                 <input name="cDepartment" type="radio" id="cDepartment4" value="管理部" />
                                 管理部
-                                <input name="cDepartment" type="radio" id="cDepartment3" value="業務設計部" />
+                                <input name="cDepartment" type="radio" id="cDepartment5" value="業務設計部" />
                                 業務設計部
-                                <input name="cDepartment" type="radio" id="cDepartment4" value="廠務部" />
+                                <input name="cDepartment" type="radio" id="cDepartment6" value="廠務部" />
                                 廠務部
                             </td>
-                        {% elif unit.cProgress == "稽核室" %}
+                        {% elif unit.cDepartment == "稽核室" %}
                             <td >
                                 <input name="cDepartment" type="radio" id="cDepartment1" value="總經理室"  />
                                 總經理室
@@ -111,12 +107,12 @@
                                 文管中心
                                 <input name="cDepartment" type="radio" id="cDepartment4" value="管理部" />
                                 管理部
-                                <input name="cDepartment" type="radio" id="cDepartment3" value="業務設計部" />
+                                <input name="cDepartment" type="radio" id="cDepartment5" value="業務設計部" />
                                 業務設計部
-                                <input name="cDepartment" type="radio" id="cDepartment4" value="廠務部" />
+                                <input name="cDepartment" type="radio" id="cDepartment6" value="廠務部" />
                                 廠務部
                             </td>
-                        {% elif unit.cProgress == "文管中心" %}
+                        {% elif unit.cDepartment == "文管中心" %}
                             <td >
                                 <input name="cDepartment" type="radio" id="cDepartment1" value="總經理室"  />
                                 總經理室
@@ -126,9 +122,9 @@
                                 文管中心
                                 <input name="cDepartment" type="radio" id="cDepartment4" value="管理部" />
                                 管理部
-                                <input name="cDepartment" type="radio" id="cDepartment3" value="業務設計部" />
+                                <input name="cDepartment" type="radio" id="cDepartment5" value="業務設計部" />
                                 業務設計部
-                                <input name="cDepartment" type="radio" id="cDepartment4" value="廠務部" />
+                                <input name="cDepartment" type="radio" id="cDepartment6" value="廠務部" />
                                 廠務部
                             </td>
                         {% elif unit.cDepartment == "管理部" %}
@@ -141,9 +137,9 @@
                                 文管中心
                                 <input name="cDepartment" type="radio" id="cDepartment4" value="管理部" checked="checked"/>
                                 管理部
-                                <input name="cDepartment" type="radio" id="cDepartment3" value="業務設計部" />
+                                <input name="cDepartment" type="radio" id="cDepartment5" value="業務設計部" />
                                 業務設計部
-                                <input name="cDepartment" type="radio" id="cDepartment4" value="廠務部" />
+                                <input name="cDepartment" type="radio" id="cDepartment6" value="廠務部" />
                                 廠務部
                             </td>
                         {% elif unit.cDepartment == " 業務設計部" %}
@@ -156,9 +152,9 @@
                                 文管中心
                                 <input name="cDepartment" type="radio" id="cDepartment4" value="管理部" />
                                 管理部
-                                <input name="cDepartment" type="radio" id="cDepartment3" value="業務設計部" checked="checked"/>
+                                <input name="cDepartment" type="radio" id="cDepartment5" value="業務設計部" checked="checked"/>
                                 業務設計部
-                                <input name="cDepartment" type="radio" id="cDepartment4" value="廠務部" />
+                                <input name="cDepartment" type="radio" id="cDepartment6" value="廠務部" />
                                 廠務部
                             </td>
                         {% else %}
@@ -177,9 +173,8 @@
                                 廠務部
                             </td>
                         {% endif %}
-                    </tr>
-                    
-                    <tr>
+                      </tr>
+                      <tr>
                         <th>文件進度</th>
                         {% if unit.cProgress == "草稿" %}
                             <td >
@@ -230,8 +225,8 @@
                     <tr>
                         <th>完成日期</th>
                         <td><input type="text" id="cEndDate" name="cEndDate" value={{unit.cEndDate}}></td>
-                    </tr>
-                    </tr>
+                    </tr> -->
+                    <!-- <tr>
                       <th>接收人</th>
                       {% if unit.cReceive == "郭文龍" %}
                         <td>
@@ -451,8 +446,8 @@
                           </select>                         
                         </td>
                       {% endif %}
-                    </tr>
-                    {% if authenticate == True %}
+                    </tr> -->
+                    <!-- {% if authenticate == True %}
                       <tr>
                         <th>鎖定</th>
                         {% if unit.cLock == "否" %}
@@ -471,9 +466,9 @@
                           </td>
                         {% endif %}
                       </tr>
-                    {% endif %}
+                    {% endif %} -->
                   {% else %}
-                    <tr>
+                    <!-- <tr>
                       <th>鎖定</th>
                       {% if unit.cLock == "否" %}
                         <td>
@@ -490,12 +485,13 @@
                           是
                         </td>
                       {% endif %}
-                    </tr>
+                    </tr> -->
+                    
                   {% endif %}
                   <tr>
-                      <th colspan="2" align="center">
-                        <input type="submit" class="btn btn-primary" name="button" id="button" value="送出">
-                        <input type="reset" class="btn btn-danger" name="button2" id="button2" value="重設"></th>
+                    <th colspan="2" align="center">
+                      <input type="submit" class="btn btn-primary" name="button" id="button" value="送出">
+                      <input type="reset" class="btn btn-danger" name="button2" id="button2" value="重設"></th>
                   </tr>
                 </table>
 	            <span style="color:red">{{message}}</span>

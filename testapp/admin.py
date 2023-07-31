@@ -1,5 +1,5 @@
 from django.contrib import admin
-from testapp.models import Signed,Home,Meeting,MeetingInner,Contact,Contract,ContractInner
+from testapp.models import Signed,Home,Meeting,MeetingInner,Contact,Contract,ContractInner,Count
 # Register your models here.
 class HomeAdmin(admin.ModelAdmin):
     list_display = ('id','cNumber','cType','cDepartment','cAuther','cDate','cProgress','cEndDate')
@@ -26,7 +26,10 @@ class ContractAdmin(admin.ModelAdmin):
     # list_fulter = ('cName','cSex')
     search_fields = ('cType','cAuther','cDate',)
     ordering=('id',)
-
+class CountAdmin(admin.ModelAdmin):
+    list_display = ('id','count')
+    search_fields = ('id','count')
+    ordering=('id',)
 admin.site.register(Signed,SignedAdmin)
 admin.site.register(Meeting,MeetingAdmin)
 admin.site.register(Home,HomeAdmin)
@@ -34,3 +37,4 @@ admin.site.register(MeetingInner)
 admin.site.register(Contact,ContactAdmin)
 admin.site.register(Contract)
 admin.site.register(ContractInner)
+admin.site.register(Count,CountAdmin)

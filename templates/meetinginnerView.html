@@ -25,6 +25,11 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/meetinginnerIndex/{{home.cNumber}}/">回會議內容 <span class="sr-only">(current)</span></a>
             </li>
+            <ul class="navbar-nav ml-2">
+              <li class="nav-item">
+                <button class="btn btn-warning my-2 my-sm-0" id="{{firstname}}" onclick="perosonIndex(event)">待簽</button>
+              </li>
+            </ul>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                 其他表單
@@ -94,6 +99,10 @@
     
     function Logout(){
         $(location).attr("href","/logout/");
+    }
+    function perosonIndex(event){
+        var id = event.target.id
+        $(location).attr("href","/perosonIndex/"+id+"/");
     }
 
   </script>

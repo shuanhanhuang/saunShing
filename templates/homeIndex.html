@@ -73,11 +73,11 @@
 
   <div class="card card-body">
     <form method="GET">
-      <div class="ml-5">
+      <div class="container">
         編號: {{homeFilter.form.cNumber}}
         種類: {{homeFilter.form.cType}}
         發文者: {{homeFilter.form.cAuther}}
-        部門別: {{homeFilter.form.cDepartment}}       
+        部門別: {{homeFilter.form.cDepartment}}  
         <p></p>
         <span class="mt-2">文件進度: {{homeFilter.form.cProgress}}</span>
         <span class="mt-2">日期: {{homeFilter.form.cDate}}</span>
@@ -89,7 +89,7 @@
 
   <form action="." method="POST">
     {% csrf_token %}
-    <div class="container">
+    <div class="container-lg">
       <div class="row">
         <table class="table">
           <thead>
@@ -101,14 +101,24 @@
             <th scope="col">日期</th>
             <th scope="col">文件進度</th>
             <th scope="col">完成日期</th>
-            <th scope="col">簽名進度</th>
+            <th scope="col">簽核進度</th>
             <th scope="col">檔案</th>
           </thead>
           <tbody>
             {% for unit in all %}
             <tr>
               <!-- <td>{{unit.id}}</td> -->
-              <td>{{unit.cNumber}}</td>
+              {% if unit.cType == "簽呈" %}
+                <td><a href="/signView/{{unit.cNumber}}/">{{unit.cNumber}}</a> </td>
+              {% elif unit.cType == "會議記錄" %}
+                <td><a href="/meetingView/{{unit.cNumber}}/">{{unit.cNumber}}/a> </td>
+              {% elif unit.cType == "內部連絡單" %}
+                <td><a href="/contactView/{{unit.cNumber}}/">{{unit.cNumber}}</a></td>
+              {% elif unit.cType == "工程發包議價記錄單" %}
+                <td><a href="/contractView/{{unit.cNumber}}/">{{unit.cNumber}}</a></td>
+              {% else %}
+                <td><a href="/changeView/{{unit.cNumber}}/">{{unit.cNumber}}</a></td>
+              {% endif %}
               <td>{{unit.cType}}</td>
               <td>{{unit.cAuther}}</td>
               <td>{{unit.cDepartment}}</td>
@@ -130,31 +140,31 @@
               {% if unit.cLock == "否" %}
                 {% if unit.cReceive == "None" %}
                 <td>
-                  <button type="button" class="btn btn-outline-warning mb-2" id="Detail/{{unit.cNumber}}" onclick="Detail(event)">詳細內容</button>
-                  <button type="button" class="btn btn-outline-info mb-2" id="{{unit.id}}" onclick="Edit(event)">編輯</button>
+                  <button type="button" class="btn btn-outline-warning mb-2" id="Detail/{{unit.cNumber}}" onclick="Detail(event)">編輯</button>
+                  <button type="button" class="btn btn-outline-info mb-2" id="{{unit.id}}" onclick="Edit(event)">上傳檔案</button>
                   <button type="button" class="btn btn-outline-danger mb-2" id="{{unit.id}}" onclick="Delete(event)">刪除</button>
                   <button type="button" class="btn btn-outline-secondary mb-2" id="{{unit.cNumber}}" onclick="Copy(event)">複製表單</button>
                 </td>
                 {% else %}
                   {% if unit.cType == "簽呈" %}
                     <td>
-                      <button type="button" class="btn btn-outline-warning" id="signView/{{unit.cNumber}}" onclick="View(event)">檢視</button>
+                      <button type="button" class="btn btn-outline-primary" id="signView/{{unit.cNumber}}" onclick="View(event)">檢視</button>
                     </td>
                   {% elif unit.cType == "內部連絡單" %}
                     <td>
-                      <button type="button" class="btn btn-outline-warning" id="contactView/{{unit.cNumber}}" onclick="View(event)">檢視</button>
+                      <button type="button" class="btn btn-outline-primary" id="contactView/{{unit.cNumber}}" onclick="View(event)">檢視</button>
                     </td>
                   {% elif unit.cType == "會議記錄" %}
                     <td>
-                      <button type="button" class="btn btn-outline-warning" id="meetingView/{{unit.cNumber}}" onclick="View(event)">檢視</button>
+                      <button type="button" class="btn btn-outline-primary" id="meetingView/{{unit.cNumber}}" onclick="View(event)">檢視</button>
                     </td>
                   {% elif unit.cType == "工程發包議價記錄單" %}
                     <td>
-                      <button type="button" class="btn btn-outline-warning" id="contractView/{{unit.cNumber}}" onclick="View(event)">檢視</button>
+                      <button type="button" class="btn btn-outline-primary" id="contractView/{{unit.cNumber}}" onclick="View(event)">檢視</button>
                     </td>
                   {% else %}
                     <td>
-                      <button type="button" class="btn btn-outline-warning" id="changeView/{{unit.cNumber}}" onclick="View(event)">檢視</button>
+                      <button type="button" class="btn btn-outline-primary" id="changeView/{{unit.cNumber}}" onclick="View(event)">檢視</button>
                     </td>
                   {% endif %}
                 {% endif %}
@@ -217,7 +227,7 @@
 
       function Copy(event){
         var id = event.target.id
-        $(location).attr("href","/copy/"+id+"/")
+        $(location).attr("href","/homeCopyPost/"+id+"/")
       }
 
     
