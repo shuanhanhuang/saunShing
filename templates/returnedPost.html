@@ -60,12 +60,21 @@
       <div class="container">
         <div class="row">
           <table class="table">
-
-            <tr><th>編號</th><td>{{returnedHome.cNumber}}</td></tr>
-            <tr><th>駁回者</th><td>{{returnedform.cName}}</td></tr>
-            <tr><th>駁回理由</th><td>{{returnedform.cIllustrate}}</td></tr>
+            <tr><th>表單編號</th><td>{{returnedHome.cNumber}}</td></tr>
+            <tr><th>簽核人員</th><td>{{returnedform.cName}}</td></tr>
             <tr>
-                <th>被駁回人</th>
+              <th>簽核狀態</th>
+              <td>
+                <select class="form-control" id="taskTypeSelect" name="cHow">
+                  {% for key,value in returnedform.HOW %}
+                      <option value="{{ key }}" name="cHow">{{ value }}</option>
+                  {% endfor %}
+                </select>
+              </td>
+            </tr>
+            <tr><th>簽核內容</th><td>{{returnedform.cIllustrate}}</td></tr>
+            <tr>
+                <th>收件人</th>
                 <td >
                   <select class="form-control" id="taskTypeSelect" name="cReceive">
                   <option value={{returnedHome.cAuther}} name="cReceive">{{returnedHome.cAuther}}</option>

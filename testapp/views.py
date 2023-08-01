@@ -164,17 +164,18 @@ def returnedPost(request,id=None):
         authenticate=request.user.is_staff
         firstname = request.user.first_name
     returnedHome = Home.objects.get(id=id)
-    returnedSign = Signed.objects.get(cNumber = returnedHome.cNumber)
+    # returnedSign = Signed.objects.get(cNumber = returnedHome.cNumber)
     unitinner = Returned.objects.filter(returnTo=returnedHome).order_by("id")
     if request.method == 'POST':
         returnedform = ReturnedForm(request.POST)
         if returnedform.is_valid():
             cName = firstname
+            cHow = returnedform.cleaned_data['cHow']
             cIllustrate =  returnedform.cleaned_data['cIllustrate']
             returnedHome.cReceive = request.POST['cReceive']
             returnedHome.save()
             cTransfer = returnedHome.cReceive
-            returnedunit = Returned.objects.create(returnTo=returnedHome, cName=cName, cIllustrate=cIllustrate, cTransfer=cTransfer)
+            returnedunit = Returned.objects.create(returnTo=returnedHome, cName=cName, cIllustrate=cIllustrate, cTransfer=cTransfer,cHow=cHow)
             returnedunit.save()
             return redirect('/returnedIndex/'+ str(id) +'/')
         else:

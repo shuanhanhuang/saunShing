@@ -25,6 +25,7 @@ class Count(models.Model):
 
 class Returned(models.Model):
     cName = models.CharField(max_length=20, blank=True)# 誰駁回的(姓名)
+    cHow = models.CharField(max_length=20, blank=True)# 同意/駁回
     cIllustrate = models.TextField(blank=True)
     cTransfer = models.CharField(max_length=20, blank=True)# 被駁回的(姓名)
     returnTo = models.ForeignKey(Home, on_delete=models.CASCADE, default="" ,related_name='details')
