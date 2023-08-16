@@ -28,10 +28,11 @@ from testapp.views import HomePage,login,logout,perosonIndex,open1,\
     contractinnerDelete,contractinnerIndex,contractinnerEdit,contractinnerPost,contractinnerView,\
     changeallIndex,changeView,changeEdit,changePost,\
     homeCopyPost,signCopyPost,meetingCopyPost,contactCopyPost,contractCopyPost,changeCopyPost,\
-    returnedPost,returnedIndex,returnedDelete
+    returnedPost,returnedIndex,returnedDelete,download_workbook
 
 urlpatterns = [
     path('',HomePage),
+    path('download_workbook/',download_workbook,name = 'download_workbook'),
     path('HomePage/',HomePage),
     path('login/', login),
     path('logout/', logout),

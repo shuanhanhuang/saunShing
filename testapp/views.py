@@ -9,12 +9,32 @@ from testapp.form import HomeForm,SignedForm,MeetingInnerForm,MeetingForm,Contac
 from testapp.models import Home,Signed,MeetingInner,Meeting,Contact,Contract,ContractInner,Change,Returned,Count
 from django.db.models import Q
 from testapp.filter import HomeFilter
-# from weasyprint import HTML
-# from django.template.loader import render_to_string
-# from django import template
-# from django.db.models import Sum
-# from django.core.files.storage import FileSystemStorage
-# from django.contrib.auth.models import Group
+from django.http import HttpResponse
+from openpyxl import Workbook
+
+def download_workbook(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="data_export.xlsx"'
+
+    wb = Workbook()
+    ws = wb.active
+
+    # Add header row
+    columns = ['cNumber', 'cAuther', 'cDepartment', 'cType', 'cProgress', 'cDate', 'cEndDate','cReceive']
+    ws.append(columns)
+
+    # Add data rows
+    data = Home.objects.all().order_by("id")
+    # data = HomeFilter(request.GET, queryset=data)
+    # data = Home.objects.filter(cType = homeFilter)
+
+    for row in data:
+        row_data = [row.cNumber, row.cAuther, row.cDepartment, row.cType, row.cProgress
+                    , row.cDate, row.cEndDate, row.cReceive]  # Adjust fields as needed
+        ws.append(row_data)
+
+    wb.save(response)
+    return response
 
 # Create your views here.
 def HomePost(request):
@@ -90,11 +110,13 @@ def HomePost(request):
     homeform = HomeForm()
     return render(request, "HomePost.html", locals())
 
-def homeIndex(request):
+def homeIndex(request): 
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
         firstname = request.user.first_name
+    allPerson = Home.objects.filter(cReceive = firstname)
+    allpersonCount = len(allPerson)
     if 'q' in request.GET:
         q = request.GET['q']
         multiple_q = Q(Q(cNumber__icontains=q) | Q(cType__icontains=q) | Q(cAuther__icontains=q) | Q(cProgress__icontains=q) | Q(cDate__icontains=q) | Q(cEndDate__icontains=q))
@@ -194,6 +216,8 @@ def returnedIndex(request,id=None):
         username=request.user.username
         authenticate=request.user.is_staff
         firstname = request.user.first_name
+    allPerson = Home.objects.filter(cReceive = firstname)
+    allpersonCount = len(allPerson)
     if 'q' in request.GET:
         q = request.GET['q']
         multiple_q = Q(Q(cName__icontains=q) | Q(cIllustrate__icontains=q) | Q(cTransfer__icontains=q))
@@ -288,6 +312,8 @@ def signView(request,cNumber=None):
         username=request.user.username
         authenticate=request.user.is_staff
         firstname = request.user.first_name
+    allPerson = Home.objects.filter(cReceive = firstname)
+    allpersonCount = len(allPerson)
     home = Home.objects.get(cNumber=cNumber)
     sign = Signed.objects.get(cNumber=cNumber)
     return render(request, "signView.html",locals())
@@ -375,6 +401,8 @@ def signallIndex(request):
         username=request.user.username
         authenticate=request.user.is_staff
         firstname = request.user.first_name
+    allPerson = Home.objects.filter(cReceive = firstname)
+    allpersonCount = len(allPerson)
     if 'q' in request.GET:
         q = request.GET['q']
         multiple_q = Q(Q(cNumber__icontains=q) | Q(cSubject__icontains=q))
@@ -550,6 +578,8 @@ def meetingView(request,cNumber=None):
         username=request.user.username
         authenticate=request.user.is_staff
         firstname = request.user.first_name
+    allPerson = Home.objects.filter(cReceive = firstname)
+    allpersonCount = len(allPerson)
     home = Home.objects.get(cNumber=cNumber)
     meeting = Meeting.objects.get(cNumber=cNumber)
     return render(request, "meetingView.html",locals())
@@ -559,6 +589,8 @@ def meetingallIndex(request):
         username=request.user.username
         authenticate=request.user.is_staff
         firstname = request.user.first_name
+    allPerson = Home.objects.filter(cReceive = firstname)
+    allpersonCount = len(allPerson)
     if 'q' in request.GET:
         q = request.GET['q']
         multiple_q = Q(Q(cNumber__icontains=q) | Q(cTopic__icontains=q) | Q(cMeetingType__icontains=q))
@@ -618,6 +650,8 @@ def meetinginnerIndex(request,cNumber=None):
         username=request.user.username
         authenticate=request.user.is_staff
         firstname = request.user.first_name
+    allPerson = Home.objects.filter(cReceive = firstname)
+    allpersonCount = len(allPerson)
     id = Meeting.objects.get(cNumber = cNumber)
     if 'q' in request.GET:
         q = request.GET['q']
@@ -633,6 +667,8 @@ def meetinginnerView(request,cNumber=None,id=None):
         username=request.user.username
         authenticate=request.user.is_staff
         firstname = request.user.first_name
+    allPerson = Home.objects.filter(cReceive = firstname)
+    allpersonCount = len(allPerson)
     home = Meeting.objects.get(cNumber=cNumber)
     meetinginner = MeetingInner.objects.get(id=id)
     return render(request, "meetinginnerView.html",locals())
@@ -710,6 +746,8 @@ def contactView(request,cNumber=None):
         username=request.user.username
         authenticate=request.user.is_staff
         firstname = request.user.first_name
+    allPerson = Home.objects.filter(cReceive = firstname)
+    allpersonCount = len(allPerson)
     home = Home.objects.get(cNumber=cNumber)
     contact = Contact.objects.get(cNumber=cNumber)
     return render(request, "contactView.html",locals())
@@ -719,6 +757,8 @@ def contactallIndex(request):
         username=request.user.username
         authenticate=request.user.is_staff
         firstname = request.user.first_name
+    allPerson = Home.objects.filter(cReceive = firstname)
+    allpersonCount = len(allPerson)
     if 'q' in request.GET:
         q = request.GET['q']
         multiple_q = Q(Q(cNumber__icontains=q) | Q(cSubject__icontains=q) | Q(cDecisionDep__icontains=q))
@@ -845,6 +885,8 @@ def contractView(request,cNumber=None):
         username=request.user.username
         authenticate=request.user.is_staff
         firstname = request.user.first_name
+    allPerson = Home.objects.filter(cReceive = firstname)
+    allpersonCount = len(allPerson)
     home = Home.objects.get(cNumber=cNumber)
     contract = Contract.objects.get(cNumber=cNumber)
     return render(request, "contractView.html",locals())
@@ -854,6 +896,8 @@ def contractallIndex(request):
         username=request.user.username
         authenticate=request.user.is_staff
         firstname = request.user.first_name
+    allPerson = Home.objects.filter(cReceive = firstname)
+    allpersonCount = len(allPerson)
     if 'q' in request.GET:
         q = request.GET['q']
         multiple_q = Q(Q(cNumber__icontains=q) | Q(cClient__icontains=q) | Q(cLocation__icontains=q) | Q(cContent__icontains=q))
@@ -968,6 +1012,8 @@ def contractinnerIndex(request,cNumber=None):
         username=request.user.username
         authenticate=request.user.is_staff
         firstname = request.user.first_name
+    allPerson = Home.objects.filter(cReceive = firstname)
+    allpersonCount = len(allPerson)
     id = Contract.objects.get(cNumber = cNumber)
     if 'q' in request.GET:
         q = request.GET['q']
@@ -983,6 +1029,8 @@ def contractinnerView(request,cNumber=None,id=None):
         username=request.user.username
         authenticate=request.user.is_staff
         firstname = request.user.first_name
+    allPerson = Home.objects.filter(cReceive = firstname)
+    allpersonCount = len(allPerson)
     home = Contract.objects.get(cNumber=cNumber)
     contractinner = ContractInner.objects.get(id=id)
     return render(request, "contractinnerView.html",locals())
@@ -1104,6 +1152,8 @@ def changeView(request,cNumber=None):
         username=request.user.username
         authenticate=request.user.is_staff
         firstname = request.user.first_name
+    allPerson = Home.objects.filter(cReceive = firstname)
+    allpersonCount = len(allPerson)
     home = Home.objects.get(cNumber=cNumber)
     change = Change.objects.get(cNumber=cNumber)
     return render(request, "changeView.html",locals())
@@ -1113,6 +1163,8 @@ def changeallIndex(request):
         username=request.user.username
         authenticate=request.user.is_staff
         firstname = request.user.first_name
+    allPerson = Home.objects.filter(cReceive = firstname)
+    allpersonCount = len(allPerson)
     if 'q' in request.GET:
         q = request.GET['q']
         multiple_q = Q(Q(cNumber__icontains=q) | Q(cProjectName__icontains=q) | Q(cChangeitem__icontains=q) | Q(cChangereason__icontains=q) | Q(cHowChange__icontains=q))
