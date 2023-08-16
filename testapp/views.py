@@ -27,11 +27,14 @@ def HomePost(request):
         if homeform.is_valid():
             C = Count.objects.get(id=1)
             Acount = C.count
+            if (Acount>=1000):
+                Acount=Acount%100
+
             if(Acount//100 == 0):
-                if((Acount%100)//10 ==0):
-                    count = "00"
-                else:
-                    count = "0"
+                    if((Acount%100)//10 ==0):
+                        count = "00"
+                    else:
+                        count = "0"
             else:
                 count = ""
             C.count = Acount+1
