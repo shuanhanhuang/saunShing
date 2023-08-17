@@ -74,7 +74,7 @@
       </div>
     </div>
   </nav>
-
+  
   <div class="card card-body">
     <form method="GET">
       <div class="container">
@@ -92,7 +92,18 @@
       </div>      
     </form>
   </div>
-
+  {% if allpersonCount != 0%}
+    <div class="text-center alert alert-danger alert-dismissible fade show" role="alert">
+      <h4 class="alert-heading">提醒!!!!!!</h4>
+      <hr>
+      <br>
+      <strong>你還有{{allpersonCount}}筆待簽，請盡速簽核</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  {% endif %}
+  
   <form action="." method="POST">
     {% csrf_token %}
     <div class="container-lg">

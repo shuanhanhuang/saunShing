@@ -22,9 +22,11 @@
         
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/meetingallIndex/">回會議記錄 <span class="sr-only">(current)</span></a>
-            </li>
+            <ul class="navbar-nav ml-2">
+              <li class="nav-item">
+                <button class="btn btn-success my-2 my-sm-0" onclick="BacktoMeeting()">回會議記錄</button>
+              </li>
+            </ul>
             <ul class="navbar-nav ml-2">
               <li class="nav-item">
                 <button class="btn btn-warning my-2 my-sm-0" id="{{firstname}}" onclick="perosonIndex(event)">待簽
@@ -71,6 +73,7 @@
         {% csrf_token %}
         <div class="container">
             <div class="row">
+              <button type="button" class="btn btn-secondary mb-3" id="{{meeting.cNumber}}" onclick="Detail(event)">查看詳細會議內容</button>
                 <table class="table">
                     <tr>
                       <th>編號</th>
@@ -120,6 +123,15 @@
         var id = event.target.id
         $(location).attr("href","/perosonIndex/"+id+"/");
     }
+    function Detail(){
+      var id = event.target.id
+        $(location).attr("href","/meetinginnerIndex/"+id+"/");
+    }
+    function BacktoMeeting(){
+      $(location).attr("href","/meetingallIndex/");
+    }
+
+    
 
   </script>
 </body>

@@ -23,11 +23,13 @@
     
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <ul class="navbar-nav ml-2">
-            <li class="nav-item">
-                <button class="btn btn-light my-2 my-sm-0" id="{{home.id}}" onclick="New(event)">新增</button>
-            </li>
-          </ul>
+          {% if authenticate == True %}
+            <ul class="navbar-nav ml-2">
+              <li class="nav-item">
+                  <button class="btn btn-light my-2 my-sm-0" id="{{home.id}}" onclick="New(event)">新增</button>
+              </li>
+            </ul>
+          {% endif %}
           <ul class="navbar-nav ml-2">
             <li class="nav-item">
               <button class="btn btn-warning my-2 my-sm-0" id="{{firstname}}" onclick="perosonIndex(event)">待簽
@@ -80,7 +82,6 @@
       <div class="row">
         <table class="table">
           <thead>
-            <th scope="col">筆數</th>
             <th scope="col">簽核人員</th>
             <th scope="col">簽核狀態</th>
             <th scope="col">簽核內容</th>
@@ -90,14 +91,15 @@
           <tbody>
             {% for unit in returned %}
             <tr>
-              <td>{{unit.id}}</td>
               <td>{{unit.cName}}</td>
               <td>{{unit.cHow}}</td>
               <td>{{unit.cIllustrate}}</td>
               <td>{{unit.cTransfer}}</td>
-              <td>
-                <button type="button" class="btn btn-outline-danger" id="{{home.id}}/{{unit.id}}" onclick="Delete(event)">刪除</button>
-              </td>
+              {% if firstname == unit.cName %}
+                <td>
+                  <button type="button" class="btn btn-outline-danger" id="{{home.id}}/{{unit.id}}" onclick="Delete(event)">刪除</button>
+                </td>
+              {% endif%}
             </tr>
             {% endfor %}
           </tbody>

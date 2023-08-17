@@ -22,9 +22,11 @@
         
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/contractallIndex/">回議價表 <span class="sr-only">(current)</span></a>
-            </li>
+            <ul class="navbar-nav ml-2">
+              <li class="nav-item">
+                <button class="btn btn-success my-2 my-sm-0" onclick="BacktoContract()">回工程發包議價紀錄單</button>
+              </li>  
+            </ul>
             <ul class="navbar-nav ml-2">
               <li class="nav-item">
                 <button class="btn btn-warning my-2 my-sm-0" id="{{firstname}}" onclick="perosonIndex(event)">待簽
@@ -71,6 +73,7 @@
         {% csrf_token %}
         <div class="container">
             <div class="row">
+              <button type="button" class="btn btn-secondary mb-3" id="{{contract.cNumber}}" onclick="Detail(event)">查看詳細議價資訊</button>
                 <table class="table">
                     <tr>
                       <th>編號</th>
@@ -125,7 +128,8 @@
                         <td>{{contract.cGeneral_Sign}}</td>
                     </tr> 
                 </table>
-            </div>
+                
+              </div>
         </div>
     </form>
 
@@ -139,6 +143,13 @@
       function perosonIndex(event){
         var id = event.target.id
         $(location).attr("href","/perosonIndex/"+id+"/");
+      }
+      function Detail(){
+        var id = event.target.id
+        $(location).attr("href","/contractinnerIndex/"+id+"/");
+      }
+      function BacktoContract(){
+        $(location).attr("href","/contractallIndex/");
       }
 
     </script>

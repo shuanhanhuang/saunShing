@@ -28,7 +28,7 @@
               <button class="btn btn-success my-2 my-sm-0" onclick="BacktoContract()">回工程發包議價記錄單</button>
             </li>  
           </ul>
-          {% if home.cLock == "否" %}
+          {% if home.cLock == "否" and home.cReceive == "None" %}
             <ul class="navbar-nav ml-2">
               <li class="nav-item">
                 <button class="btn btn-light my-2 my-sm-0" id="{{id.cNumber}}/{{unit.id}}" onclick="New(event)">新增</button>
@@ -100,7 +100,7 @@
               <td>{{unit.cRemark}}</td>
               <td>
                 <button type="button" class="btn btn-outline-primary" id="{{id.cNumber}}/{{unit.id}}" onclick="View(event)">檢視</button>
-                {% if home.cLock == "否" %}
+                {% if home.cLock == "否" and home.cReceive == "None" %}
                   <button type="button" class="btn btn-outline-info" id="{{id.cNumber}}/{{unit.id}}" onclick="Edit(event)">編輯</button>
                   <button type="button" class="btn btn-outline-secondary" id="{{id.cNumber}}/{{unit.id}}" onclick="Delete(event)">刪除</button>
                 {% endif %}
