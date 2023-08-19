@@ -11,7 +11,7 @@ from django.db.models import Q
 from testapp.filter import HomeFilter
 from django.http import HttpResponse
 from openpyxl import Workbook
-some = []
+excel_filter = []
 def download_workbook(request):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="data_export.xlsx"'
@@ -24,7 +24,7 @@ def download_workbook(request):
     ws.append(columns)
 
     # Add data rows
-    data = some
+    data = excel_filter
     # data = HomeFilter(request.GET, queryset=data)
     # data = Home.objects.filter(cNumber = some)
 
@@ -111,7 +111,7 @@ def HomePost(request):
     return render(request, "HomePost.html", locals())
 
 def homeIndex(request):
-    global some; 
+    global excel_filter
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
@@ -122,12 +122,12 @@ def homeIndex(request):
         q = request.GET['q']
         multiple_q = Q(Q(cNumber__icontains=q) | Q(cDepartment__icontains=q) | Q(cType__icontains=q) | Q(cAuther__icontains=q) | Q(cProgress__icontains=q) | Q(cDate__icontains=q) | Q(cEndDate__icontains=q))
         all = Home.objects.filter(multiple_q)
-        some = all
+        excel_filter = all
     else:
         all = Home.objects.all().order_by("id")
         homeFilter = HomeFilter(request.GET, queryset=all)
         all = homeFilter.qs
-        some = all
+        excel_filter = all
     allHomeCount = len(all)
     return render(request, "homeIndex.html",locals())
 
