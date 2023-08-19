@@ -4,7 +4,6 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from datetime import datetime
 from django.contrib import auth
-# from django.contrib.auth.models import User
 from testapp.form import HomeForm,SignedForm,MeetingInnerForm,MeetingForm,ContactForm,ContractForm,ContractInnerForm,ChangeForm,ReturnedForm,CountForm
 from testapp.models import Home,Signed,MeetingInner,Meeting,Contact,Contract,ContractInner,Change,Returned,Count
 from django.db.models import Q
@@ -19,14 +18,10 @@ def download_workbook(request):
     wb = Workbook()
     ws = wb.active
 
-    # Add header row
     columns = ['cNumber', 'cAuther', 'cDepartment', 'cType', 'cProgress', 'cDate', 'cEndDate','cReceive']
     ws.append(columns)
 
-    # Add data rows
     data = excel_filter
-    # data = HomeFilter(request.GET, queryset=data)
-    # data = Home.objects.filter(cNumber = some)
 
     for row in data:
         row_data = [row.cNumber, row.cAuther, row.cDepartment, row.cType, row.cProgress
