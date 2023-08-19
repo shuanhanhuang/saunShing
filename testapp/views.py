@@ -11,7 +11,7 @@ from django.db.models import Q
 from testapp.filter import HomeFilter
 from django.http import HttpResponse
 from openpyxl import Workbook
-
+some = []
 def download_workbook(request):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="data_export.xlsx"'
@@ -24,9 +24,9 @@ def download_workbook(request):
     ws.append(columns)
 
     # Add data rows
-    data = Home.objects.all().order_by("id")
+    data = some
     # data = HomeFilter(request.GET, queryset=data)
-    # data = Home.objects.filter(cType = homeFilter)
+    # data = Home.objects.filter(cNumber = some)
 
     for row in data:
         row_data = [row.cNumber, row.cAuther, row.cDepartment, row.cType, row.cProgress
@@ -110,7 +110,8 @@ def HomePost(request):
     homeform = HomeForm()
     return render(request, "HomePost.html", locals())
 
-def homeIndex(request): 
+def homeIndex(request):
+    global some; 
     if request.user.is_authenticated:
         username=request.user.username
         authenticate=request.user.is_staff
@@ -119,12 +120,14 @@ def homeIndex(request):
     allpersonCount = len(allPerson)
     if 'q' in request.GET:
         q = request.GET['q']
-        multiple_q = Q(Q(cNumber__icontains=q) | Q(cType__icontains=q) | Q(cAuther__icontains=q) | Q(cProgress__icontains=q) | Q(cDate__icontains=q) | Q(cEndDate__icontains=q))
+        multiple_q = Q(Q(cNumber__icontains=q) | Q(cDepartment__icontains=q) | Q(cType__icontains=q) | Q(cAuther__icontains=q) | Q(cProgress__icontains=q) | Q(cDate__icontains=q) | Q(cEndDate__icontains=q))
         all = Home.objects.filter(multiple_q)
+        some = all
     else:
         all = Home.objects.all().order_by("id")
         homeFilter = HomeFilter(request.GET, queryset=all)
         all = homeFilter.qs
+        some = all
     allHomeCount = len(all)
     return render(request, "homeIndex.html",locals())
 
