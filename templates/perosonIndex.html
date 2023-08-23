@@ -28,15 +28,15 @@
                 <button class="btn btn-light my-2 my-sm-0" onclick="home()">新增</button>
               </li>
             </ul>
-          <!-- <li class="nav-item active">
-            <a class="nav-link" href="/homePost/">新增 <span class="sr-only">(current)</span></a>
-          </li> -->
+
           <ul class="navbar-nav ml-2">
             <li class="nav-item">
               <button class="btn btn-warning my-2 my-sm-0" id="{{firstname}}" onclick="perosonIndex(event)">待簽
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  {{allHomeCount}}
-                </span>
+                {% if allHomeCount != 0%}
+                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {{allHomeCount}}
+                  </span>
+                {% endif %}
               </button>
             </li>
           </ul>
@@ -83,7 +83,6 @@
       <div class="row">
         <table class="table">
           <thead>
-            <!-- <th scope="col">筆數</th> -->
             <th scope="col">編號</th>
             <th scope="col">種類</th>
             <th scope="col">發文者</th>

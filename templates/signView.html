@@ -28,9 +28,11 @@
             <ul class="navbar-nav ml-2">
               <li class="nav-item">
                 <button class="btn btn-warning my-2 my-sm-0" id="{{firstname}}" onclick="perosonIndex(event)">待簽
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                    {{allpersonCount}}
-                  </span>
+                  {% if allpersonCount != 0 %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                      {{allpersonCount}}
+                    </span>
+                  {% endif %}
                 </button>
               </li>
             </ul>
