@@ -145,12 +145,12 @@ def homeEdit(request,id=None,mode=None):
         return render(request, "homeEdit.html", locals())
     elif mode == "save": # 由 edit2.html 按 submit
         unit = Home.objects.get(id=id)  #取得要修改的資料記錄
-        if Open == True:
-            open = False
-            try:
-                unit.cFile = request.FILES['cFile']
-            except:
-                unit.cFile = request.POST["cFile"]
+        # if Open == True:
+        #     open = False
+        try:
+            unit.cFile = request.FILES['cFile']
+        except:
+            unit.cFile = request.POST["cFile"]
         unit.save()  #寫入資料庫
         message = '已修改...'
         return redirect('/homeIndex/')
