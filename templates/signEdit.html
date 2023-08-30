@@ -380,17 +380,6 @@
                             {% endfor %}
                           </select>                         
                         </td>
-                      {% elif unithome.cReceive == "王韋盛" %}
-                        <td >
-                          <select class="form-control" id="taskTypeSelect" name="cReceive">
-                            <option value="王韋盛" name="cReceive">王韋盛</option>
-                            {% for key,value in homeform.REC %}
-                              {% if key != "王韋盛" %}
-                                <option value="{{ key }}" name="cReceive">{{value}}</option>
-                              {% endif %}
-                            {% endfor %}
-                          </select>                         
-                        </td>
                       {% elif unithome.cReceive == "陳佳欣" %}
                         <td >
                           <select class="form-control" id="taskTypeSelect" name="cReceive">
