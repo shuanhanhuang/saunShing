@@ -252,12 +252,6 @@
                       <th>擬辦</th>
                       <td><textarea  id="cProposed" name="cProposed">{{unit.cProposed}}</textarea></td>
                     </tr>
-                    {% if authenticate == True %}
-                    <tr>
-                        <th>批示</th>
-                        <td><textarea  id="cCheck" name="cCheck">{{unit.cCheck}}</textarea></td>
-                    </tr>
-                    {% endif %}
                     <tr><th>接收人</th>
                       {% if unithome.cReceive == "郭文龍" %}
                         <td>
