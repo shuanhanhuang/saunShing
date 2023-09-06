@@ -268,8 +268,7 @@ def signCopyPost(request,cNumber=None,thisNumber=None):# cNumber複製的;thisNu
             cSubject =  unitinner.cSubject
             cDiscription =  unitinner.cDiscription
             cProposed = unitinner.cProposed
-            cCheck = signedform.cleaned_data['cCheck']
-            signunit = Signed.objects.create(home=home, cNumber=cNumber,cJob_title= cJob_title, cSubject=cSubject, cDiscription=cDiscription,cProposed=cProposed,cCheck=cCheck)
+            signunit = Signed.objects.create(home=home, cNumber=cNumber,cJob_title= cJob_title, cSubject=cSubject, cDiscription=cDiscription,cProposed=cProposed)
             signunit.save()
             return redirect('/signallIndex/')
         else:
@@ -293,8 +292,7 @@ def signPost(request,cNumber=None):
             cSubject =  signedform.cleaned_data['cSubject']
             cDiscription =  signedform.cleaned_data['cDiscription']
             cProposed = signedform.cleaned_data['cProposed']
-            cCheck = signedform.cleaned_data['cCheck']
-            signunit = Signed.objects.create(home=home, cNumber=cNumber,cJob_title= cJob_title, cSubject=cSubject, cDiscription=cDiscription,cProposed=cProposed,cCheck=cCheck)
+            signunit = Signed.objects.create(home=home, cNumber=cNumber,cJob_title= cJob_title, cSubject=cSubject, cDiscription=cDiscription,cProposed=cProposed)
             signunit.save()
             return redirect('/signallIndex/')
         else:
@@ -448,8 +446,6 @@ def signEdit(request,id=None,mode=None,cNumber=None):
             unit.cSubject=request.POST['cSubject']
             unit.cDiscription=request.POST['cDiscription']
             unit.cProposed=request.POST['cProposed']
-            if authenticate == True:
-                unit.cCheck=request.POST['cCheck']
         unithome.save()  #寫入資料庫
         unit.save()  #寫入資料庫
         message = '已修改...'

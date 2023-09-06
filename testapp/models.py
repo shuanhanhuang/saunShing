@@ -30,14 +30,13 @@ class Returned(models.Model):
     cTransfer = models.CharField(max_length=20, blank=True)# 被駁回的(姓名)
     returnTo = models.ForeignKey(Home, on_delete=models.CASCADE, default="" ,related_name='details')
 
-4+1
+# 5+1
 class Signed (models.Model):
     cNumber = models.CharField(max_length=50, default='', null=False)#編號
     cJob_title = models.CharField(max_length=50,blank=True)#職稱
     cSubject = models.CharField(max_length=255, default='', null=False)#主旨
     cDiscription = models.TextField(blank=True)#說明
     cProposed=models.TextField(blank=True)#擬辦
-    cCheck=models.TextField(blank=True)#批示
     home = models.OneToOneField(Home, on_delete=models.CASCADE,default='')
 
 #11+1

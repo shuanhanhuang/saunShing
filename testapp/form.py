@@ -30,7 +30,6 @@ class SignedForm (forms.Form):
 	cJob_title = forms.CharField(max_length=50,initial='',required=False)
 	cSubject = forms.CharField(max_length=255, initial='') # ,required=False
 	cProposed=forms.CharField(widget=forms.Textarea,required=False)#擬辦
-	cCheck=forms.CharField(widget=forms.Textarea,required=False)#批示
 	cDiscription = forms.CharField(widget=forms.Textarea,required=False)
 
 class MeetingInnerForm(forms.Form):
