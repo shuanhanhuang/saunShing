@@ -2,12 +2,12 @@ from django.contrib import admin
 from testapp.models import Signed,Home,Meeting,MeetingInner,Contact,Contract,ContractInner,Count
 # Register your models here.
 class HomeAdmin(admin.ModelAdmin):
-    list_display = ('id','cNumber','cType','cDepartment','cAuther','cDate','cProgress','cEndDate')
+    list_display = ('id','cNumber','cType','cDepartment','cAuther','cProgress','cEndDate','HomeDate')
     # list_fulter = ('cName','cSex')
     search_fields = ('cType','cAuther','cDate',)
     ordering=('id',)
 class SignedAdmin(admin.ModelAdmin):
-    list_display = ('id','cNumber','cJob_title','cSubject','cDiscription')
+    list_display = ('id','cNumber','cJob_title','cDiscription')
     # list_fulter = ('cName','cSex')
     search_fields = ('cType','cAuther','cDate',)
     ordering=('id',)

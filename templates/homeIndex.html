@@ -5,22 +5,28 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0  shrink-to-fit=no">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
   {% load static %}
   <title>顯示所有資料</title>
 </head>
 
 <body>
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+    crossorigin="anonymous"></script>
+
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand" href="/homeIndex/">首頁</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-    
+
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <ul class="navbar-nav ml-2">
@@ -31,19 +37,24 @@
 
           <ul class="navbar-nav ml-2">
             <li class="nav-item">
-              <button class="btn btn-warning my-2 my-sm-0" id="{{firstname}}" onclick="perosonIndex(event)">待簽
+              <button class="btn btn-warning my-2 my-sm-0" id="{{firstname}}" onclick="perosonIndex(event)">待處理
                 {% if allpersonCount != 0 %}
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                    {{allpersonCount}}
-                  </span>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  {{allpersonCount}}
+                </span>
                 {% endif %}
               </button>
             </li>
           </ul>
-          {% if username == "admin" %}
-            <li class="nav-item active">
-              <a class="nav-link" href="/admin/">管理人員 <span class="sr-only">(current)</span></a>
+          <ul class="navbar-nav ml-2">
+            <li class="nav-item">
+              <button class="btn btn-danger my-2 my-sm-0" onclick="Tomessage(event)">訊息</button>
             </li>
+          </ul>
+          {% if username == "admin" %}
+          <li class="nav-item active">
+            <a class="nav-link" href="/admin/">管理人員 <span class="sr-only">(current)</span></a>
+          </li>
           {% endif %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
@@ -53,7 +64,7 @@
               <a class="dropdown-item" href="/signallIndex/">簽呈資料</a>
               <a class="dropdown-item" href="/meetingallIndex/">會議記錄資料</a>
               <a class="dropdown-item" href="/contactallIndex/">內部連絡單資料</a>
-              <a class="dropdown-item" href="/contractallIndex/">工程發包議價記錄單</a>
+              <a class="dropdown-item" href="/contractallIndex/">發包議價表</a>
               <a class="dropdown-item" href="/changeallIndex/">設計變更通知單</a>
             </div>
           </li>
@@ -72,7 +83,7 @@
             <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button>
           </li>
         </ul>
-        
+
       </div>
     </div>
   </nav>
@@ -82,29 +93,28 @@
         編號: {{homeFilter.form.cNumber}}
         種類: {{homeFilter.form.cType}}
         發文者: {{homeFilter.form.cAuther}}
-        部門別: {{homeFilter.form.cDepartment}}  
+        部門別: {{homeFilter.form.cDepartment}}
         <p></p>
         <span class="mt-2">文件進度: {{homeFilter.form.cProgress}}</span>
-        <span class="mt-2">日期: {{homeFilter.form.cDate}}</span>
+        <span class="mt-2">建立日期: {{homeFilter.form.HomeDate}}</span>
         <span class="mt-2">完成日期: {{homeFilter.form.cEndDate}}</span>
         <input type="submit" class="btn btn-primary" value="查詢" />
         <button type="button" class="btn btn-success" onclick="excel_download()">匯出Excel</button>
-        <!-- <button href="/download_workbook/"/>匯出excel</button> -->
-      </div>      
+      </div>
     </form>
   </div>
   {% if allpersonCount != 0%}
-    <div class="text-center alert alert-danger alert-dismissible fade show" role="alert">
-      <h4 class="alert-heading">提醒!!!!!!</h4>
-      <hr>
-      <br>
-      <strong>你還有{{allpersonCount}}筆待簽，請盡速簽核</strong>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
+  <div class="text-center alert alert-danger alert-dismissible fade show" role="alert">
+    <h4 class="alert-heading">提醒!!!!!!</h4>
+    <hr>
+    <br>
+    <strong>你還有{{allpersonCount}}筆待處理，請盡速簽核</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
   {% endif %}
-  
+
   <form action="." method="POST">
     {% csrf_token %}
     <div class="container-lg">
@@ -114,9 +124,10 @@
             <!-- <th scope="col">筆數</th> -->
             <th scope="col">編號</th>
             <th scope="col">種類</th>
+            <th scope="col">主旨</th>
             <th scope="col">發文者</th>
             <th scope="col">部門別</th>
-            <th scope="col">日期</th>
+            <th scope="col">建立日期</th>
             <th scope="col">文件進度</th>
             <th scope="col">完成日期</th>
             <th scope="col">簽核進度</th>
@@ -124,95 +135,58 @@
           </thead>
           <tbody>
             {% for unit in all %}
-            <tr>
-              <!-- <td>{{unit.id}}</td> -->
-              {% if unit.cType == "簽呈" %}
-                <td><a href="/signView/{{unit.cNumber}}/">{{unit.cNumber}}</a> </td>  <!--將編號變超連結可以點選後進入-->
-              {% elif unit.cType == "會議記錄" %}
-                <td><a href="/meetingView/{{unit.cNumber}}/">{{unit.cNumber}}</a> </td><!--將編號變超連結可以點選後進入-->
-              {% elif unit.cType == "內部連絡單" %}
-                <td><a href="/contactView/{{unit.cNumber}}/">{{unit.cNumber}}</a></td><!--將編號變超連結可以點選後進入-->
-              {% elif unit.cType == "工程發包議價記錄單" %}
-                <td><a href="/contractView/{{unit.cNumber}}/">{{unit.cNumber}}</a></td><!--將編號變超連結可以點選後進入-->
-              {% else %}
-                <td><a href="/changeView/{{unit.cNumber}}/">{{unit.cNumber}}</a></td><!--將編號變超連結可以點選後進入-->
-              {% endif %}
-              <td>{{unit.cType}}</td>
-              <td>{{unit.cAuther}}</td>
-              <td>{{unit.cDepartment}}</td>
-              <td>{{unit.cDate}}</td>
-              <td>{{unit.cProgress}}</td>
-              <td>{{unit.cEndDate}}</td>
-              {% if unit.cReceive != "None" %}
-                <td>{{unit.cReceive}}</td>
-              {% else %}
-              <td></td>
-              {% endif %}
+              <tr>
+                <td>{{unit.cNumber}}</td>
+                <td>{{unit.cType}}</td>
+                <td style="word-wrap: break-word; max-width: 200px;">{{unit.cSubject}}</td>
+                <td>{{unit.cAuther}}</td>
+                <td>{{unit.cDepartment}}</td>
+                <td>{{unit.HomeDate}}</td>
+                <td>{{unit.cProgress}}</td>
+                {% if unit.cEndDate == null %}
+                  <td></td>
+                {% else %}
+                  <td>{{unit.cEndDate}}</td>
+                {% endif %}
+                {% if unit.cProgress == "結案" or unit.cProgress == "駁回" %}
+                  <td></td>
+                {% else %}
+                  <td>{{unit.cReceive}}</td>
+                {% endif %}
 
-              {% if unit.cFile != None %}
-                <td><a href="http://127.0.0.1:8000/media/{{unit.cFile}}" download>{{unit.cFile}}</a></td>
-              {% else %}
-                <td>{{unit.cFile}}</td>
-              {% endif %}
-              
-              {% if unit.cLock == "否" %}
-                {% if unit.cReceive == "None" %}
-                <td>
-                  <button type="button" class="btn btn-outline-warning mb-2" id="Detail/{{unit.cNumber}}" onclick="Detail(event)">編輯</button>
-                  <button type="button" class="btn btn-outline-info mb-2" id="{{unit.id}}" onclick="Edit(event)">上傳檔案</button>
-                  <button type="button" class="btn btn-outline-danger mb-2" id="{{unit.id}}" onclick="Delete(event)">刪除</button>
-                  <button type="button" class="btn btn-outline-secondary mb-2" id="{{unit.cNumber}}" onclick="Copy(event)">複製表單</button>
-                </td>
+                {% if unit.cFile != None %}
+                  <td><a href="http://127.0.0.1:8000/media/{{unit.cFile}}" download>{{unit.cFile}}</a></td>
                 {% else %}
+                  <td>{{unit.cFile}}</td>
+                {% endif %}
+                <td>
+                  <button type="button" class="btn btn-outline-secondary mt-2" id="{{unit.cNumber}}" onclick="Copy(event)">複製表單</button>
                   {% if unit.cType == "簽呈" %}
-                    <td>
-                      <button type="button" class="btn btn-outline-primary" id="signView/{{unit.cNumber}}" onclick="View(event)">檢視</button>
-                    </td>
+                    {% if unit.cSecret == "是" %}
+                      {% if unit.cAuther == firstname %}
+                        <button type="button" class="btn btn-outline-primary mt-2" id="/signView/{{unit.cNumber}}/"
+                        onclick="View(event)">檢視</button>
+                      {% else %}
+                        {% for transfer in transferall %}
+                          {% if transfer.cNumber == unit.cNumber and transfer.cTransferTo == firstname %}
+                            <button type="button" class="btn btn-outline-primary mt-2" id="/signView/{{unit.cNumber}}/" onclick="View(event)">檢視</button>
+                          {% endif %}
+                        {% endfor %}
+                      {% endif %}
+                    {% else %}
+                      <button type="button" class="btn btn-outline-primary mt-2" id="/signView/{{unit.cNumber}}/" onclick="View(event)">檢視</button> <!--將編號變超連結可以點選後進入-->
+                    {% endif %}
+                  {% elif unit.cType == "會議記錄表" %}
+                    <button type="button" class="btn btn-outline-primary mt-2" id="/meetingView/{{unit.cNumber}}/" onclick="View(event)">檢視</button>
                   {% elif unit.cType == "內部連絡單" %}
-                    <td>
-                      <button type="button" class="btn btn-outline-primary" id="contactView/{{unit.cNumber}}" onclick="View(event)">檢視</button>
-                    </td>
-                  {% elif unit.cType == "會議記錄" %}
-                    <td>
-                      <button type="button" class="btn btn-outline-primary" id="meetingView/{{unit.cNumber}}" onclick="View(event)">檢視</button>
-                    </td>
-                  {% elif unit.cType == "工程發包議價記錄單" %}
-                    <td>
-                      <button type="button" class="btn btn-outline-primary" id="contractView/{{unit.cNumber}}" onclick="View(event)">檢視</button>
-                    </td>
+                    <button type="button" class="btn btn-outline-primary mt-2" id="/contactView/{{unit.cNumber}}/" onclick="View(event)">檢視</button>
+                  {% elif unit.cType == "發包議價表" %}
+                    <button type="button" class="btn btn-outline-primary mt-2" id="/contractView/{{unit.cNumber}}/" onclick="View(event)">檢視</button>
                   {% else %}
-                    <td>
-                      <button type="button" class="btn btn-outline-primary" id="changeView/{{unit.cNumber}}" onclick="View(event)">檢視</button>
-                    </td>
+                    <button type="button" class="btn btn-outline-primary mt-2" id="/changeView/{{unit.cNumber}}/" onclick="View(event)">檢視</button>
                   {% endif %}
-                {% endif %}
-              {% elif unit.cLock == "是" and authenticate == True %}
-                {% if unit.cType == "簽呈" %}
-                <td>
-                  <button type="button" class="btn btn-outline-warning" id="Detail/{{unit.cNumber}}" onclick="Detail(event)">編輯</button>
                 </td>
-                {% elif unit.cType == "內部連絡單" %}
-                  <td>
-                    <button type="button" class="btn btn-outline-warning" id="Detail/{{unit.cNumber}}" onclick="Detail(event)">編輯</button>
-                  </td>
-                {% elif unit.cType == "會議記錄" %}
-                  <td>
-                    <button type="button" class="btn btn-outline-warning" id="Detail/{{unit.cNumber}}" onclick="Detail(event)">編輯</button>
-                  </td>
-                {% elif unit.cType == "工程發包議價記錄單" %}
-                  <td>
-                    <button type="button" class="btn btn-outline-warning" id="Detail/{{unit.cNumber}}" onclick="Detail(event)">編輯</button>
-                  </td>
-                {% else %}
-                  <td>
-                    <button type="button" class="btn btn-outline-warning" id="Detail/{{unit.cNumber}}" onclick="Detail(event)">編輯</button>
-                  </td>
-                {% endif %}
-              <!-- <td>
-                <button type="button" class="btn btn-outline-info" id="{{unit.id}}" onclick="Edit(event)">編輯</button>
-              </td> -->
-              {% endif %}
-            </tr> 
+              </tr>
             {% endfor %}
           </tbody>
         </table>
@@ -226,56 +200,65 @@
     </div>
   </div>
 
-  
- <script src="{% static 'jquery.min.js' %}"></script>
+
+  <script src="{% static 'jquery.min.js' %}"></script>
   <script>
 
 
-      function Edit(event){
-        var id = event.target.id
-        $(location).attr("href","/homeEdit/"+id+"/load");
-      }
+    function Edit(event) {
+      var id = event.target.id
+      $(location).attr("href", "/homeEdit/" + id + "/load");
+    }
 
-      function Delete(event){
-        var id = event.target.id
-        $(location).attr("href","/homeDelete/"+id+"/");
-      }
+    function Delete(event) {
+      var id = event.target.id
+      $(location).attr("href", "/homeDelete/" + id + "/");
+    }
 
-      function Detail(event){
-        var id = event.target.id
-        $(location).attr("href",'/'+id+"/");
-      }
+    function Detail(event) {
+      var id = event.target.id
+      $(location).attr("href", '/' + id + "/");
+    }
 
-      function Logout(){
-        $(location).attr("href","/logout/");
-      }
+    function Logout() {
+      $(location).attr("href", "/logout/");
+    }
 
-      function perosonIndex(event){
-        var id = event.target.id
-        $(location).attr("href","/perosonIndex/"+id+"/");
-      }
+    function perosonIndex(event) {
+      var id = event.target.id
+      $(location).attr("href", "/perosonIndex/" + id + "/");
+    }
 
-      function home(){
-        $(location).attr("href","/homePost/")
-      }
+    function home() {
+      $(location).attr("href", "/homePost/")
+    }
 
-      function View(event){
-        var id = event.target.id
-        $(location).attr("href","/"+id+"/");
-      }
+    function Tomessage() {
+      $(location).attr("href", "/message/")
+    }
 
-      function Copy(event){
-        var id = event.target.id
-        $(location).attr("href","/homeCopyPost/"+id+"/")
-      }
+    function View(event) {
+      var id = event.target.id
+      $(location).attr("href", "/" + id + "/");
+    }
 
-      function excel_download(){
-        $(location).attr("href","/download_workbook/");
-      }
-    
+    function Copy(event) {
+      var id = event.target.id
+      $(location).attr("href", "/homeCopyPost/" + id + "/")
+    }
+
+    function excel_download() {
+      $(location).attr("href", "/download_workbook/");
+    }
+    function View(event) {
+      var id = event.target.id
+      $(location).attr("href", id);
+    }
 
 
-  </script> 
-</body> 
+
+
+  </script>
+</body>
 
 </html>

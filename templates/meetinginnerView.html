@@ -22,12 +22,12 @@
         
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <!-- <li class="nav-item active">
                 <a class="nav-link" href="/meetinginnerIndex/{{home.cNumber}}/">回會議內容 <span class="sr-only">(current)</span></a>
-            </li>
+            </li> -->
             <ul class="navbar-nav ml-2">
               <li class="nav-item">
-                <button class="btn btn-warning my-2 my-sm-0" id="{{firstname}}" onclick="perosonIndex(event)">待簽
+                <button class="btn btn-warning my-2 my-sm-0" id="{{firstname}}" onclick="perosonIndex(event)">待處理
                   {% if allpersonCount != 0 %}
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                       {{allpersonCount}}
@@ -44,9 +44,14 @@
                 <a class="dropdown-item" href="/signallIndex/">簽呈資料</a>
                 <a class="dropdown-item" href="/meetingallIndex/">會議記錄資料</a>
                 <a class="dropdown-item" href="/contactallIndex/">內部連絡單資料</a>
-                <a class="dropdown-item" href="/contractallIndex/">工程發包議價記錄單</a>
+                <a class="dropdown-item" href="/contractallIndex/">發包議價表</a>
                 <a class="dropdown-item" href="/changeallIndex/">設計變更通知單</a>
               </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav mr-auto" style="display: flex; justify-content: center;">
+            <li class="nav-item active">
+                <a class="navbar-brand">會議內容檢視</a>
             </li>
           </ul>
           <ul class="navbar-nav ml-2">
@@ -75,29 +80,34 @@
             <div class="row">
                 <table class="table">
                     <tr>
-                        <th>編號</th>
-                        <td>{{home.cNumber}}</td>
+                      <th>編號</th>
+                      <td>{{home.cNumber}}</td>
                       </tr>
                     <tr>
                       <th>會議內容</th>
                       <td>{{meetinginner.cContent}}</td>
                     </tr>
                     <tr>
-                        <th>執行者</th>
-                        <td>{{meetinginner.cDoPerson}}</td>
+                      <th>執行者</th>
+                      <td>{{meetinginner.cDoPerson}}</td>
                     </tr>
                     <tr>
-                        <th>預定完成日</th>
-                        <td>{{meetinginner.cExpectDate}}</td>
+                      <th>提案日</th>
+                      <td>{{meetinginner.cStartDate}}</td>
                     </tr>
                     <tr>
-                        <th>備註欄</th>
-                        <td>{{meetinginner.cOther}}</td>
+                      <th>預定完成日</th>
+                      <td>{{meetinginner.cExpectDate}}</td>
                     </tr>
+                    
                 </table>
             </div>
         </div>
     </form>
+
+    <div class="container" style="display: flex; justify-content: center;">
+      <button class="btn btn-dark mb-2" id="/meetinginnerIndex/{{home.cNumber}}/" onclick="BacktoMeeting(event)">回會議內容總覽
+    </div>
 
     <script src="{% static 'jquery.min.js' %}"></script>
 
@@ -109,6 +119,10 @@
     function perosonIndex(event){
         var id = event.target.id
         $(location).attr("href","/perosonIndex/"+id+"/");
+    }
+    function BacktoMeeting(event){
+        var id = event.target.id
+        $(location).attr("href",id);
     }
 
   </script>

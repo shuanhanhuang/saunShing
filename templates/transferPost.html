@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0  shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  {% load static %}
+  <title>資料表新增</title>
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+    crossorigin="anonymous"></script>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/homeIndex/">首頁</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+              其他表單
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="/signallIndex/">簽呈資料</a>
+              <a class="dropdown-item" href="/meetingallIndex/">會議記錄資料</a>
+              <a class="dropdown-item" href="/contactallIndex/">內部連絡單資料</a>
+              <a class="dropdown-item" href="/contractallIndex/">發包議價表</a>
+              <a class="dropdown-item" href="/changeallIndex/">設計變更通知單</a>
+            </div>
+          </li>
+        </ul>
+        <ul class="navbar-nav mr-auto" style="display: flex; justify-content: center;">
+          <li class="nav-item active">
+            <a class="navbar-brand">新增簽核順序/啟動簽核</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-2">
+          <li class="nav-item active">
+            <a class="nav-link disabled" style="color: green;">{{firstname}} <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-2">
+          <li class="nav-item">
+            <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <hr style="border-width: 2px;border-style: dashed; border-color: #0066CC;">
+  </div>
+  <div class="container">
+    <div class="row">
+      <h2 class="mt-2">新增 簽核人員</h2>
+    </div>
+    <p style="color:red; font-weight: bold; font-size: larger;">{{message}}</p>
+  </div>
+
+  <form action="." method="post" name="form1" onsubmit="return validateForm()">
+    {% csrf_token %}
+    <div class="container">
+      <div class="row">
+        <table class="table">
+          <tr>
+            <th>編號</th>
+            <td>{{transferHome.cNumber}}</td>
+          </tr>
+          <tr>
+            <th>收件人</th>
+            <td>
+              <select class="form-control" id="taskTypeSelect" name="cTransferTo">
+                {% for key, value in transferform.REC %}
+                {% if key != firstname %}
+                <option value="{{ key }}" name="cTransferTo">{{ value }}</option>
+                {% endif %}
+                {% endfor %}
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <th align="center" scope="col">
+              <input type="submit" class="btn btn-primary" name="button" id="button" value="新增簽核人員" type="button">
+              <input type="reset" class="btn btn-danger" name="button2" id="button2" value="重設">
+            </th>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </form>
+
+  <div class="container">
+    <div class="row">
+      <h1>{{transferHome.cNumber}} 表單 簽核順序</h1>
+    </div>
+  </div>
+
+  <form action="." method="POST" name="form2">
+    {% csrf_token %}
+    <div class="container">
+      <div class="row">
+        <table class="table">
+          <thead>
+            <th scope="col">簽核順序</th>
+            <th></th>
+          </thead>
+          <tbody>
+            {% for unit in unitinner %}
+            <tr>
+              <td>{{unit.cTransferTo}}</td>
+              <td>
+                <button type="button" class="btn btn-outline-danger" id="{{transferHome.cNumber}}/{{unit.id}}"
+                  onclick="Delete(event)">刪除</button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </form>
+  <div class="container">
+    {% if unitinnercount > 0 %}
+    <button class="btn btn-primary" id="{{transferHome.id}}/{{transferHome.cNumber}}"
+      onclick="submitForm(event)">啟動簽核</button>
+    {% endif %}
+    <button class="btn btn-warning" id="{{firstname}}" onclick="backtoperson(event)">回待處理</button>
+  </div>
+
+  <!-- <script src="{% static 'jquery.min.js' %}"></script> -->
+  <script>
+    function Logout() {
+      $(location).attr("href", "/logout/");
+    }
+
+    function Delete() {
+      var id = event.target.id
+      $(location).attr("href", "/transferDelete/" + id + "/");
+    }
+
+
+    function validateForm() {
+      var transferToValue = document.forms["form1"]["cTransferTo"].value;
+      if (transferToValue == "None") {
+        alert("請選擇有效的人員");
+        return false;
+      }
+      return true;
+    }
+
+    function submitForm(event) {
+      var id = event.target.id
+      $(location).attr("href", "/returnedPost/" + id + "/");
+    }
+
+    function backtoperson(event) {
+      var id = event.target.id
+      $(location).attr("href", "/perosonIndex/" + id + "/");
+    }
+
+  </script>
+
+
+
+</body>
+
+</html>

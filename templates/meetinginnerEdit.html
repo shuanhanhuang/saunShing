@@ -30,9 +30,14 @@
                 <a class="dropdown-item" href="/signallIndex/">簽呈資料</a>
                 <a class="dropdown-item" href="/meetingallIndex/">會議記錄資料</a>
                 <a class="dropdown-item" href="/contactallIndex/">內部連絡單資料</a>
-                <a class="dropdown-item" href="/contractallIndex/">工程發包議價記錄單</a>
+                <a class="dropdown-item" href="/contractallIndex/">發包議價表</a>
                 <a class="dropdown-item" href="/changeallIndex/">設計變更通知單</a>
               </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav mr-auto" style="display: flex; justify-content: center;">
+            <li class="nav-item active">
+                <a class="navbar-brand">會議內容修改</a>
             </li>
           </ul>
           <ul class="navbar-nav ml-2">
@@ -67,16 +72,17 @@
                     </tr>
                     <tr>
                         <th>執行者</th>
-                        <td ><input type="text" id="cDoPerson" name="cDoPerson" value={{unit.cDoPerson}}></td>
+                        <td ><input type="text" id="cDoPerson" name="cDoPerson" value="{{unit.cDoPerson}}"></td>
                     </tr>
                     <tr>
-                        <th>預定完成日</th>
-                        <td ><input type="text" id="cExpectDate" name="cExpectDate" value={{unit.cExpectDate}}></td>
+                        <th>提案日</th>
+                        <td ><input type="text" id="cStartDate" name="cStartDate" value="{{unit.cStartDate}}"></td>
                     </tr>
                     <tr>
-                        <th>備註</th>
-                        <td ><input type="text" id="cOther" name="cOther" value={{unit.cOther}}></td>
-                    </tr>
+                      <th>預定完成日</th>
+                      <td ><input type="text" id="cExpectDate" name="cExpectDate" value="{{unit.cExpectDate}}"></td>
+                  </tr>
+                    
                     <tr>
                         <th colspan="2" align="center">
                         <button type="submit" class="btn btn-primary" value="Submit">送出</button>
@@ -88,6 +94,8 @@
     </form>
 
     <script src="{% static 'jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'customer.js' %}"></script>
+  <script type="text/javascript">prohibitpreviouspage();</script>
 
     <script>
       

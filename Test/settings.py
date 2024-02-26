@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-v643wy7z**!kth7j505-a273smjo+fx4s078=r$5s0wbewha)q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 # '192.168.50.155','192.168.100.155'
-ALLOWED_HOSTS = ['192.168.100.155','127.0.0.1']
+ALLOWED_HOSTS = ['192.168.100.155','127.0.0.1','192.168.50.155','192.168.50.117','192.168.1.33']
 
 
 # Application definition
@@ -77,10 +77,21 @@ WSGI_APPLICATION = 'Test.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'my_docnewdb',
+        'USER': 'root',
+        'PASSWORD': 'yvonne0630',
+        'HOST': 'localhost',  # 如果MySQL在本地，則使用localhost
+        'PORT': '',           # 默認MySQL端口為3306，如果已更改端口，請指定新的端口號
     }
 }
 
@@ -121,7 +132,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'/static/').replace("\\",'/')
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),'C:/Users/yvonn/AppData/Local/Programs/Python/Python311/Lib/site-packages/django/contrib/admin/static/',)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 

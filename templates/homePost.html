@@ -14,7 +14,7 @@
   
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
-        <a class="navbar-brand" href="/homeIndex/">Home</a>
+        <a class="navbar-brand" href="/homeIndex/">首頁</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -23,15 +23,20 @@
           <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                Dropdown
+                其他表單
               </a>
               <div class="dropdown-menu">
                 <a class="dropdown-item" href="/signallIndex/">簽呈資料</a>
                 <a class="dropdown-item" href="/meetingallIndex/">會議記錄資料</a>
                 <a class="dropdown-item" href="/contactallIndex/">內部連絡單資料</a>
-                <a class="dropdown-item" href="/contractallIndex/">工程發包議價記錄單</a>
+                <a class="dropdown-item" href="/contractallIndex/">發包議價表</a>
                 <a class="dropdown-item" href="/changeallIndex/">設計變更通知單</a>
               </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav mr-auto" style="display: flex; justify-content: center;">
+            <li class="nav-item active">
+                <a class="navbar-brand">首頁新增</a>
             </li>
           </ul>
           <ul class="navbar-nav ml-2">
@@ -61,71 +66,41 @@
         <div class="row">
           <table class="table">
             <tr>
-                <th>種類</th>
+                <th>表單種類</th>
                 <td>
-                    <input name="cType" type="radio" value="簽呈" checked="checked"/>簽呈
-                    <input name="cType" type="radio" value="會議記錄"/>會議記錄
-                    <input name="cType" type="radio" value="內部連絡單"/>內部連絡單
-                    <input name="cType" type="radio" value="工程發包議價記錄單"/>工程發包議價記錄單
-                    <input name="cType" type="radio" value="設計變更通知單"/>設計變更通知單
+                  <select class="form-control" id="taskTypeSelect" name="cType">
+                    {% for key,value in homeform.type %}
+                      <option value="{{ key }}" name="cType">{{value}}</option>
+                    {% endfor %}
+                  </select>  
                 </td>
             </tr>
             <tr><th>編號</th><td>{{homeform.cNumber}}</td> </tr>
-            <tr><th>姓名</th><td>{{homeform.cAuther}}</td></tr>
-            <tr>
-              <th>部門別</th>
-              <td>
-                <input name="cDepartment" type="radio" value="總經理室" checked="checked"/>總經理室
-                <input name="cDepartment" type="radio" value="稽核室"/>稽核室
-                <input name="cDepartment" type="radio" value="文管中心"/>文管中心
-                <input name="cDepartment" type="radio" value="管理部"/>管理部
-                <input name="cDepartment" type="radio" value="業務設計部"/>業務設計部
-                <input name="cDepartment" type="radio" value="廠務部"/>廠務部
-              </td>
-            </tr>
-            <tr><th>日期</th><td>{{homeform.cDate}}</td></tr>
-            <tr>
+            <tr><th>主旨</th><td>{{homeform.cSubject}}</td></tr>
+            <tr><th>姓名</th><td><input type="text" name="{{ homeform.cAuther.name }}" value="{{ homeform.cAuther.value }}" disabled></td></tr>
+            <tr><th>部門別</th><td><input type="text" name="{{ homeform.cDepartment.name }}" value="{{ homeform.cDepartment.value }}" disabled></td></tr>
+            <tr><th>建立時間</th><td><input type="text" id="createTimeInput" name="{{ homeform.cTime.name }}" value="{{ homeform.cTime.value }}"></td></tr>
+            <!-- <tr style="display: none;">
               <th>文件進度</th>
               <td>
-                <input name="cProgress" type="radio"  value="草稿" checked="checked"/>草稿
-                <input name="cProgress" type="radio" value="流程中"/>流程中
-                <input name="cProgress" type="radio" value="廢單"/>廢單
-                <input name="cProgress" type="radio" value="結案"/>結案
+                <input name="cProgress" type="radio"  value="草稿" checked="checked" />草稿
+                <input name="cProgress" type="radio" value="流程中" disabled="True"/>流程中
+                <input name="cProgress" type="radio" value="結案" disabled="True"/>結案
               </td>
             </tr>
-            <tr>
-            <tr><th>完成日期</th><td>{{homeform.cEndDate}}</td></tr>
-            <tr>
-              <th>收件人</th>
-              <td>
-                <select class="form-control" id="taskTypeSelect" name="cReceive">
-                  {% for key,value in homeform.REC %}
-                      <option value="{{ key }}" name="cReceive">{{ value }}</option>
-                  {% endfor %}
-                </select>
-              </td>
+            <tr style="display: none;">
+            <th>完成日期</th><td>{{homeform.cEndDate}}</td>
             </tr>
-            <tr>
+            <tr style="display: none;">
+              <th>收件人</th><td>{{homeform.cReceive}}</td>
+            </tr> -->
+            <!-- <tr>
               <th>檔案</th>
               <td>
                 <input name="cFile" type="file">
               </td>
-            </tr>
-            {% if authenticate == True %}
-            <tr>
-              <th>鎖定</th>
-              <td>
-                <input name="cLock" type="radio"  value="否" checked="checked"/>否
-              </td>
-            </tr>
-            {% else %}
-            <tr>
-              <th>鎖定</th>
-              <td>
-                <input name="cLock" type="radio"  value="否" checked="checked"/>否
-              </td>
-            </tr>
-            {% endif %}
+            </tr> -->
+            
               <th align="center">
                 <input type="submit" class="btn btn-primary" name="button" id="button" value="送出">
                 <input type="reset" class="btn btn-danger" name="button2" id="button2" value="重設">
@@ -136,13 +111,30 @@
       </div>
     </form>
     <script src="{% static 'jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'customer.js' %}"></script>
+    <script type="text/javascript">prohibitpreviouspage();</script>
     <script>
 
       function Logout(){
         $(location).attr("href","/logout/");
       }
+      document.getElementById('taskTypeSelect').addEventListener('change', function () {
+        // 取得下拉式選單的值
+        var selectedValue = this.value;
+
+        // 取得建立時間的輸入框
+        var createTimeInput = document.getElementById('createTimeInput');
+
+        // 根據下拉式選單的值動態設定建立時間的編輯狀態
+        if (selectedValue == '簽呈' || selectedValue == '會議記錄表') {
+            createTimeInput.disabled = false;  // 允許編輯
+        } else {
+            createTimeInput.disabled = true;   // 不允許編輯
+        }
+      });
 
     </script>
+    
   
 
 

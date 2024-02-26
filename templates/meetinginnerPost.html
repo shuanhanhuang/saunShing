@@ -22,6 +22,11 @@
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav ml-2">
+              <li class="nav-item">
+                <button class="btn btn-success my-2 my-sm-0" id="{{innermeeting.cNumber}}" onclick="BacktoMeetinginner(event)">回會議內容總覽</button>
+              </li>
+            </ul>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                 其他表單
@@ -30,9 +35,14 @@
                 <a class="dropdown-item" href="/signallIndex/">簽呈資料</a>
                 <a class="dropdown-item" href="/meetingallIndex/">會議記錄資料</a>
                 <a class="dropdown-item" href="/contactallIndex/">內部連絡單資料</a>
-                <a class="dropdown-item" href="/contractallIndex/">工程發包議價記錄單</a>
+                <a class="dropdown-item" href="/contractallIndex/">發包議價表</a>
                 <a class="dropdown-item" href="/changeallIndex/">設計變更通知單</a>
               </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav mr-auto" style="display: flex; justify-content: center;">
+            <li class="nav-item active">
+                <a class="navbar-brand">會議內容新增</a>
             </li>
           </ul>
           <ul class="navbar-nav ml-2">
@@ -56,16 +66,21 @@
       <p style="color:red; font-weight: bold; font-size: larger;">{{message}}</p>
     </div>
 
-    <form action="/meetinginnerPost/{{innermeeting.cNumber}}/" method="post" name="form1">
+    <form action="/meetinginnerPost/{{innermeeting.cNumber}}/" method="post" name="form1" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="container">
         <div class="row">
           <table class="table">
-          
             <tr><th>會議內容</th><td>{{meetinginnerform.cContent}}</td> </tr>
             <tr><th>執行者</th><td>{{meetinginnerform.cDoPerson}}</td> </tr>
+            <tr><th>提案日</th><td>{{meetinginnerform.cStartDate}}</td></tr>
             <tr><th>預定完成日</th><td>{{meetinginnerform.cExpectDate}}</td></tr>
-            <tr><th>備註欄</th><td>{{meetinginnerform.cOther}}</td></tr>
+            <tr>
+              <th>檔案</th>
+              <td>
+                <input name="cFile" type="file">
+              </td>
+            </tr>
             <tr>
               <th align="center">
                 <input type="submit" class="btn btn-primary"  name="button" id="button" value="送出">
@@ -78,11 +93,17 @@
     </form>
 
     <script src="{% static 'jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'customer.js' %}"></script>
+    <script type="text/javascript">prohibitpreviouspage();</script>
 
     <script>
       
       function Logout(){
           $(location).attr("href","/logout/");
+      }
+      function BacktoMeetinginner(event){
+        var id = event.target.id
+        $(location).attr("href","/meetinginnerIndex/"+id+"/");
       }
 
     </script>

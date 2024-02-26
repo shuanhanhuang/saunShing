@@ -26,13 +26,13 @@
           {% if authenticate == True %}
             <ul class="navbar-nav ml-2">
               <li class="nav-item">
-                  <button class="btn btn-light my-2 my-sm-0" id="{{home.id}}" onclick="New(event)">新增</button>
+                  <button class="btn btn-light my-2 my-sm-0" id="{{home.id}}/{{home.cNumber}}" onclick="New(event)">新增</button>
               </li>
             </ul>
           {% endif %}
           <ul class="navbar-nav ml-2">
             <li class="nav-item">
-              <button class="btn btn-warning my-2 my-sm-0" id="{{firstname}}" onclick="perosonIndex(event)">待簽
+              <button class="btn btn-warning my-2 my-sm-0" id="{{firstname}}" onclick="perosonIndex(event)">待處理
                 {% if allpersonCount != 0 %}
                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                     {{allpersonCount}}
@@ -49,7 +49,7 @@
               <a class="dropdown-item" href="/signallIndex/">簽呈資料</a>
               <a class="dropdown-item" href="/meetingallIndex/">會議記錄資料</a>
               <a class="dropdown-item" href="/contactallIndex/">內部連絡單資料</a>
-              <a class="dropdown-item" href="/contractallIndex/">工程發包議價記錄單</a>
+              <a class="dropdown-item" href="/contractallIndex/">發包議價表</a>
               <a class="dropdown-item" href="/changeallIndex/">設計變更通知單</a>
             </div>
           </li>
@@ -85,6 +85,7 @@
         <table class="table">
           <thead>
             <th scope="col">簽核人員</th>
+            <th scope="col">簽核時間</th>
             <th scope="col">簽核狀態</th>
             <th scope="col">簽核內容</th>
             <th scope="col">簽核進度</th>
@@ -94,14 +95,10 @@
             {% for unit in returned %}
             <tr>
               <td>{{unit.cName}}</td>
+              <td>{{unit.cTime}}</td>
               <td>{{unit.cHow}}</td>
               <td>{{unit.cIllustrate}}</td>
               <td>{{unit.cTransfer}}</td>
-              {% if firstname == unit.cName %}
-                <td>
-                  <button type="button" class="btn btn-outline-danger" id="{{home.id}}/{{unit.id}}" onclick="Delete(event)">刪除</button>
-                </td>
-              {% endif%}
             </tr>
             {% endfor %}
           </tbody>

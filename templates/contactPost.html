@@ -14,14 +14,14 @@
   
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
-        <a class="navbar-brand" href="/homeIndex/">首頁</a>
+        <a class="navbar-brand" >首頁</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                 其他表單
               </a>
@@ -32,6 +32,11 @@
                 <a class="dropdown-item" href="/contractallIndex/">工程發包議價記錄單</a>
                 <a class="dropdown-item" href="/changeallIndex/">設計變更通知單</a>
               </div>
+            </li> -->
+          </ul>
+          <ul class="navbar-nav mr-auto" style="display: flex; justify-content: center;">
+            <li class="nav-item active">
+                <a class="navbar-brand">內部聯絡單新增</a>
             </li>
           </ul>
           <ul class="navbar-nav ml-2">
@@ -41,7 +46,7 @@
           </ul>
           <ul class="navbar-nav ml-2">
             <li class="nav-item">
-              <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button>
+              <!-- <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button> -->
             </li>
           </ul>
         </div>
@@ -55,42 +60,51 @@
       <p style="color:red; font-weight: bold; font-size: larger;">{{message}}</p>
     </div>
 
-    <form action="." method="post" name="form1">
+    <form action="." method="post" name="form1" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="container">
         <div class="row">
           <table class="table">
-            <tr><th>編號</th><td>{{contactform.cNumber}}</td> </tr> 
-            <tr><th>發文主管</th><td>{{contactform.cAutherManager}}</td></tr>
+            <tr><th>編號</th><td><input type="text" name="{{ contactform.cNumber.name }}" value="{{ contactform.cNumber.value }}" disabled></td></tr> 
+            <tr><th>發文者</th><td><input type="text" name="{{ contactform.cAutherManager.name }}" value="{{ contactform.cAutherManager.value }}" disabled></td></tr>
             <tr><th>決策單位</th>
-                <td>
-                <input name="cDecisionDep" type="radio"  value="總經理" checked="checked"/>總經理
-                <input name="cDecisionDep" type="radio" value="顧問"/>顧問
-                <input name="cDecisionDep" type="radio" value="協理"/>協理
-                </td>
+              <td>
+                <input type="checkbox" value="總經理" class="check_box_list1"/>總經理
+                <input type="checkbox" value="副總經理" class="check_box_list1"/>副總經理
+                <input type="checkbox" value="協理" class="check_box_list1"/>協理
+              <!-- <input name="cDecisionDep" type="radio"  value="總經理" checked="checked"/>總經理
+              <input name="cDecisionDep" type="radio" value="副總經理"/>副總經理
+              <input name="cDecisionDep" type="radio" value="協理"/>協理 -->
+              </td>
             </tr>
             <tr><th>執行單位</th>
                 <td>
                     <input type="checkbox" value="管理部" class="check_box_list"/>管理部
                     <input type="checkbox" value="工程部" class="check_box_list"/>工程部
+                    <input type="checkbox" value="品管課" class="check_box_list"/>品管課
                     <br>
                     <input type="checkbox" value="業務部-部門經理" class="check_box_list"/>業務部-部門經理
                     <input type="checkbox" value="業務部-專案經理" class="check_box_list"/>業務部-專案經理
                     <input type="checkbox" value="業務部-設計專員" class="check_box_list"/>業務部-設計專員
                     <input type="checkbox" value="業務部-業務助理" class="check_box_list"/>業務部-業務助理
+                    <input type="checkbox" value="業務部-生技助理" class="check_box_list"/>業務部-生技助理
                     <br>
                     <input type="checkbox" value="廠務部-採購" class="check_box_list"/>廠務部-採購
-                    <input type="checkbox" value="廠務部-生技" class="check_box_list"/>廠務部-生技
+                    <input type="checkbox" value="廠務部-生技" class="check_box_list"/>廠務部-生管
                     <input type="checkbox" value="廠務部-廠務" class="check_box_list"/>廠務部-廠務
-                    <input type="checkbox" value="廠務部-倉管" class="check_box_list"/>廠務部-倉管
-                    <input type="checkbox" value="廠務部-品管" class="check_box_list"/>廠務部-品管
+                    <input type="checkbox" value="廠務部-製造" class="check_box_list"/>廠務部-製造
                 </td>
             </tr>
-            <tr><th>主旨</th><td>{{contactform.cSubject}}</td></tr>
             <tr><th>說明</th><td>{{contactform.cDiscription}}</td></tr>
-            <tr><th>審核人員意見</th><td>{{contactform.cOption}}</td></tr>
+            <tr>
+              <th>檔案</th>
+              <td>
+                <input name="cFile" type="file">
+              </td>
+            </tr>
             <tr>
               <th align="center">
+                <input type="hidden" name="cDecisionDep" id="textvalue1">
                 <input type="hidden" name="cImplementDep" id="textvalue">
                 <input type="submit" class="btn btn-primary" name="button" id="button" value="送出">
                 <input type="reset"  class="btn btn-danger" name="button2" id="button2" value="重設">
@@ -102,6 +116,8 @@
     </form>
 
     <script src="{% static 'jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'customer.js' %}"></script>
+    <script type="text/javascript">prohibitpreviouspage();</script>
     <script>
         $(document).ready(function(){
             $(".check_box_list").click(function(){
@@ -111,6 +127,14 @@
                 });
                 test= test.substring(0,test.length-1)
                 $("#textvalue").val(test);
+            })
+            $(".check_box_list1").click(function(){
+                var test1 = ""
+                $(".check_box_list1:checked").each(function(){
+                    test1+=$(this).val()+","
+                });
+                test1= test1.substring(0,test1.length-1)
+                $("#textvalue1").val(test1);
             })
         })
         function Logout(){

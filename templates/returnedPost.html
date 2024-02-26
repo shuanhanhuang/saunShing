@@ -1,110 +1,600 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0  shrink-to-fit=no">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    {% load static %}
-    <title>資料表新增</title>
-  </head>
-  <body>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
-  
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <a class="navbar-brand" href="/homeIndex/">首頁</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                其他表單
-              </a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="/signallIndex/">簽呈資料</a>
-                <a class="dropdown-item" href="/meetingallIndex/">會議記錄資料</a>
-                <a class="dropdown-item" href="/contactallIndex/">內部連絡單資料</a>
-                <a class="dropdown-item" href="/contractallIndex/">工程發包議價記錄單</a>
-                <a class="dropdown-item" href="/changeallIndex/">設計變更通知單</a>
-              </div>
-            </li>
-          </ul>
-          <ul class="navbar-nav ml-2">
-            <li class="nav-item active">
-              <a class="nav-link disabled" style="color: green;">{{firstname}} <span class="sr-only">(current)</span></a>
-            </li>
-          </ul>
-          <ul class="navbar-nav ml-2">
-            <li class="nav-item">
-              <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
 
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0  shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  {% load static %}
+  <title>資料表新增</title>
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+    crossorigin="anonymous"></script>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <div class="row">
-        <h2 class="mt-2">新增 簽核</h2>
+      <a class="navbar-brand" href="/homeIndex/">首頁</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <!-- <ul class="navbar-nav ml-2">
+              <li class="nav-item">
+                  <button class="btn btn-success my-2 my-sm-0" id="{{returnedHome.id}}" onclick="View(event)">查看簽核總覽</button>
+              </li>
+            </ul> -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+              其他表單
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="/signallIndex/">簽呈資料</a>
+              <a class="dropdown-item" href="/meetingallIndex/">會議記錄資料</a>
+              <a class="dropdown-item" href="/contactallIndex/">內部連絡單資料</a>
+              <a class="dropdown-item" href="/contractallIndex/">發包議價表</a>
+              <a class="dropdown-item" href="/changeallIndex/">設計變更通知單</a>
+            </div>
+          </li>
+        </ul>
+        <ul class="navbar-nav mr-auto" style="display: flex; justify-content: center;">
+          <li class="nav-item active">
+            <a class="navbar-brand">送出簽核</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-2">
+          <li class="nav-item active">
+            <a class="nav-link disabled" style="color: green;">{{firstname}} <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-2">
+          <li class="nav-item">
+            <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button>
+          </li>
+        </ul>
       </div>
-      <p style="color:red; font-weight: bold; font-size: larger;">{{message}}</p>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <h2 class="mt-2">表單內容<button type="button" class="btn btn-outline-warning ml-2"
+          id="Detail/{{returnedHome.cNumber}}" onclick="Detail(event)">編輯</button></h2>
+    </div>
+  </div>
+
+  {% if returnedHome.cType == "簽呈" %}
+  <div class="container">
+    <div class="row">
+      <table class="table">
+        <tr>
+          <th>編號</th>
+          <td>{{returnedSign.cNumber}}</td>
+        </tr>
+        <tr>
+          <th>職稱</th>
+          <td>{{returnedSign.cJob_title}}</td>
+        </tr>
+        <tr>
+          <th>主旨</th>
+          <td>{{returnedSign.cSubject}}</td>
+        </tr>
+        <tr>
+          <th>說明</th>
+          <td>{{returnedSign.cDiscription|linebreaks}}</td>
+        </tr>
+        <tr>
+          <th>擬辦</th>
+          <td>{{returnedSign.cProposed|linebreaks}}</td>
+        </tr>
+        <tr>
+          <th>檔案</th>
+          {% if returnedHome.cFile != None %}
+          <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile}}" download>{{returnedHome.cFile}}</a></td>
+          {% else %}
+          <td>{{returnedHome.cFile}}</td>
+          {% endif %}
+        </tr>
+
+      </table>
+    </div>
+  </div>
+  {% elif returnedHome.cType == "會議記錄表" %}
+  <div class="container">
+    <div class="row">
+      <table class="table">
+        <tr>
+          <th>編號</th>
+          <td>{{returnedMeeting.cNumber}}</td>
+        </tr>
+        <tr>
+          <th>會議型態</th>
+          <td>{{returnedMeeting.cMeetingType}}</td>
+        </tr>
+        <tr>
+          <th>主題</th>
+          <td>{{returnedMeeting.cTopic}}</td>
+        </tr>
+        <tr>
+          <th>主席</th>
+          <td>{{returnedMeeting.cLeader}}</td>
+        </tr>
+        <tr>
+          <th>紀錄者</th>
+          <td>{{returnedMeeting.cRecoder}}</td>
+        </tr>
+        <tr>
+          <th>開會日期</th>
+          <td>{{returnedMeeting.cTime}}</td>
+        </tr>
+        <tr>
+          <th>地點</th>
+          <td>{{returnedMeeting.cLocation}}</td>
+        </tr>
+        <tr>
+          <th>列席人員</th>
+          <td>{{returnedMeeting.cAttendees1}}</td>
+        </tr>
+        <tr>
+          <th>出席人員</th>
+          <td>{{returnedMeeting.cAttendees2}}</td>
+        </tr>
+        <tr>
+          <th>檔案</th>
+          {% if returnedHome.cFile != None %}
+          <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile}}" download>{{returnedHome.cFile}}</a></td>
+          {% else %}
+          <td>{{returnedHome.cFile}}</td>
+          {% endif %}
+        </tr>
+      </table>
+    </div>
+  </div>
+
+
+
+  <div class="container">
+    {% for unit in returnedMeetinginner %}
+    <div class="row">
+      <table class="table">
+        <thead>
+          <th scope="col">會議內容</th>
+          <th scope="col">執行者</th>
+          <th scope="col">提案日</th>
+          <th scope="col">預定完成日</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{unit.cContent}}</td>
+            <td>{{unit.cDoPerson}}</td>
+            <td>{{unit.cStartDate}}</td>
+            <td>{{unit.cExpectDate}}</td>
+
+            <td>
+              <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#g{{unit.id}}"
+                aria-expanded="false" aria-controls="collapseExample">
+                批示內容
+              </button>
+              <button type="button" class="btn btn-outline-secondary"
+                id="{{returnedMeeting.cNumber}}/{{unit.id}}/{{re_id}}" onclick="gopurpose(event)">批示</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <!-- <button onclick="BackToSign()">回簽呈資料表</button> -->
-    <form action="." method="post" name="form1">
-      {% csrf_token %}
+
+    <div class="collapse" id="g{{unit.id}}">
       <div class="container">
         <div class="row">
           <table class="table">
-            <tr><th>表單編號</th><td>{{returnedHome.cNumber}}</td></tr>
-            <tr><th>簽核人員</th><td>{{returnedform.cName}}</td></tr>
-            <tr>
-              <th>簽核狀態</th>
-              <td>
-                <select class="form-control" id="taskTypeSelect" name="cHow">
-                  {% for key,value in returnedform.HOW %}
-                      <option value="{{ key }}" name="cHow">{{ value }}</option>
-                  {% endfor %}
-                </select>
-              </td>
-            </tr>
-            <tr><th>批示</th><td>{{returnedform.cIllustrate}}</td></tr>
-            <tr>
-                <th>收件人</th>
-                <td >
-                  <select class="form-control" id="taskTypeSelect" name="cReceive">
-                  <option value={{returnedHome.cAuther}} name="cReceive">{{returnedHome.cAuther}}</option>
-                  {% for key,value in returnedform.REC %}
-                      {% if key != "{{returnedHome.cAuther}}" %}
-                      <option value="{{ key }}" name="cReceive">{{value}}</option>
-                      {% endif %}
-                  {% endfor %}
-                  </select>                         
+            <thead>
+              <th scope="col">批示</th>
+              <th scope="col">簽核者</th>
+              <th scope="col">簽核日期</th>
+              <th scope="col">檔案</th>
+            </thead>
+            <tbody>
+              {% for mp in meetingpurpose %}
+              {% if mp.purposemeeting_id == unit.id %}
+              <tr>
+                <td style="word-wrap: break-word; max-width: 200px;">{{mp.cPurpose}}</td>
+                <td>{{mp.cPerson}}</td>
+                <td>{{mp.cDate}}</td>
+                {% if mp.cFile != None %}
+                <td><a href="http://127.0.0.1:8000/media/{{mp.cFile}}" download>{{mp.cFile}}</a></td>
+                {% else %}
+                <td>{{mp.cFile}}</td>
+                {% endif %}
+                <td>
+                  <button type="button" class="btn btn-outline-warning"
+                    id="{{returnedMeeting.cNumber}}/{{unit.id}}/{{mp.id}}/load"
+                    onclick="gopurposeedit(event)">編輯</button>
+                  <button type="button" class="btn btn-outline-info"
+                    id="{{returnedMeeting.cNumber}}/{{unit.id}}/{{mp.id}}/load"
+                    onclick="gopurposefileedit(event)">編輯檔案</button>
                 </td>
-            </tr>
-            <tr>
-                <th align="center" scope="col">
-                <input type="submit" class="btn btn-primary" name="button" id="button" value="送出">
-                <input type="reset"  class="btn btn-danger" name="button2" id="button2" value="重設">
-                </th>
-            </tr>
+              </tr>
+              {% endif %}
+              {% endfor %}
+            </tbody>
           </table>
         </div>
       </div>
-    </form>
-    
-    <script src="{% static 'jquery.min.js' %}"></script>
-    <script>
-      function Logout(){
-        $(location).attr("href","/logout/");
+    </div>
+    <hr style="border-top:1px dashed #0066CC; border-width: 2px;" />
+    {% endfor %}
+  </div>
+  {% elif returnedHome.cType == "發包議價表" %}
+  <div class="container">
+    <div class="row">
+      <table class="table">
+        <tr>
+          <th>編號</th>
+          <td>{{returnedContract.cNumber}}</td>
+        </tr>
+        <tr>
+          <th>客戶名稱</th>
+          <td>{{returnedContract.cClient}}</td>
+        </tr>
+        <tr>
+          <th>工地名稱/地點</th>
+          <td>{{returnedContract.cLocation}}</td>
+        </tr>
+        <tr>
+          <th>發包內容</th>
+          <td>{{returnedContract.cContent}}</td>
+        </tr>
+        <tr>
+          <th>確認訂單</th>
+          <td>{{returnedContract.cConfirm}}</td>
+        </tr>
+        <tr>
+          <th>付款方式</th>
+          <td>{{returnedContract.cPayMode}}</td>
+        </tr>
+        <tr>
+          <th>工程預算</th>
+          <td>{{returnedContract.cBudget}}</td>
+        </tr>
+        <tr>
+          <th>備註</th>
+          <td>{{returnedContract.cOther}}</td>
+        </tr>
+        <tr>
+          <th>檔案</th>
+          {% if returnedHome.cFile != None %}
+          <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile}}" download>{{returnedHome.cFile}}</a></td>
+          {% else %}
+          <td>{{returnedHome.cFile}}</td>
+          {% endif %}
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <table class="table">
+        <thead>
+          <th scope="col">承包商</th>
+          <th scope="col">報價</th>
+          <th scope="col">第一次議價</th>
+          <th scope="col">第二次議價</th>
+          <th scope="col">備註欄</th>
+        </thead>
+        <tbody>
+          {% for unit in returnedContractinner %}
+          <tr>
+            <td>{{unit.cContractor}}</td>
+            <td>{{unit.cQuotation}}</td>
+            <td>{{unit.cBargain1}}</td>
+            <td>{{unit.cBargain2}}</td>
+            <td>{{unit.cRemark}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% elif returnedHome.cType == "內部連絡單" %}
+  <div class="container">
+    <div class="row">
+      <table class="table">
+        <tr>
+          <th>編號</th>
+          <td>{{returnedContact.cNumber}}</td>
+        </tr>
+        <tr>
+          <th>發文者</th>
+          <td>{{returnedContact.cAutherManager}}</td>
+        </tr>
+        <tr>
+          <th>決策單位</th>
+          <td>{{returnedContact.cDecisionDep}}</td>
+        </tr>
+        <tr>
+          <th>執行單位</th>
+          <td>{{returnedContact.cImplementDep}}</td>
+        </tr>
+        <tr>
+          <th>主旨</th>
+          <td>{{returnedContact.cSubject}}</td>
+        </tr>
+        <tr>
+          <th>說明</th>
+          <td>{{returnedContact.cDiscription}}</td>
+        </tr>
+        <tr>
+          <th>檔案</th>
+          {% if returnedHome.cFile != None %}
+          <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile}}" download>{{returnedHome.cFile}}</a></td>
+          {% else %}
+          <td>{{returnedHome.cFile}}</td>
+          {% endif %}
+        </tr>
+      </table>
+    </div>
+  </div>
+  {% else %}
+  <div class="container">
+    <div class="row">
+      <table class="table">
+        <tr>
+          <th>編號</th>
+          <td>{{change.cNumber}}</td>
+        </tr>
+        <tr>
+          <th>專案名稱</th>
+          <td>{{change.cProjectName}}</td>
+        </tr>
+        <tr>
+          <th>承辦人</th>
+          <td>{{change.cUndertaker}}</td>
+        </tr>
+        <tr>
+          <th>變更項目</th>
+          <td>{{change.cChangeitem}}</td>
+        </tr>
+        <tr>
+          <th>變更原因</th>
+          <td>{{change.cChangereason}}</td>
+          <th>有償無償</th>
+          <td>{{change.cEarn}}</td>
+        </tr>
+        <tr>
+          <th>如何變更</th>
+          <td>{{change.cHowChange}}</td>
+        </tr>
+        <tr>
+          <th>影響項目</th>
+          <td>{{change.cAffectitem}}</td>
+        </tr>
+        <tr>
+          <th>變更風險說明</th>
+          <td>{{change.cRisk}}</td>
+        </tr>
+        <tr>
+          <th>變更要點說明</th>
+          <td>{{change.cKeypoint}}</td>
+        </tr>
+        <tr>
+          <th>技術通報</th>
+          <td>{{change.cTech_bulletin}}</td>
+        </tr>
+        <tr>
+          <th>副本印製</th>
+          <td>{{change.cCC}}</td>
+        </tr>
+        <tr>
+          <th>廠務部建議</th>
+          <td>{{change.cOption_FS}}</td>
+          <th>廠務部簽名</th>
+          <td>{{change.cFs_Sign}}</td>
+        </tr>
+        <tr>
+          <th>設計部建議</th>
+          <td>{{change.cOption_Design}}</td>
+          <th>設計部簽名</th>
+          <td>{{change.cDesign_Sign}}</td>
+        </tr>
+        <tr>
+          <th>品管課建議</th>
+          <td>{{change.cOption_Quality}}</td>
+          <th>品管課簽名</th>
+          <td>{{change.cQuality_Sign}}</td>
+        </tr>
+        <tr>
+          <th>採購課建議</th>
+          <td>{{change.cOption_Purchase}}</td>
+          <th>採購課簽名</th>
+          <td>{{change.cPurchase_Sign}}</td>
+        </tr>
+        <tr>
+          <th>檔案</th>
+          {% if returnedHome.cFile != None %}
+          <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile}}" download>{{returnedHome.cFile}}</a></td>
+          {% else %}
+          <td>{{returnedHome.cFile}}</td>
+          {% endif %}
+        </tr>
+      </table>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="container">
+    <div class="row">
+      <h2>{{returnedHome.cNumber}} 表單 簽核紀錄</h2>
+    </div>
+  </div>
+
+  <form action="." method="POST">
+    {% csrf_token %}
+    <div class="container">
+      <div class="row">
+        <table class="table">
+          <thead>
+            <th scope="col">簽核人員</th>
+            <th scope="col">簽核時間</th>
+            <th scope="col">簽核狀態</th>
+            <th scope="col">簽核內容</th>
+            <th></th>
+          </thead>
+          <tbody>
+            {% for unit in returned %}
+            <tr>
+              <td>{{unit.cName}}</td>
+              <td>{{unit.cReturnedTime}}</td>
+              <td>{{unit.cHow}}</td>
+              <td>{{unit.cIllustrate}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </form>
+
+  <div class="container">
+    <hr style="border-top:1px dashed red; border-width: 3px;" />
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <h2 class="mt-2">啟動簽核</h2>
+    </div>
+    <p style="color:red; font-weight: bold; font-size: larger;">{{message}}</p>
+  </div>
+
+  <form action="." method="post" name="form1" onsubmit="return validateForm()">
+    {% csrf_token %}
+    <div class="container">
+      <div class="row">
+        <table class="table">
+          {% if returnedHome.cAuther != firstname %}
+            <tr>
+              <th>簽核順序</th>
+              <td>
+                {% for i in transfered %}
+                {{i.cTransferTo}}
+                {% endfor %}
+              </td>
+            </tr>
+
+            <tr>
+              <th>簽核人員</th>
+              <td><input type="text" name="{{ returnedform.cName.name }}" value="{{ returnedform.cName.value }}" disabled>
+              </td>
+            </tr>
+            <tr>
+              <th>建立時間</th>
+              <td><input type="text" name="{{ returnedform.cReturnedTime.name }}"
+                  value="{{ returnedform.cReturnedTime.value }}" disabled></td>
+            </tr>
+            <tr>
+              <th>簽核狀態</th>
+              <td>
+                {% if returnedHome.cAuther == firstname %}
+                <select class="form-control" id="taskTypeSelect" name="cHow" disabled>
+                  <option value="同意" name="cHow">同意</option>
+                  <input type="hidden" name="cHow" value="同意">
+                </select>
+                {% else %}
+                <select class="form-control" id="taskTypeSelect" name="cHow">
+                  {% for key,value in returnedform.HOW %}
+                  <option value="{{ key }}" name="cHow">{{ value }}</option>
+                  {% endfor %}
+                </select>
+                {% endif %}
+              </td>
+            </tr>
+
+            <tr>
+              {% if returnedHome.cAuther != firstname %}
+              <th>批示</th>
+              <td>{{returnedform.cIllustrate}}</td>
+              {% endif %}
+            </tr>
+          {% endif %}
+
+          <tr>
+            <th align="center" scope="col">
+              <input type="submit" class="btn btn-primary" name="button" id="button" value="送出">
+              <input type="reset" class="btn btn-danger" name="button2" id="button2" value="重設">
+            </th>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </form>
+
+  <script src="{% static 'jquery.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'customer.js' %}"></script>
+  <script type="text/javascript">prohibitpreviouspage();</script>
+
+  <script>
+    function Logout() {
+      $(location).attr("href", "/logout/");
+    }
+
+    function View(event) {
+      var id = event.target.id
+      $(location).attr("href", "/returnedIndex/" + id + '/');
+    }
+    function gopurpose(event) {
+      var id = event.target.id
+      $(location).attr("href", "/meetingpurposePost/" + id + '/');
+    }
+
+    function gopurposeedit(event) {
+      var id = event.target.id
+      $(location).attr("href", "/meetingpurposeEdit/" + id + '/');
+    }
+
+    function gopurposefileedit(event) {
+      var id = event.target.id
+      $(location).attr("href", "/meetingpurposefileEdit/" + id + '/');
+    }
+
+    function Detail(event) {
+      var id = event.target.id
+      $(location).attr("href", '/' + id + "/");
+    }
+
+    function validateForm() {
+      var taskTypeSelect = document.forms["form1"]["cHow"].value;
+      var Illustrate = document.forms["form1"]["cIllustrate"].value;
+      // 檢查如果值為 "無"，顯示警告
+      if (taskTypeSelect == "駁回") {
+        if (Illustrate == null || Illustrate.trim() === "") {
+          alert("請填寫批示");
+          return false; // 阻止表單提交
+        }
+        return true;
       }
-    </script>
-  
+      else if (taskTypeSelect == "修正再呈") {
+        if (Illustrate == null || Illustrate.trim() === "") {
+          alert("請填寫批示");
+          return false; // 阻止表單提交
+        }
+        return true;
+      }
+      // 如果值不是 "無"，可以繼續提交
+      return true;
+    }
+  </script>
 
 
-  </body>
+
+</body>
+
 </html>

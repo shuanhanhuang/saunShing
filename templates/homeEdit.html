@@ -29,9 +29,14 @@
                 <a class="dropdown-item" href="/signallIndex/">簽呈資料</a>
                 <a class="dropdown-item" href="/meetingallIndex/">會議記錄資料</a>
                 <a class="dropdown-item" href="/contactallIndex/">內部連絡單資料</a>
-                <a class="dropdown-item" href="/contractallIndex/">工程發包議價記錄單</a>
+                <a class="dropdown-item" href="/contractallIndex/">發包議價表</a>
                 <a class="dropdown-item" href="/changeallIndex/">設計變更通知單</a>
               </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav mr-auto" style="display: flex; justify-content: center;">
+            <li class="nav-item active">
+                <a class="navbar-brand">首頁檔案編輯</a>
             </li>
           </ul>
           <ul class="navbar-nav ml-2">
@@ -60,12 +65,11 @@
         <div class="container">
             <div class="row">
                 <table class="table">
-                  {% if unit.cLock == "否" %}
                       <tr>
                         <th>檔案</th>
                         <td>
                           <input name="cFile" type="file">
-                          </td>
+                        </td>
                       </tr>
                       <!-- <tr>
                         <th>發文者</th>
@@ -431,47 +435,8 @@
                         </td>
                       {% endif %}
                     </tr> -->
-                    <!-- {% if authenticate == True %}
-                      <tr>
-                        <th>鎖定</th>
-                        {% if unit.cLock == "否" %}
-                          <td>
-                            <input name="cLock" type="radio" id="cLock1" value="否" checked="checked" />
-                            否
-                            <input name="cLock" type="radio" id="cLock2" value="是" />
-                            是
-                          </td>
-                        {% else %}
-                          <td>
-                            <input name="cLock" type="radio" id="cLock1" value="否"  />
-                            否
-                            <input name="cLock" type="radio" id="cLock2" value="是" checked="checked"/>
-                            是
-                          </td>
-                        {% endif %}
-                      </tr>
-                    {% endif %} -->
-                  {% else %}
-                    <!-- <tr>
-                      <th>鎖定</th>
-                      {% if unit.cLock == "否" %}
-                        <td>
-                          <input name="cLock" type="radio" id="cLock1" value="否" checked="checked" />
-                          否
-                          <input name="cLock" type="radio" id="cLock2" value="是" />
-                          是
-                        </td>
-                      {% else %}
-                        <td>
-                          <input name="cLock" type="radio" id="cLock1" value="否"  />
-                          否
-                          <input name="cLock" type="radio" id="cLock2" value="是" checked="checked"/>
-                          是
-                        </td>
-                      {% endif %}
-                    </tr> -->
                     
-                  {% endif %}
+                  
                   <tr>
                     <th colspan="2" align="center">
                       <input type="submit" class="btn btn-primary" name="button" id="button" value="送出">
@@ -484,6 +449,8 @@
 
 
   <script src="{% static 'jquery.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'customer.js' %}"></script>
+  <script type="text/javascript">prohibitpreviouspage();</script>
     <script>
 
       function Logout(){

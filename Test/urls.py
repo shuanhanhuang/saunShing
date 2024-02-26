@@ -22,16 +22,17 @@ from testapp.views import HomePage,login,logout,perosonIndex,open1,\
     homeDelete,homeEdit,homeIndex,HomePost,\
     signView,signPost,signEdit,signallIndex,Detail,\
     meetingallIndex,meetingView,meetingPost,meetingEdit,meetinginnerView,\
-    meetinginnerEdit,meetinginnerPost,meetinginnerIndex,meetinginnerDelete,\
+    meetinginnerEdit,meetinginnerPost,meetinginnerIndex,meetinginnerDelete,meetingfileEdit,meetingpurposePost,meetingpurposeEdit,meetingpurposefileEdit,\
     contactallIndex,contactView,contactPost,contactEdit,\
     contractallIndex,contractPost,contractEdit,contractView,\
     contractinnerDelete,contractinnerIndex,contractinnerEdit,contractinnerPost,contractinnerView,\
     changeallIndex,changeView,changeEdit,changePost,\
     homeCopyPost,signCopyPost,meetingCopyPost,contactCopyPost,contractCopyPost,changeCopyPost,\
-    returnedPost,returnedIndex,returnedDelete,download_workbook
+    returnedPost,returnedIndex,returnedDelete,download_workbook,\
+    transferPost,transferDelete,transferIndex,message
 
 urlpatterns = [
-    path('',HomePage),
+    path('',login),
     path('download_workbook/',download_workbook,name = 'download_workbook'),
     path('HomePage/',HomePage),
     path('login/', login),
@@ -58,8 +59,12 @@ urlpatterns = [
     path('meetinginnerDelete/<str:cNumber>/<int:id>/',meetinginnerDelete),
     path('meetinginnerIndex/<str:cNumber>/',meetinginnerIndex),
     path('meetinginnerEdit/<str:cNumber>/<int:id>/<str:mode>',meetinginnerEdit),
+    path('meetingfileEdit/<str:cNumber>/<int:id>/<str:mode>/',meetingfileEdit),
     path('meetinginnerPost/<str:cNumber>/',meetinginnerPost),
     path('meetinginnerView/<str:cNumber>/<int:id>/',meetinginnerView),
+    path('meetingpurposePost/<str:cNumber>/<int:id>/<int:id2>/',meetingpurposePost),
+    path('meetingpurposeEdit/<str:cNumber>/<int:id>/<int:id2>/<str:mode>/',meetingpurposeEdit),
+    path('meetingpurposefileEdit/<str:cNumber>/<int:id>/<int:id2>/<str:mode>/',meetingpurposefileEdit),
 
     path('contactallIndex/',contactallIndex),
     path('contactView/<str:cNumber>/',contactView),
@@ -89,9 +94,14 @@ urlpatterns = [
     path('contractCopyPost/<str:cNumber>/<str:thisNumber>/',contractCopyPost),
     path('changeCopyPost/<str:cNumber>/<str:thisNumber>/',changeCopyPost),
 
-    path('returnedPost/<int:id>/',returnedPost),
+    path('returnedPost/<int:id>/<str:cNumber>/',returnedPost),
     path('returnedIndex/<int:id>/',returnedIndex),
     path('returnedDelete/<int:id2>/<int:id>/',returnedDelete),
+    
+    path('transferPost/<str:cNumber>/',transferPost),
+    path('transferIndex/<int:id>/',transferIndex),
+    path('transferDelete/<str:cNumber>/<int:id>/',transferDelete),
 
     path('admin/', admin.site.urls),
+    path('message/',message),
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

@@ -14,14 +14,14 @@
   
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
-        <a class="navbar-brand" href="/homeIndex/">首頁</a>
+        <a class="navbar-brand" >首頁</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                 其他表單
               </a>
@@ -29,9 +29,14 @@
                 <a class="dropdown-item" href="/signallIndex/">簽呈資料</a>
                 <a class="dropdown-item" href="/meetingallIndex/">會議記錄資料</a>
                 <a class="dropdown-item" href="/contactallIndex/">內部連絡單資料</a>
-                <a class="dropdown-item" href="/contractallIndex/">工程發包議價記錄單</a>
+                <a class="dropdown-item" href="/contractallIndex/">發包議價表</a>
                 <a class="dropdown-item" href="/changeallIndex/">設計變更通知單</a>
               </div>
+            </li> -->
+          </ul>
+          <ul class="navbar-nav mr-auto" style="display: flex; justify-content: center;">
+            <li class="nav-item active">
+                <a class="navbar-brand">發包議價表新增</a>
             </li>
           </ul>
           <ul class="navbar-nav ml-2">
@@ -41,7 +46,7 @@
           </ul>
           <ul class="navbar-nav ml-2">
             <li class="nav-item">
-              <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button>
+              <!-- <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button> -->
             </li>
           </ul>
         </div>
@@ -50,7 +55,7 @@
 
     <div class="container">
       <div class="row">
-        <h2 class="mt-2">工程發包議價紀錄單 資料表新增</h2>
+        <h2 class="mt-2">複製 {{unitinner.cNumber}} 表單</h2>
       </div>
       <p style="color:red; font-weight: bold; font-size: larger;">{{message}}</p>
     </div>
@@ -61,57 +66,40 @@
       <div class="container">
         <div class="row">
           <table class="table">
-            <tr><th>編號</th><td>{{contractform.cNumber}}</td></tr>
+            <tr><th>編號</th><td><input type="text" name="{{ contractform.cNumber.name }}" value="{{ contractform.cNumber.value }}" disabled></td></tr>
             <tr><th>客戶名稱</th><td>{{contractform.cClient}}</td></tr>
             <tr><th>工地名稱/地點</th><td>{{contractform.cLocation}}</td></tr>
-            <tr><th>發包內容</th><td>{{unitinner.cContent}}</td></tr>
-            <tr><th>確認訂單</th><td>{{unitinner.cConfirm}}</td></tr>
-            <tr><th>工程預算</th><td>{{unitinner.cBudget}}</td></tr>
+            <tr><th>發包內容</th><td>{{contractform.cContent}}</td></tr>
+            <tr><th>確認訂單</th><td>{{contractform.cConfirm}}</td></tr>
+            <tr><th>工程預算</th><td>{{contractform.cBudget}}</td></tr>
             <tr>
-                <th>付款方式</th>
-                {% if unitinner.cPayMode == "現金" %}
-                    <td>
-                        <input name="cPayMode" type="radio" id="cPayMode1" value="現金" checked="checked" />
-                        現金
-                        <input name="cPayMode" type="radio" id="cPayMode2" value="支票" />
-                        支票
-                        <input name="cPayMode" type="text" id="other" value="">
-                    </td>
-                {% else %}
-                    <td>
-                        <input name="cPayMode" type="radio" id="cPayMode1" value="現金"  />
-                        現金
-                        <input name="cPayMode" type="radio" id="cPayMode2" value="支票" checked="checked"/>
-                        支票
-                        <input name="cPayMode" type="text" id="other" value={{unitinner.cPayMode}}>
-                    </td>
-                {% endif %}
+              <th>付款方式</th>
+              {% if unitinner.cPayMode == "現金" %}
+                <td>
+                  <input name="cPayMode" type="radio" id="cPayMode1" value="現金" checked="checked" onclick="togglePaymentDetails()"/>
+                  現金
+                  <input name="cPayMode" type="radio" id="cPayMode2" value="支票" onclick="togglePaymentDetails()"/>
+                  支票
+                  <span id="paymentDetails" style="display:None;">
+                    ，當月結<input name="cPayMode" type="text" id="other" value="" oninput="updateAdditionalTextbox()">天票
+                  </span>
+                </td>
+              {% else %}
+                <td>
+                  <input name="cPayMode" type="radio" id="cPayMode1" value="現金"  onclick="togglePaymentDetails()"/>
+                  現金
+                  <input name="cPayMode" type="radio" id="cPayMode2" value="支票" checked="checked" onclick="togglePaymentDetails()"/>
+                  支票
+                  <span id="paymentDetails" style="display:inline-block;">
+                    ，當月結<input name="cPayMode" type="text" id="other" value={{unitinner.cPayMode}} required oninput="updateAdditionalTextbox()">天票
+                  </span>
+                </td>
+              {% endif %} 
             </tr>
-            <tr><th>備註</th><td>{{unitinner.cOther}}</td></tr>
-            {% if username == "08804001"%}
-              <tr>
-                <th>總經理簽名</th>
-                <td>{{contractform.cGeneral_Sign}}</td>
-              </tr>
-            {% elif username == "08907008" %}
-              <tr>
-                <th>副總經理簽名</th>
-                <td>{{contractform.cViceGeneral_Sign}}</td>
-              </tr>
-            {% elif authenticate == True %}
-              <tr>
-                <th>部門主管簽名</th>
-                <td>{{contractform.cManager_Sign}}</td>
-              </tr>
-              <tr>
-                <th>單位主管簽名</th>
-                <td>{{contractform.cDepartmentManager_Sign}}</td>
-              </tr>
-            {% endif %}
-            <tr><th>承辦人簽名</th><td>{{unitinner.cUndertaker}}</td></tr>
+            <tr><th>備註</th><td>{{contractform.cOther}}</td></tr>
             <tr>
                 <th align="center">
-                <input type="hidden" name="cPayMode" id="textvalue1" value="現金">
+                <input type="hidden" name="cPayMode" id="textvalue1" value="{{unitinner.cPayMode}}">
                 <input type="submit" class="btn btn-primary" name="button" id="button" value="送出">
                 <input type="reset" class="btn btn-danger" name="button2" id="button2" value="重設">
             </th>
@@ -121,51 +109,42 @@
       </div>
     </form>
     <script src="{% static 'jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'customer.js' %}"></script>
+    <script type="text/javascript">prohibitpreviouspage();</script>
     <script>
       function Logout(){
         $(location).attr("href","/logout/");
       }
 
-      $(document).ready(function () {
-        if($("#other").val()==undefined || $("#other").val()== ""){
-          $("#other").hide();
+      document.addEventListener("DOMContentLoaded", function() {
+        var inputElement = document.getElementById("other");
+        var currentValue = inputElement.value;
+        var modifiedValue = currentValue.replace("支票，當月結", '').replace("天票","");
+        inputElement.value = modifiedValue;
+      });
+
+        function togglePaymentDetails() {
+        var radioCash = document.getElementById('cPayMode1');
+        var radioCheck = document.getElementById('cPayMode2');
+        var textInput = document.getElementById('other');
+        var textInput22 = document.getElementById('paymentDetails');
+        var additionalTextbox = document.getElementById('textvalue1');
+
+        if (radioCheck.checked) {
+            textInput22.style.display = 'inline-block';
+            updateAdditionalTextbox();
+        } else {
+            textInput22.style.display = 'none';
+            additionalTextbox.value = '現金';
         }
-        else{
-            $("#other").val()
-        }
-            
-        $('#cPayMode2').click(function () {
-            var test2 = ""
-            $("#other").show();
-            if ($(this).is(':checked')) {
-                $("#other").show();
-            }
-            else {
-                $("#other").html('');
-                $("#other").hide();
-            }
-            test2 = $("#other").val()
-            $("#textvalue1").val(test2);
-        });
+      }
 
+      function updateAdditionalTextbox() {
+        var textInput = document.getElementById('other');
+        var additionalTextbox = document.getElementById('textvalue1');
+        additionalTextbox.value = '支票，當月結' + textInput.value + '天票';
+      }
 
-
-        $("#other").on("input", function () {
-            test2 = "支票，" + $(this).val();
-            $("#textvalue1").val(test2);
-
-        });
-
-        $('#cPayMode1').click(function () {
-
-            $("#other").html('');
-            $("#other").hide();
-            test2 = $(this).val()
-            $("#textvalue1").val(test2);
-
-        });
-
-      })
     </script>
   
 
