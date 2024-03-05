@@ -90,11 +90,11 @@
         </tr>
         <tr>
           <th>說明</th>
-          <td>{{returnedSign.cDiscription|linebreaks}}</td>
+          <td style="white-space: pre-wrap;">{{returnedSign.cDiscription|safe}}</td>
         </tr>
         <tr>
           <th>擬辦</th>
-          <td>{{returnedSign.cProposed|linebreaks}}</td>
+          <td style="white-space: pre-wrap;">{{returnedSign.cProposed|safe}}</td>
         </tr>
         <tr>
           <th>檔案</th>
@@ -481,49 +481,49 @@
       <div class="row">
         <table class="table">
           {% if returnedHome.cAuther != firstname %}
-            <tr>
-              <th>簽核順序</th>
-              <td>
-                {% for i in transfered %}
-                {{i.cTransferTo}}
+          <tr>
+            <th>簽核順序</th>
+            <td>
+              {% for i in transfered %}
+              {{i.cTransferTo}}
+              {% endfor %}
+            </td>
+          </tr>
+
+          <tr>
+            <th>簽核人員</th>
+            <td><input type="text" name="{{ returnedform.cName.name }}" value="{{ returnedform.cName.value }}" disabled>
+            </td>
+          </tr>
+          <tr>
+            <th>建立時間</th>
+            <td><input type="text" name="{{ returnedform.cReturnedTime.name }}"
+                value="{{ returnedform.cReturnedTime.value }}" disabled></td>
+          </tr>
+          <tr>
+            <th>簽核狀態</th>
+            <td>
+              {% if returnedHome.cAuther == firstname %}
+              <select class="form-control" id="taskTypeSelect" name="cHow" disabled>
+                <option value="同意" name="cHow">同意</option>
+                <input type="hidden" name="cHow" value="同意">
+              </select>
+              {% else %}
+              <select class="form-control" id="taskTypeSelect" name="cHow">
+                {% for key,value in returnedform.HOW %}
+                <option value="{{ key }}" name="cHow">{{ value }}</option>
                 {% endfor %}
-              </td>
-            </tr>
-
-            <tr>
-              <th>簽核人員</th>
-              <td><input type="text" name="{{ returnedform.cName.name }}" value="{{ returnedform.cName.value }}" disabled>
-              </td>
-            </tr>
-            <tr>
-              <th>建立時間</th>
-              <td><input type="text" name="{{ returnedform.cReturnedTime.name }}"
-                  value="{{ returnedform.cReturnedTime.value }}" disabled></td>
-            </tr>
-            <tr>
-              <th>簽核狀態</th>
-              <td>
-                {% if returnedHome.cAuther == firstname %}
-                <select class="form-control" id="taskTypeSelect" name="cHow" disabled>
-                  <option value="同意" name="cHow">同意</option>
-                  <input type="hidden" name="cHow" value="同意">
-                </select>
-                {% else %}
-                <select class="form-control" id="taskTypeSelect" name="cHow">
-                  {% for key,value in returnedform.HOW %}
-                  <option value="{{ key }}" name="cHow">{{ value }}</option>
-                  {% endfor %}
-                </select>
-                {% endif %}
-              </td>
-            </tr>
-
-            <tr>
-              {% if returnedHome.cAuther != firstname %}
-              <th>批示</th>
-              <td>{{returnedform.cIllustrate}}</td>
+              </select>
               {% endif %}
-            </tr>
+            </td>
+          </tr>
+
+          <tr>
+            {% if returnedHome.cAuther != firstname %}
+            <th>批示</th>
+            <td>{{returnedform.cIllustrate}}</td>
+            {% endif %}
+          </tr>
           {% endif %}
 
           <tr>

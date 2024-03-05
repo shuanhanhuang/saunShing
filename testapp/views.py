@@ -18,6 +18,7 @@ from datetime import timedelta
 # from python_function import encrypt, write_data_to_contract, read_data_from_sqlite, read_data_from_contract, decrypt
 # excel_filter = []
 excel_filter = Home.objects.all()
+url_temp = ""
 
 def download_workbook(request):
     response = HttpResponse(content_type='application/ms-excel')
@@ -98,16 +99,22 @@ def HomePost(request):
             unit = Home.objects.create(cType=cType,cNumber=cNumber,cAuther=cAuther, HomeDate=HomeDate, cDepartment=cDepartment, cEndDate=cEndDate, cProgress=cProgress,cReceive=cReceive,cFile=cFile,cTime=cTime,cSubject=cSubject)
             home = unit.save()  #寫入資料庫
             message = '已儲存...'
+            global url_temp
             if cType == "簽呈":
-                 return redirect('/signPost/'+str(cNumber)+'/')
+                url_temp = '/signPost/'+str(cNumber)+'/'
+                return redirect('/homeIndextemp/',request=request.POST)
             elif cType == '會議記錄表':
-                return redirect('/meetingPost/'+str(cNumber)+'/')
+                url_temp = '/meetingPost/'+str(cNumber)+'/'
+                return redirect('/homeIndextemp/',request=request.POST)
             elif cType == '內部連絡單':
-                return redirect('/contactPost/'+str(cNumber)+'/')
+                url_temp = '/contactPost/'+str(cNumber)+'/'
+                return redirect('/homeIndextemp/',request=request.POST)
             elif cType == '發包議價表':
-                return redirect('/contractPost/'+str(cNumber)+'/')
+                url_temp = '/contractPost/'+str(cNumber)+'/'
+                return redirect('/homeIndextemp/',request=request.POST)
             elif cType == '設計變更通知單':
-                return redirect('/changePost/'+str(cNumber)+'/')
+                url_temp = '/changePost/'+str(cNumber)+'/'
+                return redirect('/homeIndextemp/',request=request.POST)
         else:
             message = '驗證碼錯誤！'
     else:
@@ -137,6 +144,33 @@ def homeIndex(request):
         excel_filter = all
     allHomeCount = len(all)
     return render(request, "homeIndex.html",locals())
+
+
+def homeIndextemp(request):
+    global url_temp
+    redirecturl = url_temp
+    global excel_filter
+    if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
+        user_id = request.session['user_id']
+        user = User.objects.get(pk=user_id)  # 获取当前登录用户信息
+        firstname = user.name  # 传递用户名到模板中
+    allPerson = Home.objects.filter(cReceive = firstname)
+    transferall = Transfered.objects.all().order_by("id")
+    transferallCount = len(transferall)
+    allpersonCount = len(allPerson)
+    if 'q' in request.GET:
+        q = request.GET['q']
+        multiple_q = Q(Q(cNumber__icontains=q) | Q(cSubject__icontains=q) | Q(cDepartment__icontains=q) | Q(cType__icontains=q) | Q(cAuther__icontains=q) | Q(cProgress__icontains=q) | Q(HomeDate__icontains=q) | Q(cEndDate__icontains=q))
+        all = Home.objects.filter(multiple_q)
+        excel_filter = all
+    else:
+        all = Home.objects.all().order_by("id")
+        homeFilter = HomeFilter(request.GET, queryset=all)
+        all = homeFilter.qs
+        excel_filter = all
+    allHomeCount = len(all)
+    return render(request, "homeIndextemp.html",locals())
+
 
 
 open = False
@@ -337,16 +371,22 @@ def returnedPost(request,id=None,cNumber=None):
                 else:
                     returnedHome.cProgress = "流程中"
                     returnedHome.save()
+            global url_temp
             if(returnedHome.cType == "簽呈"):
-                return redirect('/signView/'+str(cNumber)+'/')
+                url_temp = '/signView/'+str(cNumber)+'/'
+                return redirect('/homeIndextemp/',request=request.POST)
             elif(returnedHome.cType == "會議記錄表"):
-                return redirect('/meetingView/'+str(cNumber)+'/')
+                url_temp = '/meetingView/'+str(cNumber)+'/'
+                return redirect('/homeIndextemp/',request=request.POST)
             elif (returnedHome.cType == "內部連絡單"):
-                return redirect('/contactView/'+str(cNumber)+'/')
+                url_temp = '/contactView/'+str(cNumber)+'/'
+                return redirect('/homeIndextemp/',request=request.POST)
             elif (returnedHome.cType == "發包議價表"):
-                return redirect('/contractView/'+str(cNumber)+'/')
+                url_temp = '/contractView/'+str(cNumber)+'/'
+                return redirect('/homeIndextemp/',request=request.POST)
             else:
-                return redirect('/changeView/'+str(cNumber)+'/')
+                url_temp = '/changeView/'+str(cNumber)+'/'
+                return redirect('/homeIndextemp/',request=request.POST)
         else:
              message="驗證錯誤"
     else:
@@ -548,16 +588,22 @@ def homeCopyPost(request,cNumber1=None):
             cFile = home.cFile
             unit = Home.objects.create(cType=cType,cNumber=cNumber,cAuther=cAuther, HomeDate=HomeDate, cTime=cTime, cDepartment=cDepartment, cEndDate=cEndDate, cProgress=cProgress,cReceive=cReceive,cFile=cFile,cSubject=cSubject)
             ome = unit.save()
+            global url_temp
             if cType == "簽呈":
-                return redirect('/signCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/')
+                url_temp = '/signCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/'
+                return redirect('/homeIndextemp/',request=request.POST)
             elif cType == '會議記錄表':
-                return redirect('/meetingCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/')
+                url_temp = '/meetingCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/'
+                return redirect('/homeIndextemp/',request=request.POST)
             elif cType == '內部連絡單':
-                return redirect('/contactCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/')
+                url_temp = '/contactCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/'
+                return redirect('/homeIndextemp/',request=request.POST)
             elif cType == '發包議價表':
-                return redirect('/contractCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/')
+                url_temp = '/contractCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/'
+                return redirect('/homeIndextemp/',request=request.POST)
             elif cType == '設計變更通知單':
-                return redirect('/changeCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/')
+                url_temp = '/changeCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/'
+                return redirect('/homeIndextemp/',request=request.POST)
         else:
             message = '驗證碼錯誤！'
     else:
