@@ -19,7 +19,7 @@ from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
 from testapp.views import HomePage,login,logout,perosonIndex,open1,\
-    homeDelete,homeEdit,homeIndex,HomePost,homeIndextemp,\
+    homeDelete,homeEdit,homeIndex,HomePost,\
     signView,signPost,signEdit,signallIndex,Detail,\
     meetingallIndex,meetingView,meetingPost,meetingEdit,meetinginnerView,\
     meetinginnerEdit,meetinginnerPost,meetinginnerIndex,meetinginnerDelete,meetingfileEdit,meetingpurposePost,meetingpurposeEdit,meetingpurposefileEdit,\
@@ -44,7 +44,6 @@ urlpatterns = [
     path('homePost/',HomePost),
     path('homeEdit/<int:id>/<str:mode>',homeEdit),
     path('homeDelete/<int:id>/',homeDelete),
-    path('homeIndextemp/',homeIndextemp),
 
     path('signallIndex/',signallIndex),
     path('signView/<str:cNumber>/',signView),

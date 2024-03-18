@@ -18,8 +18,6 @@ from datetime import timedelta
 # from python_function import encrypt, write_data_to_contract, read_data_from_sqlite, read_data_from_contract, decrypt
 # excel_filter = []
 excel_filter = Home.objects.all()
-url_temp = ""
-
 def download_workbook(request):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="homeform.xlsx"'
@@ -96,25 +94,25 @@ def HomePost(request):
             cSubject = homeform.cleaned_data['cSubject']
             cReceive = firstname
             cFile = homeform.cleaned_data['cFile']
-            unit = Home.objects.create(cType=cType,cNumber=cNumber,cAuther=cAuther, HomeDate=HomeDate, cDepartment=cDepartment, cEndDate=cEndDate, cProgress=cProgress,cReceive=cReceive,cFile=cFile,cTime=cTime,cSubject=cSubject)
+            cFile1 = homeform.cleaned_data['cFile1']
+            cFile2 = homeform.cleaned_data['cFile2']
+            cFile3 = homeform.cleaned_data['cFile3']
+            cFile4 = homeform.cleaned_data['cFile4']
+
+            unit = Home.objects.create(cType=cType,cNumber=cNumber,cAuther=cAuther, HomeDate=HomeDate, cDepartment=cDepartment, cEndDate=cEndDate, cProgress=cProgress,cReceive=cReceive,cFile=cFile,cFile1=cFile1,cFile2=cFile2,cFile3=cFile3,cFile4=cFile4,cTime=cTime,cSubject=cSubject)
             home = unit.save()  #寫入資料庫
             message = '已儲存...'
-            global url_temp
+            
             if cType == "簽呈":
-                url_temp = '/signPost/'+str(cNumber)+'/'
-                return redirect('/homeIndextemp/',request=request.POST)
+                return redirect('/signPost/'+str(cNumber)+'/')
             elif cType == '會議記錄表':
-                url_temp = '/meetingPost/'+str(cNumber)+'/'
-                return redirect('/homeIndextemp/',request=request.POST)
+                return redirect('/meetingPost/'+str(cNumber)+'/')
             elif cType == '內部連絡單':
-                url_temp = '/contactPost/'+str(cNumber)+'/'
-                return redirect('/homeIndextemp/',request=request.POST)
+                return redirect('/contactPost/'+str(cNumber)+'/')
             elif cType == '發包議價表':
-                url_temp = '/contractPost/'+str(cNumber)+'/'
-                return redirect('/homeIndextemp/',request=request.POST)
+                return redirect('/contractPost/'+str(cNumber)+'/')
             elif cType == '設計變更通知單':
-                url_temp = '/changePost/'+str(cNumber)+'/'
-                return redirect('/homeIndextemp/',request=request.POST)
+                return redirect('/changePost/'+str(cNumber)+'/')
         else:
             message = '驗證碼錯誤！'
     else:
@@ -146,33 +144,6 @@ def homeIndex(request):
     return render(request, "homeIndex.html",locals())
 
 
-def homeIndextemp(request):
-    global url_temp
-    redirecturl = url_temp
-    global excel_filter
-    if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
-        user_id = request.session['user_id']
-        user = User.objects.get(pk=user_id)  # 获取当前登录用户信息
-        firstname = user.name  # 传递用户名到模板中
-    allPerson = Home.objects.filter(cReceive = firstname)
-    transferall = Transfered.objects.all().order_by("id")
-    transferallCount = len(transferall)
-    allpersonCount = len(allPerson)
-    if 'q' in request.GET:
-        q = request.GET['q']
-        multiple_q = Q(Q(cNumber__icontains=q) | Q(cSubject__icontains=q) | Q(cDepartment__icontains=q) | Q(cType__icontains=q) | Q(cAuther__icontains=q) | Q(cProgress__icontains=q) | Q(HomeDate__icontains=q) | Q(cEndDate__icontains=q))
-        all = Home.objects.filter(multiple_q)
-        excel_filter = all
-    else:
-        all = Home.objects.all().order_by("id")
-        homeFilter = HomeFilter(request.GET, queryset=all)
-        all = homeFilter.qs
-        excel_filter = all
-    allHomeCount = len(all)
-    return render(request, "homeIndextemp.html",locals())
-
-
-
 open = False
 def open1(request,id=None,mode=None):
     global open
@@ -193,10 +164,42 @@ def homeEdit(request,id=None,mode=None):
         return render(request, "homeEdit.html", locals())
     elif mode == "save": # 由 edit2.html 按 submit
         unit = Home.objects.get(id=id)  #取得要修改的資料記錄
-        try:
-            unit.cFile = request.FILES['cFile']
-        except:
-            unit.cFile = request.POST["cFile"]
+        if request.FILES.get('cFile', '') != "":
+            try:
+                unit.cFile = request.FILES['cFile']
+            except:
+                unit.cFile = request.POST["cFile"]
+        else:
+            unit.cFile = unit.cFile
+        if request.FILES.get('cFile1', '') != "":
+            try:
+                unit.cFile1 = request.FILES['cFile1']
+            except:
+                unit.cFile1 = request.POST["cFile1"]
+        else:
+            unit.cFile1 = unit.cFile1
+        if request.FILES.get('cFile2', '') != "":
+            try:
+                unit.cFile2 = request.FILES['cFile2']
+            except:
+                unit.cFile2 = request.POST["cFile2"]
+        else:
+            unit.cFile2 = unit.cFile2
+        if request.FILES.get('cFile3', '') != "":
+            try:
+                unit.cFile3 = request.FILES['cFile3']
+            except:
+                unit.cFile3 = request.POST["cFile3"]
+        else:
+            unit.cFile3 = unit.cFile3
+        if request.FILES.get('cFile4', '') != "":
+            try:
+                unit.cFile4 = request.FILES['cFile4']
+            except:
+                unit.cFile4 = request.POST["cFile4"]
+        else:
+            unit.cFile4 = unit.cFile4
+        
         unit.save()  #寫入資料庫
 
         message = '已修改...'
@@ -371,22 +374,16 @@ def returnedPost(request,id=None,cNumber=None):
                 else:
                     returnedHome.cProgress = "流程中"
                     returnedHome.save()
-            global url_temp
             if(returnedHome.cType == "簽呈"):
-                url_temp = '/signView/'+str(cNumber)+'/'
-                return redirect('/homeIndextemp/',request=request.POST)
+                return redirect('/signView/'+str(cNumber)+'/')
             elif(returnedHome.cType == "會議記錄表"):
-                url_temp = '/meetingView/'+str(cNumber)+'/'
-                return redirect('/homeIndextemp/',request=request.POST)
+                return redirect('/meetingView/'+str(cNumber)+'/')
             elif (returnedHome.cType == "內部連絡單"):
-                url_temp = '/contactView/'+str(cNumber)+'/'
-                return redirect('/homeIndextemp/',request=request.POST)
+                return redirect('/contactView/'+str(cNumber)+'/')
             elif (returnedHome.cType == "發包議價表"):
-                url_temp = '/contractView/'+str(cNumber)+'/'
-                return redirect('/homeIndextemp/',request=request.POST)
+                return redirect('/contractView/'+str(cNumber)+'/')
             else:
-                url_temp = '/changeView/'+str(cNumber)+'/'
-                return redirect('/homeIndextemp/',request=request.POST)
+                return redirect('/changeView/'+str(cNumber)+'/')
         else:
              message="驗證錯誤"
     else:
@@ -506,10 +503,25 @@ def signPost(request,cNumber=None):
             home.cSecret = request.POST['cSecret']
             try:
                 home.cFile = request.FILES['cFile']
-                home.save()
             except:
                 home.cFile = request.POST["cFile"]
-                home.save()
+            try:
+                home.cFile1 = request.FILES['cFile1']
+            except:
+                home.cFile1 = request.POST["cFile1"]
+            try:
+                home.cFile2 = request.FILES['cFile2']
+            except:
+                home.cFile2 = request.POST["cFile2"]
+            try:
+                home.cFile3 = request.FILES['cFile3']
+            except:
+                home.cFile3 = request.POST["cFile3"]
+            try:
+                home.cFile4 = request.FILES['cFile4']
+            except:
+                home.cFile4 = request.POST["cFile4"]
+            home.save()
             signunit = Signed.objects.create(home=home, cNumber=cNumber,cJob_title= cJob_title, cDiscription=cDiscription,cProposed=cProposed,cSubject=cSubject,cSecret=cSecret)
             signunit.save()
             return redirect('/transferPost/'+ str(cNumber)+'/')
@@ -586,24 +598,23 @@ def homeCopyPost(request,cNumber1=None):
             cProgress =  "草稿"
             cReceive = firstname
             cFile = home.cFile
-            unit = Home.objects.create(cType=cType,cNumber=cNumber,cAuther=cAuther, HomeDate=HomeDate, cTime=cTime, cDepartment=cDepartment, cEndDate=cEndDate, cProgress=cProgress,cReceive=cReceive,cFile=cFile,cSubject=cSubject)
+            cFile1 = home.cFile1
+            cFile2 = home.cFile2
+            cFile3 = home.cFile3
+            cFile4 = home.cFile4
+            unit = Home.objects.create(cType=cType,cNumber=cNumber,cAuther=cAuther, HomeDate=HomeDate, cTime=cTime, cDepartment=cDepartment, cEndDate=cEndDate, cProgress=cProgress,cReceive=cReceive,cFile=cFile,cFile1=cFile1,cFile2=cFile2,cFile3=cFile3,cFile4=cFile4,cSubject=cSubject)
             ome = unit.save()
-            global url_temp
+
             if cType == "簽呈":
-                url_temp = '/signCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/'
-                return redirect('/homeIndextemp/',request=request.POST)
+                return redirect('/signCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/')
             elif cType == '會議記錄表':
-                url_temp = '/meetingCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/'
-                return redirect('/homeIndextemp/',request=request.POST)
+                return redirect('/meetingCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/')
             elif cType == '內部連絡單':
-                url_temp = '/contactCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/'
-                return redirect('/homeIndextemp/',request=request.POST)
+                return redirect('/contactCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/')
             elif cType == '發包議價表':
-                url_temp = '/contractCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/'
-                return redirect('/homeIndextemp/',request=request.POST)
+                return redirect('/contractCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/')
             elif cType == '設計變更通知單':
-                url_temp = '/changeCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/'
-                return redirect('/homeIndextemp/',request=request.POST)
+                return redirect('/changeCopyPost/'+str(cNumber)+'/'+str(home.cNumber)+'/')
         else:
             message = '驗證碼錯誤！'
     else:
@@ -747,12 +758,33 @@ def meetingPost(request,cNumber=None):
             cTopic =  meetingform.cleaned_data['cTopic']
             cAttendees1 =  meetingform.cleaned_data['cAttendees1']
             cAttendees2 =  meetingform.cleaned_data['cAttendees2']
+            # try:
+            #     home.cFile = request.FILES['cFile']
+            #     home.save()
+            # except:
+            #     home.cFile = request.POST["cFile"]
+            #     home.save()
             try:
                 home.cFile = request.FILES['cFile']
-                home.save()
             except:
                 home.cFile = request.POST["cFile"]
-                home.save()
+            try:
+                home.cFile1 = request.FILES['cFile1']
+            except:
+                home.cFile1 = request.POST["cFile1"]
+            try:
+                home.cFile2 = request.FILES['cFile2']
+            except:
+                home.cFile2 = request.POST["cFile2"]
+            try:
+                home.cFile3 = request.FILES['cFile3']
+            except:
+                home.cFile3 = request.POST["cFile3"]
+            try:
+                home.cFile4 = request.FILES['cFile4']
+            except:
+                home.cFile4 = request.POST["cFile4"]
+            home.save()
             # Save the signature data with the associated document
             unit = Meeting.objects.create(home=home,cNumber=cNumber, cRecoder=cRecoder, cMeetingType=cMeetingType, cLocation=cLocation, cTime=cTime, cLeader=cLeader, cTopic=cTopic, cAttendees1=cAttendees1, cAttendees2=cAttendees2)
             unit.save()  #寫入資料庫
@@ -1091,10 +1123,25 @@ def contactPost(request,cNumber=None):
             cDiscription =  contactform.cleaned_data['cDiscription']
             try:
                 home.cFile = request.FILES['cFile']
-                home.save()
             except:
                 home.cFile = request.POST["cFile"]
-                home.save()
+            try:
+                home.cFile1 = request.FILES['cFile1']
+            except:
+                home.cFile1 = request.POST["cFile1"]
+            try:
+                home.cFile2 = request.FILES['cFile2']
+            except:
+                home.cFile2 = request.POST["cFile2"]
+            try:
+                home.cFile3 = request.FILES['cFile3']
+            except:
+                home.cFile3 = request.POST["cFile3"]
+            try:
+                home.cFile4 = request.FILES['cFile4']
+            except:
+                home.cFile4 = request.POST["cFile4"]
+            home.save()
             unit = Contact.objects.create(home=home, cNumber=cNumber, cAutherManager=cAutherManager, cDecisionDep=cDecisionDep, cSubject=cSubject, cImplementDep=cImplementDep, cDiscription=cDiscription)
             unit.save()  #寫入資料庫
 
@@ -1234,10 +1281,25 @@ def contractPost(request,cNumber=None):
             cConfirm =  contractform.cleaned_data['cConfirm']
             try:
                 home.cFile = request.FILES['cFile']
-                home.save()
             except:
                 home.cFile = request.POST["cFile"]
-                home.save()
+            try:
+                home.cFile1 = request.FILES['cFile1']
+            except:
+                home.cFile1 = request.POST["cFile1"]
+            try:
+                home.cFile2 = request.FILES['cFile2']
+            except:
+                home.cFile2 = request.POST["cFile2"]
+            try:
+                home.cFile3 = request.FILES['cFile3']
+            except:
+                home.cFile3 = request.POST["cFile3"]
+            try:
+                home.cFile4 = request.FILES['cFile4']
+            except:
+                home.cFile4 = request.POST["cFile4"]
+            home.save()
             unit = Contract.objects.create(home=home, cNumber=cNumber, cClient=cClient, cLocation=cLocation, cContent=cContent, cPayMode=cPayMode, cOther=cOther, cBudget=cBudget, cConfirm=cConfirm)
             unit.save()  #寫入資料庫
             return redirect('/transferPost/'+ str(cNumber)+'/')
@@ -1515,10 +1577,25 @@ def changePost(request,cNumber=None):
             cPurchase_Sign = changeform.cleaned_data['cPurchase_Sign']
             try:
                 home.cFile = request.FILES['cFile']
-                home.save()
             except:
                 home.cFile = request.POST["cFile"]
-                home.save()
+            try:
+                home.cFile1 = request.FILES['cFile1']
+            except:
+                home.cFile1 = request.POST["cFile1"]
+            try:
+                home.cFile2 = request.FILES['cFile2']
+            except:
+                home.cFile2 = request.POST["cFile2"]
+            try:
+                home.cFile3 = request.FILES['cFile3']
+            except:
+                home.cFile3 = request.POST["cFile3"]
+            try:
+                home.cFile4 = request.FILES['cFile4']
+            except:
+                home.cFile4 = request.POST["cFile4"]
+            home.save()
             unit = Change.objects.create(home=home, cNumber=cNumber, cProjectName=cProjectName, cChangeitem=cChangeitem, cChangereason=cChangereason, cAffectitem=cAffectitem,
                                           cRisk=cRisk,cKeypoint=cKeypoint, cOption_FS=cOption_FS,cOption_Design=cOption_Design,
                                           cOption_Quality=cOption_Quality,cOption_Purchase=cOption_Purchase,cCC=cCC,cEarn=cEarn,

@@ -130,10 +130,16 @@
               <td>{{unit.cEndDate}}</td>
               {% endif %}
 
-              {% if unit.cFile != None %}
-              <td><a href="http://127.0.0.1:8000/media/{{unit.cFile}}" download>{{unit.cFile}}</a></td>
+              {% if unit.cFile != "" %}
+              <td>
+                <a href="http://127.0.0.1:8000/media/{{unit.cFile}}" download>{{unit.cFile}}</a><hr>
+                <a href="http://127.0.0.1:8000/media/{{unit.cFile1}}" download>{{unit.cFile1}}</a><hr>
+                <a href="http://127.0.0.1:8000/media/{{unit.cFile2}}" download>{{unit.cFile2}}</a><hr>
+                <a href="http://127.0.0.1:8000/media/{{unit.cFile3}}" download>{{unit.cFile3}}</a><hr>
+                <a href="http://127.0.0.1:8000/media/{{unit.cFile4}}" download>{{unit.cFile4}}</a>
+              </td>
               {% else %}
-              <td>{{unit.cFile}}</td>
+              <td></td>
               {% endif %}
 
               <td>

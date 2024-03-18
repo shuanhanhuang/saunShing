@@ -55,6 +55,10 @@ class Home(models.Model):
     cEndDate = models.DateField(blank=True, null=True)
     cReceive  = models.CharField(max_length=20,blank=True,null=True)
     cFile = models.FileField(blank=True, null=True)
+    cFile1 = models.FileField(blank=True, null=True)
+    cFile2 = models.FileField(blank=True, null=True)
+    cFile3 = models.FileField(blank=True, null=True)
+    cFile4 = models.FileField(blank=True, null=True)
     cTime = models.DateTimeField(auto_now_add=True)
     cCount = models.IntegerField(default=-1,blank=True)
     cSubject = models.CharField(max_length=255, default='', null=False)#主旨

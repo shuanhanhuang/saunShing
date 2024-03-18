@@ -1,0 +1,83 @@
+
+-------------53個欄位---------------
+------------------------------------
+first_inmaterial => 內板材質
+first_inthick => 內板厚度
+first_outthick => 外板材質
+first_outmaterial => 外板厚度
+first_boxthick => 箱板厚度
+-------------------------------------
+third_basic => 初級濾網
+third_basic_thick => 厚度
+third_basic_frame => 濾網框
+third_basic_material =>濾材材質
+third_basic_brand => 廠牌
+third_basic_efficient => 效率
+-------------------------------------
+third_medium => 中級濾網
+third_medium_brand => 廠牌
+third_medium_efficient => 效率
+third_medium_frameform => 外框形式
+third_medium_long => 袋長
+third_medium_efficient => 效率
+-------------------------------------
+third_high => 高級濾網
+third_high_frameform => 外框形式
+third_high_long => 袋長
+third_high_brand => 廠牌
+third_high_efficient => 效率
+third_high_frame => 濾網框
+-------------------------------------
+third_basic_medium_material => 初中級框架材質
+third_high_material => 高級框架材質
+-------------------------------------
+four_heater => 電熱器
+four_way => 分段方式
+-------------------------------------
+fiv_humidifier => 加濕器
+fiv_form => 形式
+-------------------------------------
+six_winddoor => 風門
+six_frame_material => 邊框材質
+-------------------------------------
+(盤管有分冰水盤管、熱水盤管、蒸氣盤管、鹵水盤管 => 無法知道有哪幾種盤管，所以無法填入)
+seven_fins => 鰭片
+seven_thick => 厚度
+seven_board => 端側板
+seven_size => 銅管管徑
+
+seven_hotfins => 鰭片
+seven_hotthick => 厚度
+seven_hotboard => 端側板
+seven_hotsize => 銅管管徑
+
+seven_steamfins => 鰭片
+seven_steamthick => 厚度
+seven_steamboard => 端側板
+seven_steamsize => 銅管管徑
+
+seven_brinefins => 鰭片
+seven_brinethick => 厚度
+seven_brineboard => 端側板
+seven_brinesize => 銅管管徑
+-------------------------------------
+nine_brand => 風車廠牌
+nine_form => 葉片形式
+-------------------------------------
+ten_motor_open => 啟動方式
+ten_motor_efficient => 馬達效率
+ten_motor_brand => 馬達廠牌
+ten_motor_form => 馬達型式
+-------------------------------------
+eleven_key => 鎖 
+eleven_material => 配電箱材質
+-------------------------------------
+twelve_view => 視窗
+twelve_light => 照明
+twelve_light_elec => 照明電源(好像都固定)
+twelve_light_open => 照明開關(好像都固定)
+twelve_pressure => 壓差計
+twelve_unit => 刻度單位(如果有壓差計 就是mmAq，否則就是無)
+twelve_winddoor => 洩壓風門
+twelve_material => 底座材質
+
