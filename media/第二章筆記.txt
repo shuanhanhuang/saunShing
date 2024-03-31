@@ -1,0 +1,4 @@
+為何你的程式可以使用prinf()這個函式?
+-> 有一個人在xxx.c檔案寫了一個prinf的函式，編譯過後會形成目的檔(.o檔)，再把它整合到libc.a
+-> 當我們自己在寫一隻程式時(hello.c) 會去include stdio.h檔，stdio.h檔會告訴我們print怎麼用，然後會去Link libc.a，
+   才可以把print的程式跟我們自己寫的程式連結再一起
