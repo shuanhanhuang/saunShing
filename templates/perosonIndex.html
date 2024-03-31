@@ -143,17 +143,13 @@
               {% endif %}
 
               <td>
-                <button type="button" class="btn btn-outline-warning mb-2" id="Detail/{{unit.cNumber}}"
-                  onclick="Detail(event)">編輯</button>
+                <button type="button" class="btn btn-outline-warning mb-2" id="Detail/{{unit.cNumber}}" onclick="Detail(event)">編輯</button>
                 {% if unit.cProgress != "結案" %}
-                <button type="button" class="btn btn-outline-info mb-2" id="{{unit.id}}"
-                  onclick="Edit(event)">上傳檔案</button>
-                <button type="button" class="btn btn-outline-secondary mb-2" id="{{unit.id}}/{{unit.cNumber}}"
-                  onclick="Deny(event)">簽核</button>
+                <button type="button" class="btn btn-outline-info mb-2" id="{{unit.id}}" onclick="Edit(event)">上傳檔案</button>
+                <button type="button" class="btn btn-outline-secondary mb-2" id="{{unit.id}}/{{unit.cNumber}}" onclick="Deny(event)">簽核</button>
                 {% endif %}
                 {% if unit.cProgress == "草稿" %}
-                <button type="button" class="btn btn-outline-danger mb-2" id="{{unit.id}}"
-                  onclick="Delete(event)">刪除</button>
+                <button type="button" class="btn btn-outline-danger mb-2" id="{{unit.id}}" onclick="Delete(event)">刪除</button>
                 {% endif %}
                 <!-- {% if unit.cProgress != "結案" %}
                       <button type="button" class="btn btn-outline-secondary mb-2" id="{{unit.id}}/{{unit.cNumber}}" onclick="Deny(event)">簽核</button>

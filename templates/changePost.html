@@ -54,6 +54,7 @@
     </nav>
 
     <div class="container">
+      <input type="button" class="btn btn-secondary mt-2" name="button" id="button" onclick="javascript:window.history.go(-1); return false;" value="回上一頁">
       <div class="row">
         <h2 class="mt-2">設計變更通知單 資料表新增</h2>
       </div>
@@ -188,68 +189,77 @@
     </form>
 
     <script src="{% static 'jquery.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'customer.js' %}"></script>
-    <script type="text/javascript">prohibitpreviouspage();</script>
+    <!-- <script type="text/javascript" src="{% static 'customer.js' %}"></script>
+    <script type="text/javascript">prohibitpreviouspage();</script> -->
     <script>
-        $(document).ready(function(){
-            $(".check_box_list").click(function(){
-                var test = ""
-                $(".check_box_list:checked").each(function(){
-                    test+=$(this).val()+","
-                });
-                test= test.substring(0,test.length-1)
-                $("#textvalue").val(test);
-            })
-            $("#other").hide();
-
-            $('#Other').click(function () {
-              var test2 = ""
-              if ($(this).is(':checked')) {
-                $("#other").show();
-
-              }
-              else {
-                $("#other").html('');
-                $("#other").hide();
-              }
-              test2 = $("#other").val()
-              $("#textvalue1").val(test2);
+      $(document).ready(function(){
+        $(".check_box_list").click(function(){
+            var test = ""
+            $(".check_box_list:checked").each(function(){
+                test+=$(this).val()+","
             });
+            test= test.substring(0,test.length-1)
+            $("#textvalue").val(test);
+        })
+        $("#other").hide();
 
-            $("#other").on("input", function () {
-              test2 = $(this).val();
-              $("#textvalue1").val(test2);
+        $('#Other').click(function () {
+          var test2 = ""
+          if ($(this).is(':checked')) {
+            $("#other").show();
 
-            });
-
-            $('#1').click(function () {
-
-              $("#other").html('');
-              $("#other").hide();
-              test2 = $(this).val()
-              $("#textvalue1").val(test2);
-
-            });
-            $('#2').click(function () {
-
-              $("#other").html('');
-              $("#other").hide();
-              test2 = $(this).val()
-              $("#textvalue1").val(test2);
-            });
-            $('#3').click(function () {
-
-              $("#other").html('');
-              $("#other").hide();
-              test2 = $(this).val()
-              $("#textvalue1").val(test2);
-
-              })
-            })
-
-          function Logout(){
-          $(location).attr("href","/logout/");
           }
+          else {
+            $("#other").html('');
+            $("#other").hide();
+          }
+          test2 = $("#other").val()
+          $("#textvalue1").val(test2);
+        });
+
+        $("#other").on("input", function () {
+          test2 = $(this).val();
+          $("#textvalue1").val(test2);
+
+        });
+
+        $('#1').click(function () {
+
+          $("#other").html('');
+          $("#other").hide();
+          test2 = $(this).val()
+          $("#textvalue1").val(test2);
+
+        });
+        $('#2').click(function () {
+
+          $("#other").html('');
+          $("#other").hide();
+          test2 = $(this).val()
+          $("#textvalue1").val(test2);
+        });
+        $('#3').click(function () {
+
+          $("#other").html('');
+          $("#other").hide();
+          test2 = $(this).val()
+          $("#textvalue1").val(test2);
+
+        })
+      })
+
+      function Logout(){
+        $(location).attr("href","/logout/");
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+      // Disable browser's back button on DOMContentLoaded event
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
+        return false;
+
+      });
 
     </script>
   

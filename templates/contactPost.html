@@ -54,6 +54,7 @@
     </nav>
 
     <div class="container">
+      <input type="button" class="btn btn-secondary mt-2" name="button" id="button" onclick="javascript:window.history.go(-1); return false;" value="回上一頁">
       <div class="row">
         <h2 class="mt-2">內部連絡單 資料表新增</h2>
       </div>
@@ -140,8 +141,8 @@
     </form>
 
     <script src="{% static 'jquery.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'customer.js' %}"></script>
-    <script type="text/javascript">prohibitpreviouspage();</script>
+    <!-- <script type="text/javascript" src="{% static 'customer.js' %}"></script>
+    <script type="text/javascript">prohibitpreviouspage();</script> -->
     <script>
         $(document).ready(function(){
             $(".check_box_list").click(function(){
@@ -164,6 +165,15 @@
         function Logout(){
           $(location).attr("href","/logout/");
         }
+        document.addEventListener('DOMContentLoaded', function() {
+        // Disable browser's back button on DOMContentLoaded event
+          history.pushState(null, null, location.href);
+          window.onpopstate = function () {
+              history.go(1);
+          };
+          return false;
+
+        });
 
     </script>
   

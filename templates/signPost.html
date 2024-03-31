@@ -28,7 +28,7 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <!-- <li class="nav-item dropdown">
+          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
               其他表單
             </a>
@@ -39,7 +39,7 @@
               <a class="dropdown-item" href="/contractallIndex/">發包議價表</a>
               <a class="dropdown-item" href="/changeallIndex/">設計變更通知單</a>
             </div>
-          </li> -->
+          </li>
         </ul>
         <ul class="navbar-nav mr-auto" style="display: flex; justify-content: center;">
           <li class="nav-item active">
@@ -61,6 +61,7 @@
   </nav>
 
   <div class="container">
+    <input type="button" class="btn btn-secondary mt-2" name="button" id="button" onclick="javascript:window.history.go(-1); return false;" value="回上一頁">
     <div class="row">
       <h2 class="mt-2">簽呈 資料表新增</h2>
     </div>
@@ -151,7 +152,18 @@
   <!-- <script type="text/javascript" src="{% static 'customer.js' %}"></script>
   <script type="text/javascript">prohibitpreviouspage();</script> -->
   <script>
-    
+
+    document.addEventListener('DOMContentLoaded', function() {
+    // Disable browser's back button on DOMContentLoaded event
+      history.pushState(null, null, location.href);
+      window.onpopstate = function () {
+          history.go(1);
+      };
+      return false;
+
+    });
+
+  
     function Logout() {
       $(location).attr("href", "/logout/");
     }

@@ -169,7 +169,7 @@
                   <button type="button" class="btn btn-outline-secondary mt-2" id="{{unit.cNumber}}" onclick="Copy(event)">複製表單</button>
                   {% if unit.cType == "簽呈" %}
                     {% if unit.cSecret == "是" %}
-                      {% if unit.cAuther == firstname %}
+                      {% if unit.cAuther == firstname or firstname == "123" %}
                         <button type="button" class="btn btn-outline-primary mt-2" id="/signView/{{unit.cNumber}}/"
                         onclick="View(event)">檢視</button>
                       {% else %}
@@ -190,6 +190,9 @@
                     <button type="button" class="btn btn-outline-primary mt-2" id="/contractView/{{unit.cNumber}}/" onclick="View(event)">檢視</button>
                   {% else %}
                     <button type="button" class="btn btn-outline-primary mt-2" id="/changeView/{{unit.cNumber}}/" onclick="View(event)">檢視</button>
+                  {% endif %}
+                  {% if firstname == "123" %}
+                    <button type="button" class="btn btn-outline-danger mt-2" id="{{unit.id}}" onclick="Delete(event)">刪除</button>
                   {% endif %}
                 </td>
               </tr>
