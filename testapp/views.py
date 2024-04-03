@@ -691,6 +691,41 @@ def signEdit(request,id=None,mode=None,cNumber=None):
             # unithome.cProgress = request.POST['cProgress']
             unithome.cSubject = request.POST['cSubject']
             unithome.cSecret = request.POST['cSecret']
+            if request.FILES.get('cFile', '') != "":
+                try:
+                    unithome.cFile = request.FILES['cFile']
+                except:
+                    unithome.cFile = request.POST["cFile"]
+            else:
+                unithome.cFile = unithome.cFile
+            if request.FILES.get('cFile1', '') != "":
+                try:
+                    unithome.cFile1 = request.FILES['cFile1']
+                except:
+                    unithome.cFile1 = request.POST["cFile1"]
+            else:
+                unithome.cFile1 = unithome.cFile1
+            if request.FILES.get('cFile2', '') != "":
+                try:
+                    unithome.cFile2 = request.FILES['cFile2']
+                except:
+                    unithome.cFile2 = request.POST["cFile2"]
+            else:
+                unithome.cFile2 = unithome.cFile2
+            if request.FILES.get('cFile3', '') != "":
+                try:
+                    unithome.cFile3 = request.FILES['cFile3']
+                except:
+                    unithome.cFile3 = request.POST["cFile3"]
+            else:
+                unithome.cFile3 = unithome.cFile3
+            if request.FILES.get('cFile4', '') != "":
+                try:
+                    unithome.cFile4 = request.FILES['cFile4']
+                except:
+                    unithome.cFile4 = request.POST["cFile4"]
+            else:
+                unithome.cFile4 = unithome.cFile4
             unit = Signed.objects.get(id = id)  #取得要修改的資料記錄
             unit.cJob_title = request.POST['cJob_title']
             unit.cSubject = unithome.cSubject
@@ -828,12 +863,45 @@ def meetingEdit(request,id=None,mode=None,cNumber=None):
         else:
             unithome.cAuther = request.POST['cAuther']
             unithome.cSubject = request.POST['cSubject']
-            # unithome.cDepartment = request.POST['cDepartment']
             if request.POST['cEndDate'] != "":
                 unithome.cEndDate = request.POST['cEndDate']
             else:
                 unithome.cEndDate = None
-            # unithome.cProgress = request.POST['cProgress']
+            if request.FILES.get('cFile', '') != "":
+                try:
+                    unithome.cFile = request.FILES['cFile']
+                except:
+                    unithome.cFile = request.POST["cFile"]
+            else:
+                unithome.cFile = unithome.cFile
+            if request.FILES.get('cFile1', '') != "":
+                try:
+                    unithome.cFile1 = request.FILES['cFile1']
+                except:
+                    unithome.cFile1 = request.POST["cFile1"]
+            else:
+                unithome.cFile1 = unithome.cFile1
+            if request.FILES.get('cFile2', '') != "":
+                try:
+                    unithome.cFile2 = request.FILES['cFile2']
+                except:
+                    unithome.cFile2 = request.POST["cFile2"]
+            else:
+                unithome.cFile2 = unithome.cFile2
+            if request.FILES.get('cFile3', '') != "":
+                try:
+                    unithome.cFile3 = request.FILES['cFile3']
+                except:
+                    unithome.cFile3 = request.POST["cFile3"]
+            else:
+                unithome.cFile3 = unithome.cFile3
+            if request.FILES.get('cFile4', '') != "":
+                try:
+                    unithome.cFile4 = request.FILES['cFile4']
+                except:
+                    unithome.cFile4 = request.POST["cFile4"]
+            else:
+                unithome.cFile4 = unithome.cFile4
             unit.cMeetingType = request.POST['cMeetingType']
             unit.cLocation=request.POST['cLocation']
             unit.cTopic=request.POST['cTopic']
@@ -1220,6 +1288,41 @@ def contactEdit(request,id=None,mode=None,cNumber=None):
                 unithome.cEndDate = request.POST['cEndDate']
             else:
                 unithome.cEndDate = None
+            if request.FILES.get('cFile', '') != "":
+                try:
+                    unithome.cFile = request.FILES['cFile']
+                except:
+                    unithome.cFile = request.POST["cFile"]
+            else:
+                unithome.cFile = unithome.cFile
+            if request.FILES.get('cFile1', '') != "":
+                try:
+                    unithome.cFile1 = request.FILES['cFile1']
+                except:
+                    unithome.cFile1 = request.POST["cFile1"]
+            else:
+                unithome.cFile1 = unithome.cFile1
+            if request.FILES.get('cFile2', '') != "":
+                try:
+                    unithome.cFile2 = request.FILES['cFile2']
+                except:
+                    unithome.cFile2 = request.POST["cFile2"]
+            else:
+                unithome.cFile2 = unithome.cFile2
+            if request.FILES.get('cFile3', '') != "":
+                try:
+                    unithome.cFile3 = request.FILES['cFile3']
+                except:
+                    unithome.cFile3 = request.POST["cFile3"]
+            else:
+                unithome.cFile3 = unithome.cFile3
+            if request.FILES.get('cFile4', '') != "":
+                try:
+                    unithome.cFile4 = request.FILES['cFile4']
+                except:
+                    unithome.cFile4 = request.POST["cFile4"]
+            else:
+                unithome.cFile4 = unithome.cFile4
             unit.cDecisionDep=request.POST['cDecisionDep']
             unit.cImplementDep=request.POST['cImplementDep']
             unit.cSubject=unithome.cSubject
@@ -1380,6 +1483,41 @@ def contractEdit(request,id=None,mode=None,cNumber=None):
                 unithome.cEndDate = request.POST['cEndDate']
             else:
                 unithome.cEndDate = None
+            if request.FILES.get('cFile', '') != "":
+                try:
+                    unithome.cFile = request.FILES['cFile']
+                except:
+                    unithome.cFile = request.POST["cFile"]
+            else:
+                unithome.cFile = unithome.cFile
+            if request.FILES.get('cFile1', '') != "":
+                try:
+                    unithome.cFile1 = request.FILES['cFile1']
+                except:
+                    unithome.cFile1 = request.POST["cFile1"]
+            else:
+                unithome.cFile1 = unithome.cFile1
+            if request.FILES.get('cFile2', '') != "":
+                try:
+                    unithome.cFile2 = request.FILES['cFile2']
+                except:
+                    unithome.cFile2 = request.POST["cFile2"]
+            else:
+                unithome.cFile2 = unithome.cFile2
+            if request.FILES.get('cFile3', '') != "":
+                try:
+                    unithome.cFile3 = request.FILES['cFile3']
+                except:
+                    unithome.cFile3 = request.POST["cFile3"]
+            else:
+                unithome.cFile3 = unithome.cFile3
+            if request.FILES.get('cFile4', '') != "":
+                try:
+                    unithome.cFile4 = request.FILES['cFile4']
+                except:
+                    unithome.cFile4 = request.POST["cFile4"]
+            else:
+                unithome.cFile4 = unithome.cFile4
             unit.cClient=request.POST['cClient']         
             unit.cLocation=request.POST['cLocation']
             unit.cContent=request.POST['cContent']
@@ -1678,6 +1816,41 @@ def changeEdit(request,id=None,mode=None,cNumber=None):
                 unithome.cEndDate = request.POST['cEndDate']
             else:
                 unithome.cEndDate = None
+            if request.FILES.get('cFile', '') != "":
+                try:
+                    unithome.cFile = request.FILES['cFile']
+                except:
+                    unithome.cFile = request.POST["cFile"]
+            else:
+                unithome.cFile = unithome.cFile
+            if request.FILES.get('cFile1', '') != "":
+                try:
+                    unithome.cFile1 = request.FILES['cFile1']
+                except:
+                    unithome.cFile1 = request.POST["cFile1"]
+            else:
+                unithome.cFile1 = unithome.cFile1
+            if request.FILES.get('cFile2', '') != "":
+                try:
+                    unithome.cFile2 = request.FILES['cFile2']
+                except:
+                    unithome.cFile2 = request.POST["cFile2"]
+            else:
+                unithome.cFile2 = unithome.cFile2
+            if request.FILES.get('cFile3', '') != "":
+                try:
+                    unithome.cFile3 = request.FILES['cFile3']
+                except:
+                    unithome.cFile3 = request.POST["cFile3"]
+            else:
+                unithome.cFile3 = unithome.cFile3
+            if request.FILES.get('cFile4', '') != "":
+                try:
+                    unithome.cFile4 = request.FILES['cFile4']
+                except:
+                    unithome.cFile4 = request.POST["cFile4"]
+            else:
+                unithome.cFile4 = unithome.cFile4
             unit.cProjectName=request.POST['cProjectName']
             unit.cChangeitem=request.POST['cChangeitem']
             unit.cChangereason=request.POST['cChangereason']

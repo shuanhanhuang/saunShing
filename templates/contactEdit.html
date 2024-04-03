@@ -63,7 +63,7 @@
     </div>
 
 
-    <form action="/contactEdit/{{unithome.cNumber}}/{{unit.id}}/save" method="POST" name="form1">
+    <form action="/contactEdit/{{unithome.cNumber}}/{{unit.id}}/save" method="POST" name="form1" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="container">
             <div class="row">
@@ -141,14 +141,63 @@
                       <th>說明</th>
                       <td><textarea  id="cDiscription" name="cDiscription">{{unit.cDiscription}}</textarea></td>
                     </tr>
-                    {% else %}
-                      <tr><th>簽核順序</th>
+                    <tr>
+                      <th>檔案</th>
                       <td>
-                          <select class="form-control" id="taskTypeSelect" name="cReceive">
-                          <option value="None" name="cReceive">無</option>
-                          </select>
+                        {% if unithome.cFile != "" %}
+                          <a href="http://127.0.0.1:8000/media/{{unithome.cFile}}" download>{{unithome.cFile}}</a>
+                          <p></p>
+                          <span>更新檔案<span style="font-size: 20px;">&#8594;</span></span>
+                        {% endif %}
+                        <span><input name="cFile" type="file"></span>
                       </td>
-                      </tr>
+                    </tr>
+                    <tr>
+                      <th></th>
+                      <td>
+                        {% if unithome.cFile1 != "" %}
+                          <a href="http://127.0.0.1:8000/media/{{unithome.cFile1}}" download>{{unithome.cFile1}}</a>
+                          <p></p>
+                          <span>更新檔案<span style="font-size: 20px;">&#8594;</span></span>
+                        {% endif %}
+                        <input name="cFile1" type="file">
+                      </td>
+                    </tr>
+                    <tr>
+                      <th></th>
+                      <td>
+                        {% if unithome.cFile2 != "" %}
+                          <a href="http://127.0.0.1:8000/media/{{unithome.cFile2}}" download>{{unithome.cFile2}}</a>
+                          <p></p>
+                          <span>更新檔案<span style="font-size: 20px;">&#8594;</span></span>
+                        {% endif %}
+                        <input name="cFile2" type="file">
+                      </td>
+                    </tr>
+                    <tr>
+                      <th></th>
+                      <td>
+                        {% if unithome.cFile3 != "" %}
+                          <a href="http://127.0.0.1:8000/media/{{unithome.cFile3}}" download>{{unithome.cFile3}}</a>
+                          <p></p>
+                          <span>更新檔案<span style="font-size: 20px;">&#8594;</span></span>
+                        {% endif %}
+                        <input name="cFile3" type="file">
+                      </td>
+                    </tr>
+                    <tr>
+                      <th></th>
+                      <td>
+                        {% if unithome.cFile4 != "" %}
+                          <a href="http://127.0.0.1:8000/media/{{unithome.cFile4}}" download>{{unithome.cFile4}}</a>
+                          <p></p>
+                          <span>更新檔案<span style="font-size: 20px;">&#8594;</span></span>
+                        {% endif %}
+                        <input name="cFile4" type="file">
+                      </td>
+                    </tr>
+                    {% else %}
+
                     {% endif %}
                       
                     <tr>

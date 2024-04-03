@@ -120,9 +120,9 @@
           <tr>
             <th>檔案</th>
             {% if home.cFile != None %}
-            <td><a href="http://127.0.0.1:8000/media/{{home.cFile}}" download>{{home.cFile}}</a></td>
+              <td><a href="http://127.0.0.1:8000/media/{{home.cFile}}" download>{{home.cFile}}</a></td>
             {% else %}
-            <td>{{home.cFile}}</td>
+              <td>{{home.cFile}}</td>
             {% endif %}
           </tr>
           {% if home.cFile1 != "" %}
