@@ -2,21 +2,138 @@ from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.shortcuts import render, redirect
-# import datetime
 from datetime import datetime
 from django.contrib import auth
-from testapp.form import HomeForm,SignedForm,MeetingInnerForm,MeetingForm,ContactForm,ContractForm,ContractInnerForm,ChangeForm,ReturnedForm,CountForm,TransferedForm,UserForm,MeetingPurposeForm
-from testapp.models import Home,Signed,MeetingInner,Meeting,Contact,Contract,ContractInner,Change,Returned,Count,Transfered,User,MeetingPurpose
+from testapp.form import HomeForm,SignedForm,MeetingInnerForm,MeetingForm,ContactForm,ContractForm,ContractInnerForm,ChangeForm,ReturnedForm,CountForm,TransferedForm,UserForm,MeetingPurposeForm,personForm
+from testapp.models import Home,Signed,MeetingInner,Meeting,Contact,Contract,ContractInner,Change,Returned,Count,Transfered,User,MeetingPurpose,person,User
 from django.db.models import Q
 from testapp.filter import HomeFilter
 from openpyxl import Workbook
-import requests
-import json
 from datetime import timedelta
 
 
 # from python_function import encrypt, write_data_to_contract, read_data_from_sqlite, read_data_from_contract, decrypt
 # excel_filter = []
+
+def userEdit(request,id=None,mode=None):
+    user = User.objects.get(id = id)
+    if mode == "load": 
+        return render(request, "userEdit.html", locals())
+    elif mode == "save": # 由 edit2.html 按 submit
+        user.name = request.POST['name']
+        user.username = request.POST['username']
+        user.title=request.POST['title']
+        user.ispro=request.POST['ispro']
+        user.Position = request.POST['Position']
+        user.save()
+          #寫入資料庫
+        message = '已修改...'
+        return redirect('/manageAccount/')
+
+def manageAccount(request):
+    user = User.objects.all()
+    return render(request, "manageAccount.html", locals()) 
+def userDelete(request,id=None):
+    if id!=None:
+        if request.method == "POST":  #如果是以POST方式才處理
+            id=request.POST['cId'] #取得表單輸入的編號
+        try:
+            unit = User.objects.get(id=id)
+            unit.delete()
+            return redirect('/manageAccount/')
+        except:
+            unit.delete()
+            message = "讀取錯誤!"
+    unit.delete()
+    return render(request, "userDelete.html", locals())
+def createaccount(request):
+    if request.method == 'POST':
+        userform = UserForm(request.POST)
+        if userform.is_valid():
+            name =  userform.cleaned_data['name']
+            username = userform.cleaned_data['username']
+            password = userform.cleaned_data['password']
+            ispro = userform.cleaned_data['ispro']
+            title = userform.cleaned_data['title']
+            Position = userform.cleaned_data['Position']
+            userunit = User.objects.create(name=name, username=username,password=password, ispro=ispro,title=title,Position=Position)
+            userunit.save()
+            return redirect('/login/')
+    userform = UserForm()
+    return render(request, "createAccount.html", locals())
+
+def changepassword(request):
+    if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
+        user_id = request.session['user_id']
+        user = User.objects.get(pk=user_id)  # 获取当前登录用户信息
+        firstname = user.name  # 传递用户名到模板中
+        password = user.password 
+        position = user.Position
+        title = user.title
+    user = User.objects.get(name = firstname)
+    allPerson = Home.objects.filter(cReceive = firstname)
+    allpersonCount = len(allPerson)
+    old_password = str(request.POST.get('old_pass'))
+    new_password = str(request.POST.get('new_password'))
+    again_password = str(request.POST.get('again_password'))
+    if old_password == user.password and new_password == again_password:
+        user.password = new_password
+        user.save()
+        alert_script = "<script>alert('密碼修改成功');</script>"
+        return HttpResponse(alert_script + '<script>window.location.href="/login/";</script>')
+    elif old_password == user.password and new_password != again_password:
+        alert_script = "<script>alert('更新密碼和確認密碼需相同');</script>"
+        return HttpResponse(alert_script + '<script>window.location.href="/changepassword/";</script>')
+    elif old_password != user.password and old_password !="None":
+        alert_script = "<script>alert('現在密碼輸入錯誤');</script>"
+        return HttpResponse(alert_script + '<script>window.location.href="/changepassword/";</script>')
+    return render(request, "changePassword.html", locals()) 
+
+
+def is_friendly_time():
+    homeProgress = Home.objects.filter(cProgress = "流程中")
+    current_time = str(datetime.now().strftime("%Y-%m-%d %H:%M")).replace("月","-").replace("年","-").replace("年","")
+    current_time = datetime.strptime(current_time, "%Y-%m-%d %H:%M")
+    agent = person.objects.filter(Starttime__lte=current_time, Endtime__gt=current_time)
+    for instance in agent:
+        for homes in homeProgress:
+            if instance.old_name == homes.cReceive:
+                homes.cReceive = instance.agent_name
+                homes.save()
+    agentdelete = person.objects.filter(Endtime__lte=current_time)
+    for i in agentdelete:
+        for homes in homeProgress:
+            if i.agent_name == homes.cReceive:
+                homes.cReceive = i.old_name
+                homes.save()
+        i.delete()
+
+
+def setAgent(request):
+    if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
+        user_id = request.session['user_id']
+        user = User.objects.get(pk=user_id)  # 获取当前登录用户信息
+        firstname = user.name  # 传递用户名到模板中
+        position = user.Position
+        title = user.title
+    allPerson = Home.objects.filter(cReceive = firstname)
+    allpersonCount = len(allPerson)
+    transferform = TransferedForm(request.POST)
+    if request.method == 'POST':
+        start_date = str(request.POST.get('start_date')) + str(" ") +str(request.POST.get('start_time'))
+        end_date = str(request.POST.get('end_date'))+ str(" ") +str(request.POST.get('end_time'))
+        cTransferTo = request.POST.get('cTransferTo')
+        agentform = personForm(request.POST)
+        # if agentform.is_valid():
+        Starttime = datetime.strptime(start_date,"%Y-%m-%d %H:%M")
+        Endtime = datetime.strptime(end_date,"%Y-%m-%d %H:%M")
+        old_name = firstname
+        agent_name = cTransferTo
+        unit = person.objects.create(Starttime=Starttime,Endtime=Endtime,agent_name=agent_name,old_name=old_name)
+        unit.save() 
+        return redirect('/homeIndex/')
+    return render(request, "setAgent.html", locals()) 
+
 excel_filter = Home.objects.all()
 def download_workbook(request):
     response = HttpResponse(content_type='application/ms-excel')
@@ -120,7 +237,14 @@ def HomePost(request):
     homeform = HomeForm({'cAuther':firstname,'cDepartment':position,'cProgress':"草稿",'cTime':current_time})
     return render(request, "homePost.html", locals())
 
+
+def get_transfer(number):
+    # home = Home.objects.get(cNumber=number)
+    trans = Transfered.objects.filter(cNumber=number)
+    return trans
+
 def homeIndex(request):
+    is_friendly_time()
     global excel_filter
     if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
         user_id = request.session['user_id']
@@ -208,12 +332,9 @@ def homeEdit(request,id=None,mode=None):
 def homeDelete(request,id=None):
     if id!=None:
         if request.method == "POST":  #如果是以POST方式才處理
-            print("BBB")
             id=request.POST['cId'] #取得表單輸入的編號
-            print("this is id !!!!",id)
         try:
             unit = Home.objects.get(id=id)
-            print(unit)
             unit.delete()
             return redirect('/homeIndex/')
         except:
@@ -233,7 +354,7 @@ def transferPost(request,cNumber=None):
     unitinner = Transfered.objects.filter(transferhome=transferHome).order_by("id")
     unitinnercount = len(unitinner)
     if request.method == 'POST':
-        transferform = TransferedForm(request .POST)
+        transferform = TransferedForm(request.POST)
         if transferform.is_valid():
             cTransferTo = transferform.cleaned_data['cTransferTo']
             cNumber = cNumber
@@ -410,8 +531,6 @@ def returnedIndex(request,id=None):
     else:
         returned = Returned.objects.filter(returnTo=home).order_by("id")
     allunitreturnCount = len(returned)
-    print("allunitreturnCount",allunitreturnCount)
-    print("home.cCount",home.cCount)
     if allunitreturnCount != 0:
         if home.cCount == -1:
             if returned[allunitreturnCount-1].cHow == "同意" or returned[allunitreturnCount-1].cHow == "駁回":
@@ -442,6 +561,7 @@ def Detail(request,cNumber=None):
         return redirect('/changeEdit/'+str(cNumber)+'/'+str(change_detail.id)+'/load')
 
 def perosonIndex(request,cUsername = None):
+    is_friendly_time()
     if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
         user_id = request.session['user_id']
         user = User.objects.get(pk=user_id)  # 获取当前登录用户信息
@@ -678,17 +798,14 @@ def signEdit(request,id=None,mode=None,cNumber=None):
         unithome.cEndDate = strdate3
         return render(request, "signEdit.html", locals())
     elif mode == "save": # 由 edit2.html 按 submit
-        # unithome = Home.objects.get(cNumber = cNumber)
         if unithome.cProgress == "結案":
             unithome.cReceive = request.POST['cReceive']
         else:
             unithome.cAuther = request.POST['cAuther']
-            # unithome.cDepartment = request.POST['cDepartment']
-            if request.POST['cEndDate'] != "":
-                unithome.cEndDate = request.POST['cEndDate']
-            else:
-                unithome.cEndDate = None
-            # unithome.cProgress = request.POST['cProgress']
+            # if request.POST['cEndDate'] != "":
+            #     unithome.cEndDate = request.POST['cEndDate']
+            # else:
+            #     unithome.cEndDate = None
             unithome.cSubject = request.POST['cSubject']
             unithome.cSecret = request.POST['cSecret']
             if request.FILES.get('cFile', '') != "":
@@ -780,6 +897,7 @@ def meetingPost(request,cNumber=None):
         position = user.Position
         title = user.title
     home = Home.objects.get(cNumber=cNumber)
+    start_date = str(request.POST.get('start_date'))
     unitinner = Meeting.objects.filter(home=home).order_by("id")
     if request.method == 'POST':
         meetingform = MeetingForm(request.POST)
@@ -788,17 +906,11 @@ def meetingPost(request,cNumber=None):
             cMeetingType = meetingform.cleaned_data['cMeetingType']
             cRecoder = firstname
             cLocation = meetingform.cleaned_data['cLocation']
-            cTime = meetingform.cleaned_data['cTime']
+            cTime = start_date
             cLeader = meetingform.cleaned_data['cLeader']
             cTopic =  meetingform.cleaned_data['cTopic']
             cAttendees1 =  meetingform.cleaned_data['cAttendees1']
             cAttendees2 =  meetingform.cleaned_data['cAttendees2']
-            # try:
-            #     home.cFile = request.FILES['cFile']
-            #     home.save()
-            # except:
-            #     home.cFile = request.POST["cFile"]
-            #     home.save()
             try:
                 home.cFile = request.FILES['cFile']
             except:
@@ -863,10 +975,6 @@ def meetingEdit(request,id=None,mode=None,cNumber=None):
         else:
             unithome.cAuther = request.POST['cAuther']
             unithome.cSubject = request.POST['cSubject']
-            if request.POST['cEndDate'] != "":
-                unithome.cEndDate = request.POST['cEndDate']
-            else:
-                unithome.cEndDate = None
             if request.FILES.get('cFile', '') != "":
                 try:
                     unithome.cFile = request.FILES['cFile']
@@ -1284,10 +1392,6 @@ def contactEdit(request,id=None,mode=None,cNumber=None):
         else:
             unithome.cAuther = request.POST['cAuther']
             unithome.cSubject = request.POST['cSubject']
-            if request.POST['cEndDate'] != "":
-                unithome.cEndDate = request.POST['cEndDate']
-            else:
-                unithome.cEndDate = None
             if request.FILES.get('cFile', '') != "":
                 try:
                     unithome.cFile = request.FILES['cFile']
@@ -1479,10 +1583,7 @@ def contractEdit(request,id=None,mode=None,cNumber=None):
         else:
             unithome.cAuther = request.POST['cAuther']
             unithome.cSubject = request.POST['cSubject']
-            if request.POST['cEndDate'] != "":
-                unithome.cEndDate = request.POST['cEndDate']
-            else:
-                unithome.cEndDate = None
+            
             if request.FILES.get('cFile', '') != "":
                 try:
                     unithome.cFile = request.FILES['cFile']
@@ -1812,10 +1913,6 @@ def changeEdit(request,id=None,mode=None,cNumber=None):
         else:
             unithome.cAuther = request.POST['cAuther']
             unithome.cSubject = request.POST['cSubject']
-            if request.POST['cEndDate'] != "":
-                unithome.cEndDate = request.POST['cEndDate']
-            else:
-                unithome.cEndDate = None
             if request.FILES.get('cFile', '') != "":
                 try:
                     unithome.cFile = request.FILES['cFile']
@@ -1892,7 +1989,6 @@ def login(request):
             request.session['user_id'] = user.id
             return redirect('/homeIndex/')  # 登录成功后重定向到仪表板或其他页面
         except User.DoesNotExist:
-            print("abbb")
             # 如果未找到用户，可以返回登录页面或显示错误消息
             message = "登入失敗"
             return render(request, 'login.html', {'message': message})

@@ -11,7 +11,9 @@ class UserForm(forms.Form):
     Position = forms.CharField(max_length=20) #職位
 
 class HomeForm(forms.Form):
-    REC = (("None","無"),("郭文龍","郭文龍"),("侯國興","侯國興"),("郭文河","郭文河"),("高晟琅","高晟琅"),("黃睿堂","黃睿堂"),("鄭任雯","鄭任雯"),("高麗華","高麗華"),("侯宗仁","侯宗仁"),("黃美禎","黃美禎"),("江水木","江水木"),("吳建進","吳建進"),("陳佳欣","陳佳欣"),("蔡孟亭","蔡孟亭"),("馮文明","馮文明"),("陳恆瑞","陳恆瑞"),("郭文欽","郭文欽"),("郭曉穎","郭曉穎"),("黃春北","黃春北"),("許有龍","許有龍"))
+    REC = (("None","無"),("郭文龍","郭文龍"),("侯國興","侯國興"),("郭文河","郭文河"),("高晟琅","高晟琅"),("黃睿堂","黃睿堂"),("鄭任雯","鄭任雯"),
+		   ("高麗華","高麗華"),("侯宗仁","侯宗仁"),("黃美禎","黃美禎"),("江水木","江水木"),("吳建進","吳建進"),("陳佳欣","陳佳欣"),("蔡孟亭","蔡孟亭"),
+		   ("馮文明","馮文明"),("陳恆瑞","陳恆瑞"),("郭文欽","郭文欽"),("郭曉穎","郭曉穎"),("黃春北","黃春北"),("許有龍","許有龍"))
     type = (("簽呈","簽呈"),("會議記錄表","會議記錄表"),("內部連絡單","內部連絡單"),("發包議價表","發包議價表"),("設計變更通知單","設計變更通知單"))
     secret = (("否", "否"),("是", "是"))
     cNumber = forms.CharField(max_length=50,initial="免填",disabled=True)
@@ -31,9 +33,18 @@ class HomeForm(forms.Form):
     cSubject = forms.CharField(max_length=255, initial='')
     cSecret = forms.CharField(max_length=255, initial='',required=False)
     HomeDate = forms.DateField(initial=datetime.now(),required=False)
+	
+class personForm(forms.Form):
+    Starttime = forms.CharField(max_length=255, initial='')
+    Endtime = forms.CharField(max_length=255, initial='')
+    old_name = forms.CharField(max_length=20)
+    agent_name = forms.CharField(max_length=20)
 
 class TransferedForm(forms.Form):
-    REC = (("None","無"),("郭文龍","郭文龍"),("侯國興","侯國興"),("郭文河","郭文河"),("高晟琅","高晟琅"),("黃睿堂","黃睿堂"),("鄭任雯","鄭任雯"),("高麗華","高麗華"),("侯宗仁","侯宗仁"),("黃美禎","黃美禎"),("江水木","江水木"),("吳建進","吳建進"),("陳佳欣","陳佳欣"),("蔡孟亭","蔡孟亭"),("馮文明","馮文明"),("陳恆瑞","陳恆瑞"),("郭文欽","郭文欽"),("郭曉穎","郭曉穎"),("黃春北","黃春北"),("許有龍","許有龍"))
+    REC = (("None","無"),("郭文龍","郭文龍"),("侯國興","侯國興"),("郭文河","郭文河"),("高晟琅","高晟琅"),("黃睿堂","黃睿堂"),
+		   ("鄭任雯","鄭任雯"),("高麗華","高麗華"),("侯宗仁","侯宗仁"),("黃美禎","黃美禎"),("江水木","江水木"),("吳建進","吳建進"),
+		   ("陳佳欣","陳佳欣"),("蔡孟亭","蔡孟亭"),("馮文明","馮文明"),("陳恆瑞","陳恆瑞"),("郭文欽","郭文欽"),("郭曉穎","郭曉穎"),
+		   ("黃春北","黃春北"),("許有龍","許有龍"))
     cNumber = forms.CharField(max_length=50,initial='',required=False)
     cTransferTo = forms.CharField(max_length=20,required=True)#,widget=forms.Select(choices=REC)
     
@@ -41,7 +52,10 @@ class CountForm(forms.Form):
 	count = forms.IntegerField(initial=0,required=False)
     
 class ReturnedForm(forms.Form):
-	REC = (("None","無"),("郭文龍","郭文龍"),("侯國興","侯國興"),("郭文河","郭文河"),("高晟琅","高晟琅"),("黃睿堂","黃睿堂"),("鄭任雯","鄭任雯"),("高麗華","高麗華"),("侯宗仁","侯宗仁"),("黃美禎","黃美禎"),("江水木","江水木"),("吳建進","吳建進"),("陳佳欣","陳佳欣"),("蔡孟亭","蔡孟亭"),("馮文明","馮文明"),("陳恆瑞","陳恆瑞"),("郭文欽","郭文欽"),("郭曉穎","郭曉穎"),("黃春北","黃春北"),("許有龍","許有龍"))
+	REC = (("None","無"),("郭文龍","郭文龍"),("侯國興","侯國興"),("郭文河","郭文河"),("高晟琅","高晟琅"),("黃睿堂","黃睿堂"),
+		("鄭任雯","鄭任雯"),("高麗華","高麗華"),("侯宗仁","侯宗仁"),("黃美禎","黃美禎"),("江水木","江水木"),("吳建進","吳建進"),
+		("陳佳欣","陳佳欣"),("蔡孟亭","蔡孟亭"),("馮文明","馮文明"),("陳恆瑞","陳恆瑞"),("郭文欽","郭文欽"),("郭曉穎","郭曉穎"),
+		("黃春北","黃春北"),("許有龍","許有龍"))
 	HOW = (("同意","同意"),("駁回","駁回"),("修正再呈","修正再呈"))
 	cNumber = forms.CharField(max_length=50,initial='免填',required=False)
 	cName = forms.CharField(max_length=20,required=False)#誰駁回的(姓名),initial="免填",disabled=True
@@ -78,8 +92,8 @@ class MeetingPurposeForm(forms.Form):
 class MeetingForm (forms.Form):
 	cNumber = forms.CharField(max_length=50,required=False)
 	cMeetingType = forms.CharField(max_length=10)#會議型態
-	cLocation = forms.CharField(max_length=30,required=False)
-	cTime = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder': 'XXXX/XX/XX'}))#時間
+	cLocation = forms.CharField(max_length=30)
+	cTime = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder': 'XXXX/XX/XX'}),required=False)#時間
 	cLeader = forms.CharField(max_length=10)#主席
 	cRecoder = forms.CharField(max_length=10,required=False )#紀錄者
 	cTopic = forms.CharField(max_length=50)#主題

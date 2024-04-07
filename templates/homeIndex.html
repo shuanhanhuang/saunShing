@@ -74,8 +74,19 @@
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
         <ul class="navbar-nav ml-2">
-          <li class="nav-item active">
-            <a class="nav-link disabled" style="color: green;">{{firstname}} <span class="sr-only">(current)</span></a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" style="color: green;">
+              {{firstname}} <span class="sr-only">(current)</span>
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="/setAgent/">設定代理人</a>
+              <a class="dropdown-item" href="/changepassword/">修改密碼</a>
+              {% if firstname == "測試員" %}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/createaccount/">創立帳號</a>
+                <a class="dropdown-item" href="/manageAccount/">帳號管理</a>
+              {% endif %}
+            </div>
           </li>
         </ul>
         <ul class="navbar-nav ml-2">
@@ -121,7 +132,6 @@
       <div class="row">
         <table class="table">
           <thead>
-            <!-- <th scope="col">筆數</th> -->
             <th scope="col">編號</th>
             <th scope="col">種類</th>
             <th scope="col">主旨</th>
@@ -155,23 +165,56 @@
                 {% endif %}
 
                 {% if unit.cFile != "" %}
-                  <td>
-                    <a href="http://127.0.0.1:8000/media/{{unit.cFile}}" download>{{unit.cFile}}</a><hr>
-                    <a href="http://127.0.0.1:8000/media/{{unit.cFile1}}" download>{{unit.cFile1}}</a><hr>
-                    <a href="http://127.0.0.1:8000/media/{{unit.cFile2}}" download>{{unit.cFile2}}</a><hr>
-                    <a href="http://127.0.0.1:8000/media/{{unit.cFile3}}" download>{{unit.cFile3}}</a><hr>
-                    <a href="http://127.0.0.1:8000/media/{{unit.cFile4}}" download>{{unit.cFile4}}</a>
-                  </td>
+                  {% if unit.cType == "簽呈" %}
+                    {% if unit.cSecret == "是" %}
+                      {% if unit.cAuther == firstname or firstname == "測試員" %}
+                        <td>
+                          <a href="http://127.0.0.1:8000/media/{{unit.cFile}}" download>{{unit.cFile}}</a><hr>
+                          <a href="http://127.0.0.1:8000/media/{{unit.cFile1}}" download>{{unit.cFile1}}</a><hr>
+                          <a href="http://127.0.0.1:8000/media/{{unit.cFile2}}" download>{{unit.cFile2}}</a><hr>
+                          <a href="http://127.0.0.1:8000/media/{{unit.cFile3}}" download>{{unit.cFile3}}</a><hr>
+                          <a href="http://127.0.0.1:8000/media/{{unit.cFile4}}" download>{{unit.cFile4}}</a>
+                        </td>
+                      {% else %}
+                        {% for transfer in transferall %}
+                          {% if transfer.cNumber == unit.cNumber and transfer.cTransferTo == firstname %}
+                            <td>
+                              <a href="http://127.0.0.1:8000/media/{{unit.cFile}}" download>{{unit.cFile}}</a><hr>
+                              <a href="http://127.0.0.1:8000/media/{{unit.cFile1}}" download>{{unit.cFile1}}</a><hr>
+                              <a href="http://127.0.0.1:8000/media/{{unit.cFile2}}" download>{{unit.cFile2}}</a><hr>
+                              <a href="http://127.0.0.1:8000/media/{{unit.cFile3}}" download>{{unit.cFile3}}</a><hr>
+                              <a href="http://127.0.0.1:8000/media/{{unit.cFile4}}" download>{{unit.cFile4}}</a>
+                            </td>
+                          {% endif %}
+                        {% endfor %}
+                      {% endif %}
+                    {% else %}
+                      <td>
+                        <a href="http://127.0.0.1:8000/media/{{unit.cFile}}" download>{{unit.cFile}}</a><hr>
+                        <a href="http://127.0.0.1:8000/media/{{unit.cFile1}}" download>{{unit.cFile1}}</a><hr>
+                        <a href="http://127.0.0.1:8000/media/{{unit.cFile2}}" download>{{unit.cFile2}}</a><hr>
+                        <a href="http://127.0.0.1:8000/media/{{unit.cFile3}}" download>{{unit.cFile3}}</a><hr>
+                        <a href="http://127.0.0.1:8000/media/{{unit.cFile4}}" download>{{unit.cFile4}}</a>
+                      </td>
+                    {% endif %}
+                  {% else %}
+                    <td>
+                      <a href="http://127.0.0.1:8000/media/{{unit.cFile}}" download>{{unit.cFile}}</a><hr>
+                      <a href="http://127.0.0.1:8000/media/{{unit.cFile1}}" download>{{unit.cFile1}}</a><hr>
+                      <a href="http://127.0.0.1:8000/media/{{unit.cFile2}}" download>{{unit.cFile2}}</a><hr>
+                      <a href="http://127.0.0.1:8000/media/{{unit.cFile3}}" download>{{unit.cFile3}}</a><hr>
+                      <a href="http://127.0.0.1:8000/media/{{unit.cFile4}}" download>{{unit.cFile4}}</a>
+                    </td>
+                  {% endif %}
                 {% else %}
-                  <td></td>
+                <td></td>
                 {% endif %}
                 <td>
                   <button type="button" class="btn btn-outline-secondary mt-2" id="{{unit.cNumber}}" onclick="Copy(event)">複製表單</button>
                   {% if unit.cType == "簽呈" %}
                     {% if unit.cSecret == "是" %}
-                      {% if unit.cAuther == firstname or firstname == "123" %}
-                        <button type="button" class="btn btn-outline-primary mt-2" id="/signView/{{unit.cNumber}}/"
-                        onclick="View(event)">檢視</button>
+                      {% if unit.cAuther == firstname or firstname == "測試員" %}
+                        <button type="button" class="btn btn-outline-primary mt-2" id="/signView/{{unit.cNumber}}/" onclick="View(event)">檢視</button>
                       {% else %}
                         {% for transfer in transferall %}
                           {% if transfer.cNumber == unit.cNumber and transfer.cTransferTo == firstname %}
@@ -191,7 +234,7 @@
                   {% else %}
                     <button type="button" class="btn btn-outline-primary mt-2" id="/changeView/{{unit.cNumber}}/" onclick="View(event)">檢視</button>
                   {% endif %}
-                  {% if firstname == "123" %}
+                  {% if firstname == "測試員" %}
                     <button type="button" class="btn btn-outline-danger mt-2" id="{{unit.id}}" onclick="Delete(event)">刪除</button>
                   {% endif %}
                 </td>
@@ -246,10 +289,6 @@
       $(location).attr("href", "/message/")
     }
 
-    function View(event) {
-      var id = event.target.id
-      $(location).attr("href", "/" + id + "/");
-    }
 
     function Copy(event) {
       var id = event.target.id
@@ -262,6 +301,9 @@
     function View(event) {
       var id = event.target.id
       $(location).attr("href", id);
+    }
+    function changepassword(){
+      $(location).attr("href", "/changepassword/");
     }
 
 

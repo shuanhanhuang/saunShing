@@ -28,18 +28,7 @@
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
-              <!-- <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                其他表單
-              </a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="/signallIndex/">簽呈資料</a>
-                <a class="dropdown-item" href="/meetingallIndex/">會議記錄資料</a>
-                <a class="dropdown-item" href="/contactallIndex/">內部連絡單資料</a>
-                <a class="dropdown-item" href="/contractallIndex/">發包議價表</a>
-                <a class="dropdown-item" href="/changeallIndex/">設計變更通知單</a>
-              </div> -->
-            </li>
+            <li class="nav-item dropdown"> </li>
           </ul>
           <ul class="navbar-nav mr-auto" style="display: flex; justify-content: center;">
             <li class="nav-item active">
@@ -47,10 +36,16 @@
             </li>
           </ul>
           <ul class="navbar-nav ml-2">
-            <li class="nav-item active">
-              <a class="nav-link disabled" style="color: green;">{{firstname}} <span class="sr-only">(current)</span></a>
-            </li>
-          </ul>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" style="color: green;">
+              {{firstname}} <span class="sr-only">(current)</span>
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="/setAgent/">設定代理人</a>
+                <a class="dropdown-item" href="/changepassword/">修改密碼</a>
+            </div>
+          </li>
+        </ul>
           <ul class="navbar-nav ml-2">
             <li class="nav-item">
               <!-- <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button> -->
@@ -69,7 +64,7 @@
     </div>
 
 
-    <form action="." method="post" name="form1" enctype="multipart/form-data">
+    <form action="." method="post" name="form1" enctype="multipart/form-data" onsubmit="return validateForm()">
     {% csrf_token %}
       <div class="container">
         <div class="row">
@@ -84,7 +79,7 @@
                 <input name="cMeetingType" type="radio" value="其他會議"/>其他會議
               </td>
             </tr>
-            <tr><th>開會日期</th><td>{{meetingform.cTime}}</td></tr>
+            <tr><th>開會日期</th><td><input type="date" name="start_date" value="{{ defaultDates.start }}"></td>
             <tr><th>地點</th><td>{{meetingform.cLocation}}</td></tr>
             <tr><th>主席</th><td>{{meetingform.cLeader}}</td></tr>
             <tr><th>主題</th><td>{{meetingform.cTopic}}</td></tr>
@@ -135,8 +130,14 @@
     <script type="text/javascript">prohibitpreviouspage();</script> -->
 
     <script>
+      function validateForm() {
+        var startDateInput = document.querySelector('input[name="start_date"]').value;
+        if (startDateInput == "") {
+          alert("請填寫日期");
+          return false; 
+        }
+      }
       document.addEventListener('DOMContentLoaded', function() {
-      // Disable browser's back button on DOMContentLoaded event
         history.pushState(null, null, location.href);
         window.onpopstate = function () {
             history.go(1);

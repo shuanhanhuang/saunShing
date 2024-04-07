@@ -80,6 +80,16 @@ class Returned(models.Model):
     class Meta:
         db_table = "Returned"
 
+
+class person(models.Model):
+    Starttime = models.CharField(max_length=255, default='',blank=True)
+    Endtime = models.CharField(max_length=255, default='',blank=True)
+    old_name = models.CharField(max_length=20, default='')
+    agent_name = models.CharField(max_length=20)
+
+    class Meta:
+        db_table = "person"
+
 class Transfered(models.Model):
     REC = (("None","無"),("郭文龍","郭文龍"),("侯國興","侯國興"),("郭文河","郭文河"),("高晟琅","高晟琅"),("黃睿堂","黃睿堂"),("鄭任雯","鄭任雯"),("高麗華","高麗華"),("侯宗仁","侯宗仁"),("黃美禎","黃美禎"),("江水木","江水木"),("吳建進","吳建進"),("陳佳欣","陳佳欣"),("蔡孟亭","蔡孟亭"),("馮文明","馮文明"),("陳恆瑞","陳恆瑞"),("郭文欽","郭文欽"),("郭曉穎","郭曉穎"),("黃春北","黃春北"),("許有龍","許有龍"))
     cNumber = models.CharField(max_length=50, default='',blank=True)

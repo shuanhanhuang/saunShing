@@ -52,8 +52,14 @@
           </li>
         </ul>
         <ul class="navbar-nav ml-2">
-          <li class="nav-item active">
-            <a class="nav-link disabled" style="color: green;">{{firstname}} <span class="sr-only">(current)</span></a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" style="color: green;">
+              {{firstname}} <span class="sr-only">(current)</span>
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="/setAgent/">設定代理人</a>
+                <a class="dropdown-item" href="/changepassword/">修改密碼</a>
+            </div>
           </li>
         </ul>
         <ul class="navbar-nav ml-2">
@@ -104,6 +110,30 @@
           <td>{{returnedHome.cFile}}</td>
           {% endif %}
         </tr>
+        {% if returnedHome.cFile1 != "" %}
+          <tr>
+            <th></th>
+            <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile1}}" download>{{returnedHome.cFile1}}</a></td>
+          </tr>
+          {% endif %}
+          {% if returnedHome.cFile2 != "" %}
+          <tr>
+            <th></th>
+            <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile2}}" download>{{returnedHome.cFile2}}</a></td>
+          </tr>
+          {% endif %}
+          {% if returnedHome.cFile3 != "" %}
+          <tr>
+            <th></th>
+            <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile3}}" download>{{returnedHome.cFile3}}</a></td>
+          </tr>
+          {% endif %}
+          {% if returnedHome.cFile4 != "" %}
+          <tr>
+            <th></th>
+            <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile4}}" download>{{returnedHome.cFile4}}</a></td>
+          </tr>
+          {% endif %}
 
       </table>
     </div>
@@ -156,6 +186,30 @@
           <td>{{returnedHome.cFile}}</td>
           {% endif %}
         </tr>
+        {% if returnedHome.cFile1 != "" %}
+          <tr>
+            <th></th>
+            <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile1}}" download>{{returnedHome.cFile1}}</a></td>
+          </tr>
+          {% endif %}
+          {% if returnedHome.cFile2 != "" %}
+          <tr>
+            <th></th>
+            <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile2}}" download>{{returnedHome.cFile2}}</a></td>
+          </tr>
+          {% endif %}
+          {% if returnedHome.cFile3 != "" %}
+          <tr>
+            <th></th>
+            <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile3}}" download>{{returnedHome.cFile3}}</a></td>
+          </tr>
+          {% endif %}
+          {% if returnedHome.cFile4 != "" %}
+          <tr>
+            <th></th>
+            <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile4}}" download>{{returnedHome.cFile4}}</a></td>
+          </tr>
+          {% endif %}
       </table>
     </div>
   </div>
@@ -278,6 +332,30 @@
           <td>{{returnedHome.cFile}}</td>
           {% endif %}
         </tr>
+        {% if returnedHome.cFile1 != "" %}
+          <tr>
+            <th></th>
+            <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile1}}" download>{{returnedHome.cFile1}}</a></td>
+          </tr>
+          {% endif %}
+          {% if returnedHome.cFile2 != "" %}
+          <tr>
+            <th></th>
+            <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile2}}" download>{{returnedHome.cFile2}}</a></td>
+          </tr>
+          {% endif %}
+          {% if returnedHome.cFile3 != "" %}
+          <tr>
+            <th></th>
+            <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile3}}" download>{{returnedHome.cFile3}}</a></td>
+          </tr>
+          {% endif %}
+          {% if returnedHome.cFile4 != "" %}
+          <tr>
+            <th></th>
+            <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile4}}" download>{{returnedHome.cFile4}}</a></td>
+          </tr>
+          {% endif %}
       </table>
     </div>
   </div>
@@ -426,6 +504,30 @@
           <td>{{returnedHome.cFile}}</td>
           {% endif %}
         </tr>
+        {% if returnedHome.cFile1 != "" %}
+          <tr>
+            <th></th>
+            <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile1}}" download>{{returnedHome.cFile1}}</a></td>
+          </tr>
+          {% endif %}
+          {% if returnedHome.cFile2 != "" %}
+          <tr>
+            <th></th>
+            <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile2}}" download>{{returnedHome.cFile2}}</a></td>
+          </tr>
+          {% endif %}
+          {% if returnedHome.cFile3 != "" %}
+          <tr>
+            <th></th>
+            <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile3}}" download>{{returnedHome.cFile3}}</a></td>
+          </tr>
+          {% endif %}
+          {% if returnedHome.cFile4 != "" %}
+          <tr>
+            <th></th>
+            <td><a href="http://127.0.0.1:8000/media/{{returnedHome.cFile4}}" download>{{returnedHome.cFile4}}</a></td>
+          </tr>
+          {% endif %}
       </table>
     </div>
   </div>
@@ -485,7 +587,7 @@
             <th>簽核順序</th>
             <td>
               {% for i in transfered %}
-              {{i.cTransferTo}}
+                {{i.cTransferTo}}
               {% endfor %}
             </td>
           </tr>
@@ -497,34 +599,33 @@
           </tr>
           <tr>
             <th>建立時間</th>
-            <td><input type="text" name="{{ returnedform.cReturnedTime.name }}"
-                value="{{ returnedform.cReturnedTime.value }}" disabled></td>
+            <td><input type="text" name="{{ returnedform.cReturnedTime.name }}" value="{{ returnedform.cReturnedTime.value }}" disabled></td>
           </tr>
           <tr>
             <th>簽核狀態</th>
             <td>
               {% if returnedHome.cAuther == firstname %}
-              <select class="form-control" id="taskTypeSelect" name="cHow" disabled>
-                <option value="同意" name="cHow">同意</option>
-                <input type="hidden" name="cHow" value="同意">
-              </select>
+                <select class="form-control" id="taskTypeSelect" name="cHow" disabled>
+                  <option value="同意" name="cHow">同意</option>
+                  <input type="hidden" name="cHow" value="同意">
+                </select>
               {% else %}
-              <select class="form-control" id="taskTypeSelect" name="cHow">
-                {% for key,value in returnedform.HOW %}
-                <option value="{{ key }}" name="cHow">{{ value }}</option>
-                {% endfor %}
-              </select>
+                <select class="form-control" id="taskTypeSelect" name="cHow">
+                  {% for key,value in returnedform.HOW %}
+                  <option value="{{ key }}" name="cHow">{{ value }}</option>
+                  {% endfor %}
+                </select>
               {% endif %}
             </td>
           </tr>
 
           <tr>
             {% if returnedHome.cAuther != firstname %}
-            <th>批示</th>
-            <td>{{returnedform.cIllustrate}}</td>
+              <th>批示</th>
+              <td>{{returnedform.cIllustrate}}</td>
             {% endif %}
-          </tr>
-          {% endif %}
+              </tr>
+            {% endif %}
 
           <tr>
             <th align="center" scope="col">

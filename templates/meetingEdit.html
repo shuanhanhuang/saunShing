@@ -41,10 +41,16 @@
             </li>
           </ul>
           <ul class="navbar-nav ml-2">
-            <li class="nav-item active">
-              <a class="nav-link disabled" style="color: green;">{{firstname}} <span class="sr-only">(current)</span></a>
-            </li>
-          </ul>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" style="color: green;">
+              {{firstname}} <span class="sr-only">(current)</span>
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="/setAgent/">設定代理人</a>
+                <a class="dropdown-item" href="/changepassword/">修改密碼</a>
+            </div>
+          </li>
+        </ul>
           <ul class="navbar-nav ml-2">
             <li class="nav-item">
               <button class="btn btn-outline-success my-2 my-sm-0" onclick="Logout(event)">登出</button>
@@ -77,14 +83,7 @@
                         <tr>
                             <th>主旨</th>
                             <td><input type="text" id="cSubject" name="cSubject" value="{{unithome.cSubject}}"></td>
-                        </tr>
-                            <th>完成日期</th>
-                            {% if unithome.cEndDate == "None" %}
-                                <td><input type="text" id="cEndDate" name="cEndDate" value=""></td>
-                            {% else %}
-                                <td><input type="text" id="cEndDate" name="cEndDate" value="{{unithome.cEndDate}}"></td>
-                            {% endif %}
-                        </tr>
+
                         
                         <tr>
                             <th>會議型態</th>
@@ -147,17 +146,17 @@
                             <th>主題</th>
                             <td><input type="text" id="cTopic" name="cTopic" value="{{unit.cTopic}}"></td>
                         </tr>
-                        <tr>
-                            <th>時間</th>
-                            <td><input type="text" id="cTime" name="cTime" value="{{unit.cTime}}"></td>
-                        </tr>
+                        <!-- <tr>
+                            <th>開會日期</th>
+                            <td><input type="date" name="start_date" value="{{unit.cTime}}"></td>
+                        </tr> -->
                         <tr>
                             <th>列席人數</th>
-                            <td><textarea  id="cAttendees1" name="cAttendees1">{{unit.cAttendees1}}</textarea></td>
+                            <td><textarea  id="cAttendees1" name="cAttendees1">{{unit.cAttendees1|safe}}</textarea></td>
                         </tr>
                         <tr>
                             <th>出席人數</th>
-                            <td><textarea  id="cAttendees2" name="cAttendees2">{{unit.cAttendees2}}</textarea></td>
+                            <td><textarea  id="cAttendees2" name="cAttendees2">{{unit.cAttendees2|safe}}</textarea></td>
                         </tr>
                         <tr>
                             <th>檔案</th>

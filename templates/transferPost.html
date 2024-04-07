@@ -47,8 +47,14 @@
           </li>
         </ul>
         <ul class="navbar-nav ml-2">
-          <li class="nav-item active">
-            <a class="nav-link disabled" style="color: green;">{{firstname}} <span class="sr-only">(current)</span></a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" style="color: green;">
+              {{firstname}} <span class="sr-only">(current)</span>
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="/setAgent/">設定代理人</a>
+                <a class="dropdown-item" href="/changepassword/">修改密碼</a>
+            </div>
           </li>
         </ul>
         <ul class="navbar-nav ml-2">
@@ -84,9 +90,9 @@
             <td>
               <select class="form-control" id="taskTypeSelect" name="cTransferTo">
                 {% for key, value in transferform.REC %}
-                {% if key != firstname %}
-                <option value="{{ key }}" name="cTransferTo">{{ value }}</option>
-                {% endif %}
+                  {% if key != firstname %}
+                    <option value="{{ key }}" name="cTransferTo">{{ value }}</option>
+                  {% endif %}
                 {% endfor %}
               </select>
             </td>
