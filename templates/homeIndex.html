@@ -176,16 +176,24 @@
                           <a href="http://127.0.0.1:8000/media/{{unit.cFile4}}" download>{{unit.cFile4}}</a>
                         </td>
                       {% else %}
-                        {% for transfer in transferall %}
-                          {% if transfer.cNumber == unit.cNumber and transfer.cTransferTo == firstname %}
+                        {% for i in isscret %}
+                            {% if unit.cNumber in i and firstname in i %}
+                              <td>
+                                <a href="http://127.0.0.1:8000/media/{{unit.cFile}}" download>{{unit.cFile}}</a><hr>
+                                <a href="http://127.0.0.1:8000/media/{{unit.cFile1}}" download>{{unit.cFile1}}</a><hr>
+                                <a href="http://127.0.0.1:8000/media/{{unit.cFile2}}" download>{{unit.cFile2}}</a><hr>
+                                <a href="http://127.0.0.1:8000/media/{{unit.cFile3}}" download>{{unit.cFile3}}</a><hr>
+                                <a href="http://127.0.0.1:8000/media/{{unit.cFile4}}" download>{{unit.cFile4}}</a>
+                              </td>
+                            {% elif unit.cNumber in i and firstname not in i %}
                             <td>
-                              <a href="http://127.0.0.1:8000/media/{{unit.cFile}}" download>{{unit.cFile}}</a><hr>
-                              <a href="http://127.0.0.1:8000/media/{{unit.cFile1}}" download>{{unit.cFile1}}</a><hr>
-                              <a href="http://127.0.0.1:8000/media/{{unit.cFile2}}" download>{{unit.cFile2}}</a><hr>
-                              <a href="http://127.0.0.1:8000/media/{{unit.cFile3}}" download>{{unit.cFile3}}</a><hr>
-                              <a href="http://127.0.0.1:8000/media/{{unit.cFile4}}" download>{{unit.cFile4}}</a>
+                              <a>{{unit.cFile}}</a><hr>
+                              <a>{{unit.cFile1}}</a><hr>
+                              <a>{{unit.cFile2}}</a><hr>
+                              <a>{{unit.cFile3}}</a><hr>
+                              <a>{{unit.cFile4}}</a>
                             </td>
-                          {% endif %}
+                            {% endif %}
                         {% endfor %}
                       {% endif %}
                     {% else %}

@@ -15,6 +15,19 @@ from datetime import timedelta
 # from python_function import encrypt, write_data_to_contract, read_data_from_sqlite, read_data_from_contract, decrypt
 # excel_filter = []
 
+def gettransfer():
+    sign = Signed.objects.filter(cSecret = "是")
+    dist = []
+    for i in sign:
+        dist_a = []
+        dist_a.append(i.cNumber)
+        transfered = Transfered.objects.filter(cNumber = i.cNumber)
+        for i in transfered:
+            dist_a.append(i.cTransferTo)
+        dist.append(dist_a)
+    return dist
+
+
 def userEdit(request,id=None,mode=None):
     user = User.objects.get(id = id)
     if mode == "load": 
@@ -245,6 +258,7 @@ def get_transfer(number):
 
 def homeIndex(request):
     is_friendly_time()
+    isscret = gettransfer()
     global excel_filter
     if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
         user_id = request.session['user_id']
