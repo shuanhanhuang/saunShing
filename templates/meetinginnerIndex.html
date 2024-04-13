@@ -112,7 +112,7 @@
               <td>{{unit.cStartDate}}</td>
               <td>{{unit.cExpectDate}}</td>
               {% if unit.cFile != None %}
-              <td><a href="http://127.0.0.1:8000/media/{{unit.cFile}}" download>{{unit.cFile}}</a></td>
+              <td><a href="http://{{filedownloadUrl_local}}/media/{{unit.cFile}}" download>{{unit.cFile}}</a></td>
               {% else %}
               <td>{{unit.cFile}}</td>
               {% endif %}

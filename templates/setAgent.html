@@ -101,9 +101,9 @@
                   <th>設定代理人</th>
                   <td>
                     <select class="form-control" id="taskTypeSelect" name="cTransferTo">
-                      {% for key, value in transferform.REC %}
+                      {% for key in userallname %}
                         {% if key != firstname %}
-                          <option value="{{ key }}" name="cTransferTo">{{ value }}</option>
+                          <option value="{{ key }}" name="cTransferTo">{{ key }}</option>
                         {% endif %}
                       {% endfor %}
                     </select>

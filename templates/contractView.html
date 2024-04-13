@@ -131,11 +131,35 @@
           <tr>
             <th>檔案</th>
             {% if home.cFile != None %}
-            <td><a href="http://127.0.0.1:8000/media/{{home.cFile}}" download>{{home.cFile}}</a></td>
+              <td><a href="http://{{filedownloadUrl_local}}/media/{{home.cFile}}" download>{{home.cFile}}</a></td>
             {% else %}
-            <td>{{home.cFile}}</td>
+              <td>{{home.cFile}}</td>
             {% endif %}
           </tr>
+          {% if home.cFile1 != "" %}
+          <tr>
+            <th></th>
+            <td><a href="http://{{filedownloadUrl_local}}/media/{{home.cFile1}}" download>{{home.cFile1}}</a></td>
+          </tr>
+          {% endif %}
+          {% if home.cFile2 != "" %}
+          <tr>
+            <th></th>
+            <td><a href="http://{{filedownloadUrl_local}}/media/{{home.cFile2}}" download>{{home.cFile2}}</a></td>
+          </tr>
+          {% endif %}
+          {% if home.cFile3 != "" %}
+          <tr>
+            <th></th>
+            <td><a href="http://{{filedownloadUrl_local}}/media/{{home.cFile3}}" download>{{home.cFile3}}</a></td>
+          </tr>
+          {% endif %}
+          {% if home.cFile4 != "" %}
+          <tr>
+            <th></th>
+            <td><a href="http://{{filedownloadUrl_local}}/media/{{home.cFile4}}" download>{{home.cFile4}}</a></td>
+          </tr>
+          {% endif %}
         </table>
       </div>
     </div>

@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import render, redirect
 from datetime import datetime
@@ -14,7 +14,7 @@ from datetime import timedelta
 
 # from python_function import encrypt, write_data_to_contract, read_data_from_sqlite, read_data_from_contract, decrypt
 # excel_filter = []
-
+filedownloadUrl = '127.0.0.1:8000'
 def gettransfer():
     sign = Signed.objects.filter(cSecret = "是")
     dist = []
@@ -129,6 +129,10 @@ def setAgent(request):
         firstname = user.name  # 传递用户名到模板中
         position = user.Position
         title = user.title
+    userallname = []
+    user = User.objects.all()
+    for i in user:
+        userallname.append(i.name)
     allPerson = Home.objects.filter(cReceive = firstname)
     allpersonCount = len(allPerson)
     transferform = TransferedForm(request.POST)
@@ -257,6 +261,7 @@ def get_transfer(number):
     return trans
 
 def homeIndex(request):
+    filedownloadUrl_local = filedownloadUrl
     is_friendly_time()
     isscret = gettransfer()
     global excel_filter
@@ -288,62 +293,9 @@ def open1(request,id=None,mode=None):
     open = True
     return redirect('/homeEdit/'+str(id)+"/"+str(mode))
 
-def homeEdit(request,id=None,mode=None):
-    global open
-    Open = open
-    if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
-        user_id = request.session['user_id']
-        user = User.objects.get(pk=user_id)  # 获取当前登录用户信息
-        firstname = user.name  # 传递用户名到模板中
-        position = user.Position
-        title = user.title
-    if mode == "load":  # 由 index.html 按 編輯二 鈕
-        unit = Home.objects.get(id=id)  #取得要修改的資料記  
-        return render(request, "homeEdit.html", locals())
-    elif mode == "save": # 由 edit2.html 按 submit
-        unit = Home.objects.get(id=id)  #取得要修改的資料記錄
-        if request.FILES.get('cFile', '') != "":
-            try:
-                unit.cFile = request.FILES['cFile']
-            except:
-                unit.cFile = request.POST["cFile"]
-        else:
-            unit.cFile = unit.cFile
-        if request.FILES.get('cFile1', '') != "":
-            try:
-                unit.cFile1 = request.FILES['cFile1']
-            except:
-                unit.cFile1 = request.POST["cFile1"]
-        else:
-            unit.cFile1 = unit.cFile1
-        if request.FILES.get('cFile2', '') != "":
-            try:
-                unit.cFile2 = request.FILES['cFile2']
-            except:
-                unit.cFile2 = request.POST["cFile2"]
-        else:
-            unit.cFile2 = unit.cFile2
-        if request.FILES.get('cFile3', '') != "":
-            try:
-                unit.cFile3 = request.FILES['cFile3']
-            except:
-                unit.cFile3 = request.POST["cFile3"]
-        else:
-            unit.cFile3 = unit.cFile3
-        if request.FILES.get('cFile4', '') != "":
-            try:
-                unit.cFile4 = request.FILES['cFile4']
-            except:
-                unit.cFile4 = request.POST["cFile4"]
-        else:
-            unit.cFile4 = unit.cFile4
-        
-        unit.save()  #寫入資料庫
-
-        message = '已修改...'
-        return redirect('/homeIndex/')
     
 def homeDelete(request,id=None):
+    filedownloadUrl_local = filedownloadUrl
     if id!=None:
         if request.method == "POST":  #如果是以POST方式才處理
             id=request.POST['cId'] #取得表單輸入的編號
@@ -358,12 +310,17 @@ def homeDelete(request,id=None):
     return render(request, "homeDelete.html", locals())
 
 def transferPost(request,cNumber=None):
+    filedownloadUrl_local = filedownloadUrl
     if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
         user_id = request.session['user_id']
         user = User.objects.get(pk=user_id)  # 获取当前登录用户信息
         firstname = user.name  # 传递用户名到模板中
         position = user.Position
         title = user.title
+    userallname = ["無"]
+    user = User.objects.filter(ispro="是")
+    for i in user:
+        userallname.append(i.name)
     transferHome = Home.objects.get(cNumber=cNumber)
     unitinner = Transfered.objects.filter(transferhome=transferHome).order_by("id")
     unitinnercount = len(unitinner)
@@ -395,6 +352,7 @@ def transferDelete(request,cNumber=None,id=None):
 	return render(request, "transferDelete.html", locals())
 
 def transferIndex(request,id=None):
+    filedownloadUrl_local = filedownloadUrl
     home = Home.objects.get(id = id)
     if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
         user_id = request.session['user_id']
@@ -426,6 +384,7 @@ def returnedDelete(request,id2=None,id=None):
 	return render(request, "returnedDelete.html", locals())
 
 def returnedPost(request,id=None,cNumber=None):
+    filedownloadUrl_local = filedownloadUrl
     re_id=id
     current_time = str(datetime.now().strftime("%Y-%m-%d %H:%M")).replace("月","-").replace("年","-").replace("年","")
     if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
@@ -576,6 +535,7 @@ def Detail(request,cNumber=None):
 
 def perosonIndex(request,cUsername = None):
     is_friendly_time()
+    filedownloadUrl_local = filedownloadUrl
     if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
         user_id = request.session['user_id']
         user = User.objects.get(pk=user_id)  # 获取当前登录用户信息
@@ -668,6 +628,7 @@ def signPost(request,cNumber=None):
 
 
 def signView(request,cNumber=None):
+    filedownloadUrl_local = filedownloadUrl
     if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
         user_id = request.session['user_id']
         user = User.objects.get(pk=user_id)  # 获取当前登录用户信息
@@ -788,7 +749,58 @@ def signallIndex(request):
     signallCount = len(signall)
     return render(request, "signall_Index.html",locals())
 
+def filechange(request,cNumber,selected_confirm,selected_confirm2,selected_confirm3,selected_confirm4,selected_confirm5):
+    unithome = Home.objects.get(cNumber = cNumber)
+    if request.FILES.get('cFile', '') != "":
+        try:
+            unithome.cFile = request.FILES['cFile']
+        except:
+            unithome.cFile = request.POST["cFile"]
+    elif request.FILES.get('cFile', '') == "" and selected_confirm == "無":
+        unithome.cFile = unithome.cFile
+    elif request.FILES.get('cFile', '') == "" and selected_confirm == "刪除":
+        unithome.cFile = request.POST["cFile"]
+
+    if request.FILES.get('cFile1', '') != "":
+        try:
+            unithome.cFile1 = request.FILES['cFile1']
+        except:
+            unithome.cFile1 = request.POST["cFile1"]
+    elif request.FILES.get('cFile1', '') == "" and selected_confirm2 == "無":
+        unithome.cFile1 = unithome.cFile1
+    elif request.FILES.get('cFile1', '') == "" and selected_confirm2 == "刪除":
+        unithome.cFile1 = request.POST["cFile1"]
+    if request.FILES.get('cFile2', '') != "":
+        try:
+            unithome.cFile2 = request.FILES['cFile2']
+        except:
+            unithome.cFile2 = request.POST["cFile2"]
+    elif request.FILES.get('cFile2', '') == "" and selected_confirm3 == "無":
+        unithome.cFile2 = unithome.cFile2
+    elif request.FILES.get('cFile2', '') == "" and selected_confirm3 == "刪除":
+        unithome.cFile2 = request.POST["cFile2"]
+    if request.FILES.get('cFile3', '') != "":
+        try:
+            unithome.cFile3 = request.FILES['cFile3']
+        except:
+            unithome.cFile3 = request.POST["cFile3"]
+    elif request.FILES.get('cFile3', '') == "" and selected_confirm4 == "無":
+        unithome.cFile3 = unithome.cFile3
+    elif request.FILES.get('cFile3', '') == "" and selected_confirm4 == "刪除":
+        unithome.cFile3 = request.POST["cFile3"]
+    if request.FILES.get('cFile4', '') != "":
+        try:
+            unithome.cFile4 = request.FILES['cFile4']
+        except:
+            unithome.cFile4 = request.POST["cFile4"]
+    elif request.FILES.get('cFile4', '') == "" and selected_confirm5 == "無":
+        unithome.cFile4 = unithome.cFile4
+    elif request.FILES.get('cFile4', '') == "" and selected_confirm5 == "刪除":
+        unithome.cFile4 = request.POST["cFile4"]
+    unithome.save()
+
 def signEdit(request,id=None,mode=None,cNumber=None):
+    filedownloadUrl_local = filedownloadUrl
     homeform = HomeForm(request.POST,request.FILES)
     if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
         user_id = request.session['user_id']
@@ -812,51 +824,20 @@ def signEdit(request,id=None,mode=None,cNumber=None):
         unithome.cEndDate = strdate3
         return render(request, "signEdit.html", locals())
     elif mode == "save": # 由 edit2.html 按 submit
+        selected_confirm = request.POST.get('confirm')
+        selected_confirm2 = request.POST.get('confirm2')
+        selected_confirm3 = request.POST.get('confirm3')
+        selected_confirm4 = request.POST.get('confirm4')
+        selected_confirm5 = request.POST.get('confirm5')
         if unithome.cProgress == "結案":
             unithome.cReceive = request.POST['cReceive']
         else:
             unithome.cAuther = request.POST['cAuther']
-            # if request.POST['cEndDate'] != "":
-            #     unithome.cEndDate = request.POST['cEndDate']
-            # else:
-            #     unithome.cEndDate = None
             unithome.cSubject = request.POST['cSubject']
             unithome.cSecret = request.POST['cSecret']
-            if request.FILES.get('cFile', '') != "":
-                try:
-                    unithome.cFile = request.FILES['cFile']
-                except:
-                    unithome.cFile = request.POST["cFile"]
-            else:
-                unithome.cFile = unithome.cFile
-            if request.FILES.get('cFile1', '') != "":
-                try:
-                    unithome.cFile1 = request.FILES['cFile1']
-                except:
-                    unithome.cFile1 = request.POST["cFile1"]
-            else:
-                unithome.cFile1 = unithome.cFile1
-            if request.FILES.get('cFile2', '') != "":
-                try:
-                    unithome.cFile2 = request.FILES['cFile2']
-                except:
-                    unithome.cFile2 = request.POST["cFile2"]
-            else:
-                unithome.cFile2 = unithome.cFile2
-            if request.FILES.get('cFile3', '') != "":
-                try:
-                    unithome.cFile3 = request.FILES['cFile3']
-                except:
-                    unithome.cFile3 = request.POST["cFile3"]
-            else:
-                unithome.cFile3 = unithome.cFile3
-            if request.FILES.get('cFile4', '') != "":
-                try:
-                    unithome.cFile4 = request.FILES['cFile4']
-                except:
-                    unithome.cFile4 = request.POST["cFile4"]
-            else:
-                unithome.cFile4 = unithome.cFile4
+            unithome.save()
+            filechange(request,cNumber,selected_confirm,selected_confirm2,selected_confirm3,selected_confirm4,selected_confirm5)
+            
             unit = Signed.objects.get(id = id)  #取得要修改的資料記錄
             unit.cJob_title = request.POST['cJob_title']
             unit.cSubject = unithome.cSubject
@@ -864,7 +845,7 @@ def signEdit(request,id=None,mode=None,cNumber=None):
             unit.cProposed=request.POST['cProposed']
             unit.cSecret = request.POST['cSecret']
             unit.save()
-        unithome.save()  #寫入資料庫
+          #寫入資料庫
 
           #寫入資料庫
         message = '已修改...'
@@ -960,6 +941,7 @@ def meetingPost(request,cNumber=None):
     return render(request, "meetingPost.html", locals())
 
 def meetingEdit(request,id=None,mode=None,cNumber=None):
+    filedownloadUrl_local = filedownloadUrl
     homeform = HomeForm(request.POST)
     if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
         user_id = request.session['user_id']
@@ -983,47 +965,20 @@ def meetingEdit(request,id=None,mode=None,cNumber=None):
         unithome.cEndDate = strdate3
         return render(request, "meetingEdit.html", locals())
     elif mode == "save": # 由 edit2.html 按 submit
+        selected_confirm = request.POST.get('confirm')
+        selected_confirm2 = request.POST.get('confirm2')
+        selected_confirm3 = request.POST.get('confirm3')
+        selected_confirm4 = request.POST.get('confirm4')
+        selected_confirm5 = request.POST.get('confirm5')
         unit = Meeting.objects.get(id = id)  #取得要修改的資料記錄
         if unithome.cProgress == "結案":
             unithome.cReceive = request.POST['cReceive']
         else:
             unithome.cAuther = request.POST['cAuther']
             unithome.cSubject = request.POST['cSubject']
-            if request.FILES.get('cFile', '') != "":
-                try:
-                    unithome.cFile = request.FILES['cFile']
-                except:
-                    unithome.cFile = request.POST["cFile"]
-            else:
-                unithome.cFile = unithome.cFile
-            if request.FILES.get('cFile1', '') != "":
-                try:
-                    unithome.cFile1 = request.FILES['cFile1']
-                except:
-                    unithome.cFile1 = request.POST["cFile1"]
-            else:
-                unithome.cFile1 = unithome.cFile1
-            if request.FILES.get('cFile2', '') != "":
-                try:
-                    unithome.cFile2 = request.FILES['cFile2']
-                except:
-                    unithome.cFile2 = request.POST["cFile2"]
-            else:
-                unithome.cFile2 = unithome.cFile2
-            if request.FILES.get('cFile3', '') != "":
-                try:
-                    unithome.cFile3 = request.FILES['cFile3']
-                except:
-                    unithome.cFile3 = request.POST["cFile3"]
-            else:
-                unithome.cFile3 = unithome.cFile3
-            if request.FILES.get('cFile4', '') != "":
-                try:
-                    unithome.cFile4 = request.FILES['cFile4']
-                except:
-                    unithome.cFile4 = request.POST["cFile4"]
-            else:
-                unithome.cFile4 = unithome.cFile4
+            unithome.save()
+            filechange(request,cNumber,selected_confirm,selected_confirm2,selected_confirm3,selected_confirm4,selected_confirm5)
+            
             unit.cMeetingType = request.POST['cMeetingType']
             unit.cLocation=request.POST['cLocation']
             unit.cTopic=request.POST['cTopic']
@@ -1031,12 +986,12 @@ def meetingEdit(request,id=None,mode=None,cNumber=None):
             unit.cAttendees2=request.POST['cAttendees2']
             unit.cLeader = request.POST['cLeader']
             unit.save()  #寫入資料庫
-        unithome.save()
 
         message = '已修改...'
         return redirect('/meetinginnerIndex/'+ str(unithome.cNumber)+'/')
 
 def meetingpurposePost(request,cNumber=None,id=None,id2=None):
+    filedownloadUrl_local = filedownloadUrl
     if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
         user_id = request.session['user_id']
         user = User.objects.get(pk=user_id)  # 获取当前登录用户信息
@@ -1114,6 +1069,7 @@ def meetingpurposefileEdit(request,cNumber=None,id=None,id2=None,mode=None):
         return redirect('/returnedPost/'+ str(unithome.id)+ "/"+ str(cNumber)+'/')
 
 def meetingView(request,cNumber=None):
+    filedownloadUrl_local = filedownloadUrl
     if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
         user_id = request.session['user_id']
         user = User.objects.get(pk=user_id)  # 获取当前登录用户信息
@@ -1220,6 +1176,7 @@ def meetingfileEdit(request,id=None,mode=None,cNumber=None):
         return redirect('/meetinginnerIndex/'+str(cNumber)+'/')
 
 def meetinginnerIndex(request,cNumber=None):
+    filedownloadUrl_local = filedownloadUrl
     home = Home.objects.get(cNumber = cNumber)
     if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
         user_id = request.session['user_id']
@@ -1345,6 +1302,7 @@ def contactPost(request,cNumber=None):
 
 
 def contactView(request,cNumber=None):
+    filedownloadUrl_local = filedownloadUrl
     if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
         user_id = request.session['user_id']
         user = User.objects.get(pk=user_id)  # 获取当前登录用户信息
@@ -1377,6 +1335,7 @@ def contactallIndex(request):
     return render(request, "contactall_Index.html",locals())
 
 def contactEdit(request,id=None,mode=None,cNumber=None):
+    filedownloadUrl_local = filedownloadUrl
     homeform = HomeForm(request.POST)
     if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
         user_id = request.session['user_id']
@@ -1400,53 +1359,25 @@ def contactEdit(request,id=None,mode=None,cNumber=None):
         unithome.cEndDate = strdate3
         return render(request, "contactEdit.html", locals())
     elif mode == "save": # 由 edit2.html 按 submit
+        selected_confirm = request.POST.get('confirm')
+        selected_confirm2 = request.POST.get('confirm2')
+        selected_confirm3 = request.POST.get('confirm3')
+        selected_confirm4 = request.POST.get('confirm4')
+        selected_confirm5 = request.POST.get('confirm5')
         unit = Contact.objects.get(id = id)#取得要修改的資料記錄
         if unithome.cProgress == "結案":
             unithome.cReceive = request.POST['cReceive']
         else:
             unithome.cAuther = request.POST['cAuther']
             unithome.cSubject = request.POST['cSubject']
-            if request.FILES.get('cFile', '') != "":
-                try:
-                    unithome.cFile = request.FILES['cFile']
-                except:
-                    unithome.cFile = request.POST["cFile"]
-            else:
-                unithome.cFile = unithome.cFile
-            if request.FILES.get('cFile1', '') != "":
-                try:
-                    unithome.cFile1 = request.FILES['cFile1']
-                except:
-                    unithome.cFile1 = request.POST["cFile1"]
-            else:
-                unithome.cFile1 = unithome.cFile1
-            if request.FILES.get('cFile2', '') != "":
-                try:
-                    unithome.cFile2 = request.FILES['cFile2']
-                except:
-                    unithome.cFile2 = request.POST["cFile2"]
-            else:
-                unithome.cFile2 = unithome.cFile2
-            if request.FILES.get('cFile3', '') != "":
-                try:
-                    unithome.cFile3 = request.FILES['cFile3']
-                except:
-                    unithome.cFile3 = request.POST["cFile3"]
-            else:
-                unithome.cFile3 = unithome.cFile3
-            if request.FILES.get('cFile4', '') != "":
-                try:
-                    unithome.cFile4 = request.FILES['cFile4']
-                except:
-                    unithome.cFile4 = request.POST["cFile4"]
-            else:
-                unithome.cFile4 = unithome.cFile4
+            unithome.save()
+            filechange(request,cNumber,selected_confirm,selected_confirm2,selected_confirm3,selected_confirm4,selected_confirm5)
+            
             unit.cDecisionDep=request.POST['cDecisionDep']
             unit.cImplementDep=request.POST['cImplementDep']
             unit.cSubject=unithome.cSubject
             unit.cDiscription=request.POST['cDiscription']
             unit.cAutherManager = unithome.cAuther
-            unithome.save()
         unit.save()  #寫入資料庫
         message = '已修改...'
         return redirect('/contactallIndex/')
@@ -1534,6 +1465,7 @@ def contractPost(request,cNumber=None):
 
 
 def contractView(request,cNumber=None):
+    filedownloadUrl_local = filedownloadUrl
     if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
         user_id = request.session['user_id']
         user = User.objects.get(pk=user_id)  # 获取当前登录用户信息
@@ -1567,6 +1499,7 @@ def contractallIndex(request):
     return render(request, "contractall_Index.html",locals())
 
 def contractEdit(request,id=None,mode=None,cNumber=None):
+    filedownloadUrl_local = filedownloadUrl
     homeform = HomeForm(request.POST)
     if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
         user_id = request.session['user_id']
@@ -1591,48 +1524,20 @@ def contractEdit(request,id=None,mode=None,cNumber=None):
         unithome.cEndDate = strdate3
         return render(request, "contractEdit.html", locals())
     elif mode == "save": # 由 edit2.html 按 submit
+        selected_confirm = request.POST.get('confirm')
+        selected_confirm2 = request.POST.get('confirm2')
+        selected_confirm3 = request.POST.get('confirm3')
+        selected_confirm4 = request.POST.get('confirm4')
+        selected_confirm5 = request.POST.get('confirm5')
         unit = Contract.objects.get(id = id)  #取得要修改的資料記錄
         if unithome.cProgress == "結案":
             unithome.cReceive = request.POST['cReceive']
         else:
             unithome.cAuther = request.POST['cAuther']
             unithome.cSubject = request.POST['cSubject']
+            unithome.save()
+            filechange(request,cNumber,selected_confirm,selected_confirm2,selected_confirm3,selected_confirm4,selected_confirm5)
             
-            if request.FILES.get('cFile', '') != "":
-                try:
-                    unithome.cFile = request.FILES['cFile']
-                except:
-                    unithome.cFile = request.POST["cFile"]
-            else:
-                unithome.cFile = unithome.cFile
-            if request.FILES.get('cFile1', '') != "":
-                try:
-                    unithome.cFile1 = request.FILES['cFile1']
-                except:
-                    unithome.cFile1 = request.POST["cFile1"]
-            else:
-                unithome.cFile1 = unithome.cFile1
-            if request.FILES.get('cFile2', '') != "":
-                try:
-                    unithome.cFile2 = request.FILES['cFile2']
-                except:
-                    unithome.cFile2 = request.POST["cFile2"]
-            else:
-                unithome.cFile2 = unithome.cFile2
-            if request.FILES.get('cFile3', '') != "":
-                try:
-                    unithome.cFile3 = request.FILES['cFile3']
-                except:
-                    unithome.cFile3 = request.POST["cFile3"]
-            else:
-                unithome.cFile3 = unithome.cFile3
-            if request.FILES.get('cFile4', '') != "":
-                try:
-                    unithome.cFile4 = request.FILES['cFile4']
-                except:
-                    unithome.cFile4 = request.POST["cFile4"]
-            else:
-                unithome.cFile4 = unithome.cFile4
             unit.cClient=request.POST['cClient']         
             unit.cLocation=request.POST['cLocation']
             unit.cContent=request.POST['cContent']
@@ -1640,7 +1545,6 @@ def contractEdit(request,id=None,mode=None,cNumber=None):
             unit.cBudget = request.POST['cBudget']
             unit.cOther = request.POST['cOther']
             unit.cConfirm=request.POST['cConfirm']
-            unithome.save()
         unit.save()  #寫入資料庫
 
         message = '已修改...'
@@ -1797,6 +1701,7 @@ def changeCopyPost(request,cNumber=None,thisNumber=None):
 
 #設計變更通知單
 def changePost(request,cNumber=None):
+    filedownloadUrl_local = filedownloadUrl
     if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
         user_id = request.session['user_id']
         user = User.objects.get(pk=user_id)  # 获取当前登录用户信息
@@ -1898,6 +1803,7 @@ def changeallIndex(request):
     return render(request, "changeall_Index.html",locals())
 
 def changeEdit(request,id=None,mode=None,cNumber=None):
+    filedownloadUrl_local = filedownloadUrl
     homeform = HomeForm(request.POST)
     if 'user_id' in request.session:  # 假设你的用户 ID 存在于 session 中
         user_id = request.session['user_id']
@@ -1921,47 +1827,20 @@ def changeEdit(request,id=None,mode=None,cNumber=None):
         unithome.cEndDate = strdate3
         return render(request, "changeEdit.html", locals())
     elif mode == "save": # 由 edit2.html 按 submit
+        selected_confirm = request.POST.get('confirm')
+        selected_confirm2 = request.POST.get('confirm2')
+        selected_confirm3 = request.POST.get('confirm3')
+        selected_confirm4 = request.POST.get('confirm4')
+        selected_confirm5 = request.POST.get('confirm5')
         unit = Change.objects.get(id = id)  #取得要修改的資料記錄
         if unithome.cProgress == "結案":
             unithome.cReceive = request.POST['cReceive']
         else:
             unithome.cAuther = request.POST['cAuther']
             unithome.cSubject = request.POST['cSubject']
-            if request.FILES.get('cFile', '') != "":
-                try:
-                    unithome.cFile = request.FILES['cFile']
-                except:
-                    unithome.cFile = request.POST["cFile"]
-            else:
-                unithome.cFile = unithome.cFile
-            if request.FILES.get('cFile1', '') != "":
-                try:
-                    unithome.cFile1 = request.FILES['cFile1']
-                except:
-                    unithome.cFile1 = request.POST["cFile1"]
-            else:
-                unithome.cFile1 = unithome.cFile1
-            if request.FILES.get('cFile2', '') != "":
-                try:
-                    unithome.cFile2 = request.FILES['cFile2']
-                except:
-                    unithome.cFile2 = request.POST["cFile2"]
-            else:
-                unithome.cFile2 = unithome.cFile2
-            if request.FILES.get('cFile3', '') != "":
-                try:
-                    unithome.cFile3 = request.FILES['cFile3']
-                except:
-                    unithome.cFile3 = request.POST["cFile3"]
-            else:
-                unithome.cFile3 = unithome.cFile3
-            if request.FILES.get('cFile4', '') != "":
-                try:
-                    unithome.cFile4 = request.FILES['cFile4']
-                except:
-                    unithome.cFile4 = request.POST["cFile4"]
-            else:
-                unithome.cFile4 = unithome.cFile4
+            unithome.save()
+            filechange(request,cNumber,selected_confirm,selected_confirm2,selected_confirm3,selected_confirm4,selected_confirm5)
+            
             unit.cProjectName=request.POST['cProjectName']
             unit.cChangeitem=request.POST['cChangeitem']
             unit.cChangereason=request.POST['cChangereason']
@@ -1985,7 +1864,6 @@ def changeEdit(request,id=None,mode=None,cNumber=None):
             elif position == '採購':
                 unit.cOption_Purchase = request.POST['cOption_Purchase']
                 unit.cPurchase_Sign = request.POST['cPurchase_Sign']
-            unithome.save()
 
         unit.save()  #寫入資料庫
 

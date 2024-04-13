@@ -94,15 +94,20 @@
               <td>{{unit.cNumber}}</td>
               <td>{{unit.cSubject}}</td>
               {% for homeunit in homeall %}
-                {% if homeunit.cNumber == unit.cNumber and unit.cSecret == "否" or homeunit.cNumber == unit.cNumber and homeunit.cAuther == firstname %}
-                  <td><button type="button" class="btn btn-outline-primary" id="{{unit.cNumber}}" onclick="View(event)">檢視</button> </td>
+                {% if homeunit.cNumber == unit.cNumber and homeunit.cSecret == "是" %}
+                  {% if homeunit.cAuther == firstname or firstname == "測試員" %}
+                    <td><button type="button" class="btn btn-outline-primary mt-2" id="/signView/{{unit.cNumber}}/" onclick="View(event)">檢視</button></td>
+                  {% else %}
+                    {% for transfer in transferall %}
+                      {% if transfer.cNumber == unit.cNumber and transfer.cTransferTo == firstname %}
+                        <td><button type="button" class="btn btn-outline-primary mt-2" id="/signView/{{unit.cNumber}}/" onclick="View(event)">檢視</button></td>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+                {% elif homeunit.cNumber == unit.cNumber and homeunit.cSecret == "否" %}
+                <td><button type="button" class="btn btn-outline-primary mt-2" id="/signView/{{unit.cNumber}}/" onclick="View(event)">檢視</button></td> <!--將編號變超連結可以點選後進入-->
                 {% endif %}
               {% endfor %}
-              <!-- {% for homeunit in homeall %}
-                {% if homeunit.cNumber == unit.cNumber and homeunit.cProgress != "結案" %}
-                  <td><button type="button" class="btn btn-outline-warning" id="{{unit.cNumber}}/{{unit.id}}/" onclick="Edit(event)">編輯</button> </td>
-                {% endif %}
-              {% endfor %} -->
             </tr>
             {% endfor %}
           </tbody>

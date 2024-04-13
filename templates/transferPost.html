@@ -89,9 +89,9 @@
             <th>收件人</th>
             <td>
               <select class="form-control" id="taskTypeSelect" name="cTransferTo">
-                {% for key, value in transferform.REC %}
+                {% for key in userallname %}
                   {% if key != firstname %}
-                    <option value="{{ key }}" name="cTransferTo">{{ value }}</option>
+                    <option value="{{ key }}" name="cTransferTo">{{ key }}</option>
                   {% endif %}
                 {% endfor %}
               </select>
@@ -160,7 +160,7 @@
 
     function validateForm() {
       var transferToValue = document.forms["form1"]["cTransferTo"].value;
-      if (transferToValue == "None") {
+      if (transferToValue == "無") {
         alert("請選擇有效的人員");
         return false;
       }
